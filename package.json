@@ -1,0 +1,34 @@
+{
+  "name": "eslint-plugin-prettier",
+  "version": "1.0.0",
+  "description": "Runs prettier as an eslint rule",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "author": "Teddy Katz",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint .eslintrc.js lib/ tests/ --ignore-pattern !.eslintrc.js",
+    "test": "npm run lint && mocha tests --recursive"
+  },
+  "dependencies": {
+    "prettier": "^0.11.0",
+    "requireindex": "~1.1.0"
+  },
+  "peerDependencies": {
+    "eslint": "^3.14.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "eslint-config-not-an-aardvark": "^2.0.0",
+    "eslint-plugin-eslint-plugin": "^0.2.1",
+    "eslint-plugin-node": "^3.0.5",
+    "mocha": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "license": "MIT"
+}
