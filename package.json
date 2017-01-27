@@ -13,6 +13,14 @@
     "lint": "eslint .eslintrc.js lib/ tests/ --ignore-pattern !.eslintrc.js",
     "test": "npm run lint && mocha tests --recursive"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/not-an-aardvark/eslint-plugin-prettier.git"
+  },
+  "bugs": {
+    "url": "https://github.com/not-an-aardvark/eslint-plugin-prettier/issues"
+  },
+  "homepage": "https://github.com/not-an-aardvark/eslint-plugin-prettier#readme",
   "dependencies": {
     "prettier": "^0.11.0",
     "requireindex": "~1.1.0"
