@@ -52,3 +52,7 @@ You can also pass `prettier` configuration as an option:
 ```
 
 The rule will report an error if your code does not match `prettier` style. The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
+
+---
+
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) If your desired formatting does not match the `prettier` output (e.g. if you don't want semicolons), you should use a different tool such as [prettier-eslint](https://github.com/kentcdodds/prettier-eslint) instead.
