@@ -16,6 +16,12 @@ Next, install `eslint-plugin-prettier`:
 $ npm install eslint-plugin-prettier --save-dev
 ```
 
+Finally, install `prettier`:
+
+```
+$ npm install prettier --save-dev
+```
+
 **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-prettier` globally.
 
 ## Usage
