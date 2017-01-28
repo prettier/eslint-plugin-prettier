@@ -62,3 +62,13 @@ The rule will report an error if your code does not match `prettier` style. The 
 ---
 
 This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) If your desired formatting does not match the `prettier` output (e.g. if you don't want semicolons), you should use a different tool such as [prettier-eslint](https://github.com/kentcdodds/prettier-eslint) instead.
+
+## Migrating to 2.0.0
+
+Starting in 2.0.0, `prettier` is a peerDependency of this module, rather than a dependency. This means that you can use any version of `prettier` with this plugin, but it also means that you need to install it separately and include it as a devDependency in your project.
+
+To install `prettier`, use:
+
+```bash
+npm install prettier --save-dev
+```
