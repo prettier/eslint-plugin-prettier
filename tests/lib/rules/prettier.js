@@ -3,6 +3,7 @@
  * @author Teddy Katz
  */
 'use strict';
+
 // ------------------------------------------------------------------------------
 // Requirements
 // ------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ ruleTester.run('prettier', rule, {
   valid: [
     'foo(bar);\n',
     'foo("bar");\n',
-    { code: "foo('bar');\n", options: [ { singleQuote: true } ] }
+    { code: "foo('bar');\n", options: [{ singleQuote: true }] }
   ],
   invalid: [
     {

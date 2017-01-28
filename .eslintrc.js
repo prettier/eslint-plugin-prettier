@@ -1,4 +1,5 @@
 'use strict';
+
 const fs = require('fs');
 const path = require('path');
 const PACKAGE_NAME = require('./package').name;
@@ -10,7 +11,7 @@ if (!fs.existsSync(SYMLINK_LOCATION)) {
 }
 
 module.exports = {
-  plugins: [ 'node', 'eslint-plugin', PACKAGE_NAME ],
+  plugins: ['node', 'eslint-plugin', PACKAGE_NAME],
   extends: [
     'not-an-aardvark/node',
     'plugin:node/recommended',
@@ -18,8 +19,8 @@ module.exports = {
   ],
   root: true,
   rules: {
-    'prettier/prettier': [ 'error', { singleQuote: true } ],
-    'eslint-plugin/report-message-format': [ 'error', '^[^a-z].*\\.$' ],
+    'prettier/prettier': ['error', { singleQuote: true }],
+    'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
     'array-bracket-spacing': 'off',
     'comma-dangle': 'off',
     'lines-around-directive': 'off',
