@@ -61,7 +61,7 @@ The rule will report an error if your code does not match `prettier` style. The 
 
 ---
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) If your desired formatting does not match the `prettier` output (e.g. if you don't want semicolons), you should use a different tool such as [prettier-eslint](https://github.com/kentcdodds/prettier-eslint) instead.
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/lydell/eslint-config-prettier) to disable all formatting-related ESLint rules. If your desired formatting does not match the `prettier` output (e.g. if you don't want semicolons), you should use a different tool such as [prettier-eslint](https://github.com/kentcdodds/prettier-eslint) instead.
 
 ## Migrating to 2.0.0
 
