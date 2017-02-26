@@ -1,4 +1,4 @@
-# eslint-plugin-prettier
+# eslint-plugin-prettier [![Build Status](https://travis-ci.org/not-an-aardvark/eslint-plugin-prettier.svg?branch=master)](https://travis-ci.org/not-an-aardvark/eslint-plugin-prettier)
 
 Runs [prettier](https://github.com/jlongster/prettier) as an eslint rule
 
