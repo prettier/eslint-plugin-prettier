@@ -15,16 +15,12 @@ module.exports = {
   extends: [
     'not-an-aardvark/node',
     'plugin:node/recommended',
-    'plugin:eslint-plugin/recommended'
+    'plugin:eslint-plugin/recommended',
+    'prettier'
   ],
   root: true,
   rules: {
     'prettier/prettier': ['error', { singleQuote: true }],
-    'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
-    'array-bracket-spacing': 'off',
-    'comma-dangle': 'off',
-    indent: 'off',
-    'lines-around-directive': 'off',
-    'space-before-function-paren': 'off'
+    'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$']
   }
 };
