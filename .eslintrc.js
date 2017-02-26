@@ -23,6 +23,7 @@ module.exports = {
     'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
     'array-bracket-spacing': 'off',
     'comma-dangle': 'off',
+    indent: 'off',
     'lines-around-directive': 'off',
     'space-before-function-paren': 'off'
   }
