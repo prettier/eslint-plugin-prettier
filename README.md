@@ -72,3 +72,11 @@ To install `prettier`, use:
 ```bash
 npm install prettier --save-dev
 ```
+
+## Running Tests in the Browser
+
+The unit tests can be debugged with chrome devtools by adding a `debugger` statement in a test and running this command:
+
+```
+node --debug-brk  --inspect ./node_modules/mocha/bin/_mocha tests --recursive
+```
