@@ -75,7 +75,19 @@ npm install prettier --save-dev
 
 ## Running Tests in the Browser
 
-The unit tests can be debugged with chrome devtools by adding a `debugger` statement in a test and running this command:
+The unit tests can be debugged with chrome devtools by adding a `debugger` statement in either the source or test files and running the tests with `--inspect`:
+
+```diff
+diff --git a/lib/rules/prettier.js b/lib/rules/prettier.js
+index 7710569..3612fa4 100644
+--- a/lib/rules/prettier.js
++++ b/lib/rules/prettier.js
+@@ -16,6 +16,8 @@ module.exports = {
+   create(context) {
+     const sourceCode = context.getSourceCode();
+
++    debugger;
+```
 
 ```
 node --debug-brk  --inspect ./node_modules/mocha/bin/_mocha tests --recursive
