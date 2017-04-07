@@ -72,3 +72,7 @@ To install `prettier`, use:
 ```bash
 npm install prettier --save-dev
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/not-an-aardvark/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
