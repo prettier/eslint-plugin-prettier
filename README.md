@@ -10,16 +10,16 @@ You'll first need to install [ESLint](http://eslint.org):
 $ npm install eslint --save-dev
 ```
 
-Next, install `eslint-plugin-prettier`:
-
-```
-$ npm install eslint-plugin-prettier --save-dev
-```
-
-Finally, install `prettier`:
+Next, install `prettier`:
 
 ```
 $ npm install prettier --save-dev
+```
+
+Finally, install `eslint-plugin-prettier`:
+
+```
+$ npm install eslint-plugin-prettier --save-dev
 ```
 
 **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-prettier` globally.
