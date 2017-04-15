@@ -47,12 +47,12 @@ Then configure the `prettier` rule under the `rules` section:
 }
 ```
 
-You can also pass `prettier` configuration as an option:
+You can also pass [`prettier` configuration](https://github.com/prettier/prettier#api) as an option:
 
 ```json
 {
     "rules": {
-        "prettier/prettier": ["error", {"trailingComma": true, "singleQuote": true}]
+        "prettier/prettier": ["error", {"trailingComma": "es5", "singleQuote": true}]
     }
 }
 ```
