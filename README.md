@@ -62,7 +62,7 @@ If you'd like to use a fork of `prettier`, pass its name as an additional option
 ```json
 {
     "rules": {
-        "prettier/prettier": ["error", {"trailingComma": "es5", "singleQuote": true}, "prettier-with-tabs"]
+        "prettier/prettier": ["error", {"trailingComma": "es5", "singleQuote": true}, "prettier-miscellaneous"]
     }
 }
 ```
