@@ -5,7 +5,7 @@ Thanks for contributing!
 ## Installation
 
 ```bash
-git clone https://github.com/not-an-aardvark/eslint-plugin-prettier.git
+git clone https://github.com/prettier/eslint-plugin-prettier.git
 cd eslint-plugin-prettier
 npm install
 ```
