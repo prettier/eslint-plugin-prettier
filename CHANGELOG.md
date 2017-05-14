@@ -16,5 +16,3 @@
 * Breaking: Make prettier a peerDependency ([#1](https://github.com/not-an-aardvark/eslint-plugin-prettier/issues/1)) ([d8a8992](https://github.com/not-an-aardvark/eslint-plugin-prettier/commit/d8a89922ddc6b747c474b62a0948deba6ea2657d))
 * Docs: add repo url to package.json ([2474bc9](https://github.com/not-an-aardvark/eslint-plugin-prettier/commit/2474bc9dd3f05dbd0b1fec38e27bc91a9cb0f1c7))
 * Docs: suggest prettier-eslint if eslint rules disagree with prettier ([3414437](https://github.com/not-an-aardvark/eslint-plugin-prettier/commit/341443754ae231a17d82f037f8b35663257d282a))
-
-

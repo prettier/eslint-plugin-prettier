@@ -1,0 +1,20 @@
+CODE:
+var a = {
+  b: '',
+};
+
+OUTPUT:
+var a = {
+  b: ""
+};
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Replace `\'\',` with `""`',
+    line: 2, column: 6, endLine: 2, endColumn: 9,
+  },
+]

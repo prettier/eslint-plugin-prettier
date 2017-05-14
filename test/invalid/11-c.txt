@@ -1,0 +1,22 @@
+CODE:
+/** @format */
+var a = {
+  b: ""
+};
+
+OUTPUT:
+/** @format */
+var a = {
+  b: '',
+};
+
+OPTIONS:
+['fb']
+
+ERRORS:
+[
+  {
+    message: 'Replace `""` with `\'\',`',
+    line: 3, column: 6, endLine: 3, endColumn: 8,
+  },
+]

@@ -1,0 +1,16 @@
+CODE:
+var foo = { "bar": "", "baz": "" };
+
+OUTPUT:
+var foo = { bar: "", baz: "" };
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Replace `"bar":·"",·"baz"` with `bar:·"",·baz`',
+    line: 1, column: 13, endLine: 1, endColumn: 29,
+  },
+]

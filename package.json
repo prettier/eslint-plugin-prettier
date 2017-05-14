@@ -5,13 +5,17 @@
   "keywords": [
     "eslint",
     "eslintplugin",
-    "eslint-plugin"
+    "eslint-plugin",
+    "prettier"
   ],
   "author": "Teddy Katz",
-  "main": "lib/index.js",
+  "files": [
+    "eslint-plugin-prettier.js"
+  ],
+  "main": "eslint-plugin-prettier.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && mocha tests --recursive"
+    "test": "npm run lint && mocha"
   },
   "repository": {
     "type": "git",
@@ -22,7 +26,8 @@
   },
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
   "dependencies": {
-    "requireindex": "~1.1.0"
+    "fast-diff": "^1.1.1",
+    "jest-docblock": "^20.0.1"
   },
   "peerDependencies": {
     "eslint": "^3.14.1",

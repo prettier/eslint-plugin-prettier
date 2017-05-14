@@ -1,0 +1,18 @@
+CODE:
+/** @format */
+var foo = '';
+
+OUTPUT:
+/** @format */
+var foo = "";
+
+OPTIONS:
+[null, "@format"]
+
+ERRORS:
+[
+  {
+    message: 'Replace `\'\'` with `""`',
+    line: 2, column: 11, endLine: 2, endColumn: 13,
+  },
+]

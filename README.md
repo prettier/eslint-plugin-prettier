@@ -1,77 +1,117 @@
 # eslint-plugin-prettier [![Build Status](https://travis-ci.org/prettier/eslint-plugin-prettier.svg?branch=master)](https://travis-ci.org/prettier/eslint-plugin-prettier)
 
-Runs [prettier](https://github.com/jlongster/prettier) as an eslint rule
+Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](http://eslint.org) rule and reports differences as individual ESLint issues.
+
+## Sample
+
+```js
+error: Insert `,` (prettier/prettier) at pkg/commons-atom/ActiveEditorRegistry.js:22:25:
+  20 | import {
+  21 |   observeActiveEditorsDebounced,
+> 22 |   editorChangesDebounced
+     |                         ^
+  23 | } from './debounced';;
+  24 |
+  25 | import {observableFromSubscribeFunction} from '../commons-node/event';
+
+
+error: Delete `;` (prettier/prettier) at pkg/commons-atom/ActiveEditorRegistry.js:23:21:
+  21 |   observeActiveEditorsDebounced,
+  22 |   editorChangesDebounced
+> 23 | } from './debounced';;
+     |                     ^
+  24 |
+  25 | import {observableFromSubscribeFunction} from '../commons-node/event';
+  26 | import {cacheWhileSubscribed} from '../commons-node/observable';
+
+
+2 errors found.
+```
+
+> `./node_modules/.bin/eslint --format codeframe pkg/commons-atom/ActiveEditorRegistry.js` (code from [nuclide](https://github.com/facebook/nuclide)).
 
 ## Installation
 
-You'll first need to install [ESLint](http://eslint.org):
-
-```
-$ npm install eslint --save-dev
+```sh
+npm install --save-dev prettier eslint-plugin-prettier
 ```
 
-Next, install `prettier`:
+**_`eslint-plugin-prettier` does not install Prettier or ESLint for you._** _You must install these yourself._
 
-```
-$ npm install prettier --save-dev
-```
-
-Finally, install `eslint-plugin-prettier`:
-
-```
-$ npm install eslint-plugin-prettier --save-dev
-```
-
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-prettier` globally.
-
-## Usage
-
-Add `prettier` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
+Then, in your `.eslintrc`:
 
 ```json
 {
-    "plugins": [
-        "prettier"
-    ]
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }
 ```
 
+## Options
 
-Then configure the `prettier` rule under the `rules` section:
+* The first option:
 
-```json
-{
-    "rules": {
-        "prettier/prettier": "error"
-    }
-}
-```
+  - Objects are passed directly to Prettier as [options](https://github.com/prettier/prettier#api). Example:
+    
+    ```json
+    "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
+    ```
 
-You can also pass [`prettier` configuration](https://github.com/prettier/prettier#api) as an option:
+  - Or the string `"fb"` may be used to set "Facebook style" defaults:
 
-```json
-{
-    "rules": {
-        "prettier/prettier": ["error", {"trailingComma": "es5", "singleQuote": true}]
-    }
-}
-```
+    ```json
+    "prettier/prettier": ["error", "fb"]
+    ```
 
-The rule will report an error if your code does not match `prettier` style. The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
+    Equivalent to:
+
+    ```json
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "trailingComma": "all",
+      "bracketSpacing": false,
+      "jsxBracketSameLine": true,
+      "parser": "flow"
+    }]
+    ```
+
+* The second option:
+
+  - A string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`. Example:
+
+    ```json
+    "prettier/prettier": ["error", null, "@prettier"]
+    ```
+
+    Only files with `@prettier` in the heading docblock will be checked:
+
+    ```js
+    /** @prettier */
+
+    console.log(1 + 2 + 3);
+    ```
+
+    Or:
+
+    ```js
+    /**
+     * @prettier
+     */
+
+    console.log(4 + 5 + 6);
+    ```
+
+    _This option is useful if you're migrating a large codebase and already use pragmas like `@flow`._
+
+* The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/lydell/eslint-config-prettier) to disable all formatting-related ESLint rules. If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/kentcdodds/prettier-eslint) instead.
-
-## Migrating to 2.0.0
-
-Starting in 2.0.0, `prettier` is a peerDependency of this module, rather than a dependency. This means that you can use any version of `prettier` with this plugin, but it also means that you need to install it separately and include it as a devDependency in your project.
-
-To install `prettier`, use:
-
-```bash
-npm install prettier --save-dev
-```
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules. If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
 
 ## Contributing
 
