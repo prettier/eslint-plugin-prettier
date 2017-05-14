@@ -10,7 +10,7 @@
   "author": "Teddy Katz",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint .eslintrc.js lib/ tests/ --ignore-pattern !.eslintrc.js",
+    "lint": "eslint .",
     "test": "npm run lint && mocha tests --recursive"
   },
   "repository": {
