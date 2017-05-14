@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/not-an-aardvark/eslint-plugin-prettier.git"
+    "url": "git+https://github.com/prettier/eslint-plugin-prettier.git"
   },
   "bugs": {
-    "url": "https://github.com/not-an-aardvark/eslint-plugin-prettier/issues"
+    "url": "https://github.com/prettier/eslint-plugin-prettier/issues"
   },
-  "homepage": "https://github.com/not-an-aardvark/eslint-plugin-prettier#readme",
+  "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
   "dependencies": {
     "requireindex": "~1.1.0"
   },

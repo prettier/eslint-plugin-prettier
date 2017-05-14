@@ -75,4 +75,4 @@ npm install prettier --save-dev
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/not-an-aardvark/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
