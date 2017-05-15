@@ -25,7 +25,7 @@ const FB_PRETTIER_OPTIONS = {
   parser: 'flow'
 };
 
-const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/g;
+const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 
 // ------------------------------------------------------------------------------
 //  Privates
