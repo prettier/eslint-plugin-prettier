@@ -184,7 +184,7 @@ function reportDifferences(context, prettierSource) {
  */
 function reportInsert(context, offset, text) {
   const pos = getLocFromIndex(context, offset);
-  const range = [null, offset];
+  const range = [offset, offset];
   context.report({
     message: 'Insert `{{ code }}`',
     data: { code: showInvisibles(text) },
