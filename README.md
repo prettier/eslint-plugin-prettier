@@ -57,6 +57,16 @@ You can also pass [`prettier` configuration](https://github.com/prettier/prettie
 }
 ```
 
+If you'd like to use a fork of `prettier`, pass its name as an additional option:
+
+```json
+{
+    "rules": {
+        "prettier/prettier": ["error", {"trailingComma": "es5", "singleQuote": true}, "prettier-miscellaneous"]
+    }
+}
+```
+
 The rule will report an error if your code does not match `prettier` style. The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
