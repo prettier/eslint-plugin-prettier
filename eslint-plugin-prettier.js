@@ -66,13 +66,13 @@ function showInvisibles(str) {
   for (let i = 0; i < str.length; i++) {
     switch (str[i]) {
       case ' ':
-        ret += '\u00B7'; // Middle Dot
+        ret += '·'; // Middle Dot, \u00B7
         break;
       case '\n':
-        ret += '\u23ce'; // Return Symbol
+        ret += '⏎'; // Return Symbol, \u23ce
         break;
       case '\t':
-        ret += '\u21b9'; // Left Arrow To Bar Over Right Arrow To Bar
+        ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
         break;
       default:
         ret += str[i];
