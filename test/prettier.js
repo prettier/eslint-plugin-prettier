@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-/* eslint-disable node/shebang */
-
 /**
  * @fileoverview Runs `prettier` as an ESLint rule.
  * @author Andres Suarez
