@@ -35,7 +35,9 @@ ruleTester.run('prettier', rule, {
     // Facebook style but missing pragma.
     { code: `"";\n`, options: ['fb', '@format'] },
     // Facebook style with pragma.
-    { code: `/** @format */\n'';\n`, options: ['fb', '@format'] }
+    { code: `/** @format */\n'';\n`, options: ['fb', '@format'] },
+    // Shebang with pragma.
+    { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] }
   ],
   invalid: [
     '01',
@@ -57,7 +59,8 @@ ruleTester.run('prettier', rule, {
     '15',
     '16',
     '17',
-    '18'
+    '18',
+    '19'
   ].map(loadInvalidFixture)
 });
 

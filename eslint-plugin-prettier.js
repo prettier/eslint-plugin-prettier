@@ -108,7 +108,7 @@ function reportDifferences(context, prettierSource) {
   // and another's beginning does not have line endings (i.e. issues that occur
   // on contiguous lines).
 
-  const source = context.getSource();
+  const source = context.getSourceCode().text;
   const results = diff(source, prettierSource);
 
   const batch = [];
@@ -271,14 +271,22 @@ module.exports.rules = {
         ? context.options[1].slice(1) // Remove leading @
         : null;
 
+      const sourceCode = context.getSourceCode();
+      const source = sourceCode.text;
+
+      // The pragma is only valid if it is found in a block comment at the very
+      // start of the file.
       if (pragma) {
-        // The pragma is only valid if it is found in a block comment at the
-        // very start of the file.
-        const firstComment = context.getAllComments()[0];
+        // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
+        // reports it as a "Shebang" node. This works for both versions:
+        const hasShebang = source.startsWith('#!');
+        const allComments = sourceCode.getAllComments();
+        const firstComment = hasShebang ? allComments[1] : allComments[0];
         if (
           !(firstComment &&
             firstComment.type === 'Block' &&
-            firstComment.start === 0)
+            firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
+            firstComment.loc.start.column === 0)
         ) {
           return {};
         }
@@ -294,7 +302,6 @@ module.exports.rules = {
             // Prettier is expensive to load, so only load it if needed.
             prettier = require('prettier');
           }
-          const source = context.getSource();
           const prettierSource = prettier.format(source, prettierOptions);
           if (source !== prettierSource) {
             reportDifferences(context, prettierSource);
