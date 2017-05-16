@@ -1,0 +1,17 @@
+CODE:
+
+var foo = "";
+
+OUTPUT:
+var foo = "";
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Delete `⏎`',
+    line: 1, column: 1, endLine: 2, endColumn: 1,
+  },
+]

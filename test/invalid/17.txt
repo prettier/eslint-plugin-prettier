@@ -1,0 +1,15 @@
+CODE:
+var foo = "";
+OUTPUT:
+var foo = "";
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Insert `⏎`',
+    line: 1, column: 14, endLine: 1, endColumn: 14,
+  },
+]

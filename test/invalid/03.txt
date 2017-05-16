@@ -1,0 +1,17 @@
+CODE:
+  a();;;
+;;;
+
+OUTPUT:
+a();
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Replace `··a();;;⏎;;` with `a()`',
+    line: 1, column: 1, endLine: 2, endColumn: 3,
+  },
+]

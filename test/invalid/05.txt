@@ -1,0 +1,16 @@
+CODE:
+var foo="";
+
+OUTPUT:
+var foo = "";
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Replace `=` with `·=·`',
+    line: 1, column: 8, endLine: 1, endColumn: 9,
+  },
+]

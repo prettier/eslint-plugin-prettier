@@ -1,7 +1,7 @@
 The MIT License (MIT)
 =====================
 
-Copyright © 2017 Teddy Katz
+Copyright © 2017 Andres Suarez and Teddy Katz
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
