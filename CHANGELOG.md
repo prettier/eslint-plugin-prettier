@@ -2,13 +2,13 @@
 
 ## v2.1.0 (2017-05-16)
 
-* Merge with eslint-plugin-prettify ([#21](git@github.com:prettier/eslint-plugin-prettier/issues/21)) ([6de494f](git@github.com:prettier/eslint-plugin-prettier/commit/6de494fd685a107f3a9a371e663a1f8d68d6d31f))
-* Docs: update repo links to new URL ([#18](git@github.com:prettier/eslint-plugin-prettier/issues/18)) ([6b69492](git@github.com:prettier/eslint-plugin-prettier/commit/6b694928e6e6c192dcb06e6287272fb40cbad17d))
-* Chore: Upgrade development dependencies ([#16](git@github.com:prettier/eslint-plugin-prettier/issues/16)) ([12984ea](git@github.com:prettier/eslint-plugin-prettier/commit/12984ead6c46156b25607c9a8b03ae17def7ef9e))
-* Docs: fix outdated info about prettier's semicolon support ([da6aad1](git@github.com:prettier/eslint-plugin-prettier/commit/da6aad15ea22aa899b26b5ce0979f4a945d80319))
-* Docs: update prettier options in example ([#14](git@github.com:prettier/eslint-plugin-prettier/issues/14)) ([0ae173f](git@github.com:prettier/eslint-plugin-prettier/commit/0ae173f2731b02c0ed72a6cb49efdbdcff54a419))
-* Docs: Change the order of dependencies install ([#13](git@github.com:prettier/eslint-plugin-prettier/issues/13)) ([cbf803c](git@github.com:prettier/eslint-plugin-prettier/commit/cbf803ccf0add6e324ae1513b5260e31bf9a3c05))
-* Docs: Add CONTRIBUTING.md (fixes [#9](git@github.com:prettier/eslint-plugin-prettier/issues/9)) ([40fe55b](git@github.com:prettier/eslint-plugin-prettier/commit/40fe55b3d8c000787b0dcbfa0aed4f0d930808a9))
+* Merge with eslint-plugin-prettify ([#21](https://github.com/prettier/eslint-plugin-prettier/issues/21)) ([6de494f](https://github.com/prettier/eslint-plugin-prettier/commit/6de494fd685a107f3a9a371e663a1f8d68d6d31f))
+* Docs: update repo links to new URL ([#18](https://github.com/prettier/eslint-plugin-prettier/issues/18)) ([6b69492](https://github.com/prettier/eslint-plugin-prettier/commit/6b694928e6e6c192dcb06e6287272fb40cbad17d))
+* Chore: Upgrade development dependencies ([#16](https://github.com/prettier/eslint-plugin-prettier/issues/16)) ([12984ea](https://github.com/prettier/eslint-plugin-prettier/commit/12984ead6c46156b25607c9a8b03ae17def7ef9e))
+* Docs: fix outdated info about prettier's semicolon support ([da6aad1](https://github.com/prettier/eslint-plugin-prettier/commit/da6aad15ea22aa899b26b5ce0979f4a945d80319))
+* Docs: update prettier options in example ([#14](https://github.com/prettier/eslint-plugin-prettier/issues/14)) ([0ae173f](https://github.com/prettier/eslint-plugin-prettier/commit/0ae173f2731b02c0ed72a6cb49efdbdcff54a419))
+* Docs: Change the order of dependencies install ([#13](https://github.com/prettier/eslint-plugin-prettier/issues/13)) ([cbf803c](https://github.com/prettier/eslint-plugin-prettier/commit/cbf803ccf0add6e324ae1513b5260e31bf9a3c05))
+* Docs: Add CONTRIBUTING.md (fixes [#9](https://github.com/prettier/eslint-plugin-prettier/issues/9)) ([40fe55b](https://github.com/prettier/eslint-plugin-prettier/commit/40fe55b3d8c000787b0dcbfa0aed4f0d930808a9))
 
 ## v2.0.1 (2017-02-26)
 
