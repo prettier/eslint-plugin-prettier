@@ -4,3 +4,10 @@ node_js:
   - '4'
   - '6'
   - '7'
+env:
+  - ESLINT_VERSION=latest
+  - ESLINT_VERSION=3.15.0
+before_script:
+  - if [[ $ESLINT_VERSION != "latest" ]]; then
+      yarn upgrade "eslint@$ESLINT_VERSION";
+    fi

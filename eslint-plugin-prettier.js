@@ -45,15 +45,37 @@ let prettier;
  * @returns {Object} An object containing numeric `line` and `column` keys.
  */
 function getLocFromIndex(context, index) {
-  // If `sourceCode.getLocFromIndex` is available from ESLint, use it.
-  // Otherwise, use the private version from eslint/lib/ast-utils.
-  // `sourceCode.getLocFromIndex` was added in ESLint 3.16.0.
+  // If `sourceCode.getLocFromIndex` is available from ESLint, use it - added
+  // in ESLint 3.16.0.
   const sourceCode = context.getSourceCode();
   if (typeof sourceCode.getLocFromIndex === 'function') {
     return sourceCode.getLocFromIndex(index);
   }
-  const astUtils = require('eslint/lib/ast-utils');
-  return astUtils.getLocationFromRangeIndex(sourceCode, index);
+  const text = sourceCode.getText();
+  if (typeof index !== 'number') {
+    throw new TypeError('Expected `index` to be a number.');
+  }
+  if (index < 0 || index > text.length) {
+    throw new RangeError('Index out of range.');
+  }
+  // Loosely based on
+  // https://github.com/eslint/eslint/blob/18a519fa/lib/ast-utils.js#L408-L438
+  const lineEndingPattern = /\r\n|[\r\n\u2028\u2029]/g;
+  let offset = 0;
+  let line = 0;
+  let match;
+  while ((match = lineEndingPattern.exec(text))) {
+    const next = match.index + match[0].length;
+    if (index < next) {
+      break;
+    }
+    line++;
+    offset = next;
+  }
+  return {
+    line: line + 1,
+    column: index - offset
+  };
 }
 
 /**
