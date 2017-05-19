@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.1 (2017-05-19)
+
+* Fix: Support ESLint <3.11.0 ([#24](git@github.com:prettier/eslint-plugin-prettier/issues/24)) ([fde7fdf](git@github.com:prettier/eslint-plugin-prettier/commit/fde7fdf2e2dcb3a1f164e1fddb337070802d2c68))
+* Chore: add yarn.lock ([#23](git@github.com:prettier/eslint-plugin-prettier/issues/23)) ([8b55518](git@github.com:prettier/eslint-plugin-prettier/commit/8b555187937a7e37ad84324c4331478b04898493))
+* Docs: fix links in changelog ([#22](git@github.com:prettier/eslint-plugin-prettier/issues/22)) ([7e70e11](git@github.com:prettier/eslint-plugin-prettier/commit/7e70e11de37ca77f5aeb3dcdb216e1a421b54f0d))
+
 ## v2.1.0 (2017-05-16)
 
 * Merge with eslint-plugin-prettify ([#21](https://github.com/prettier/eslint-plugin-prettier/issues/21)) ([6de494f](https://github.com/prettier/eslint-plugin-prettier/commit/6de494fd685a107f3a9a371e663a1f8d68d6d31f))
