@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.2 (2017-06-14)
+
+* Chore: Relax peerDependencies ([#30](https://github.com/prettier/eslint-plugin-prettier/issues/30)) ([a19b8af](https://github.com/prettier/eslint-plugin-prettier/commit/a19b8afc5b3e7a05468e1c566d359f80f13b80cd))
+* Chore: Add release script ([#25](https://github.com/prettier/eslint-plugin-prettier/issues/25)) ([8fbfe73](https://github.com/prettier/eslint-plugin-prettier/commit/8fbfe73ec2cdba4c313e9e3add4b602fc3166ab8))
+
 ## v2.1.1 (2017-05-19)
 
 * Fix: Support ESLint <3.11.0 ([#24](git@github.com:prettier/eslint-plugin-prettier/issues/24)) ([fde7fdf](git@github.com:prettier/eslint-plugin-prettier/commit/fde7fdf2e2dcb3a1f164e1fddb337070802d2c68))
