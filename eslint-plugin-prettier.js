@@ -11,6 +11,7 @@
 
 const diff = require('fast-diff');
 const docblock = require('jest-docblock');
+const eslint = require("eslint");
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -30,9 +31,6 @@ const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 // ------------------------------------------------------------------------------
 //  Privates
 // ------------------------------------------------------------------------------
-
-// Lazily-loaded Prettier.
-let prettier;
 
 // ------------------------------------------------------------------------------
 //  Helpers
@@ -277,7 +275,13 @@ module.exports.rules = {
         {
           anyOf: [
             { enum: [null, 'fb'] },
-            { type: 'object', properties: {}, additionalProperties: true }
+            {
+              type: 'object',
+              properties: {
+                'prettier-eslint': { type: 'boolean', default: false }
+              },
+              additionalProperties: true
+            }
           ]
         },
         // Pragma:
@@ -295,6 +299,8 @@ module.exports.rules = {
 
       const sourceCode = context.getSourceCode();
       const source = sourceCode.text;
+
+      const engine = new eslint.CLIEngine();
 
       // The pragma is only valid if it is found in a block comment at the very
       // start of the file.
@@ -320,16 +326,31 @@ module.exports.rules = {
 
       return {
         Program() {
-          if (!prettier) {
-            // Prettier is expensive to load, so only load it if needed.
-            prettier = require('prettier');
-          }
-          const prettierSource = prettier.format(source, prettierOptions);
+          const prettierSource = format();
           if (source !== prettierSource) {
             reportDifferences(context, prettierSource);
           }
         }
       };
+
+      function format() {
+        const usePrettierEslint =
+          prettierOptions && prettierOptions['prettier-eslint'];
+
+        if (usePrettierEslint) {
+          const config = engine.getConfigForFile(context.getFilename());
+          config.plugins.splice(config.plugins.indexOf("prettier"), 1);
+
+          return require('prettier-eslint')({
+            text: source,
+            eslintConfig: config,
+            fallbackPrettierOptions: prettierOptions
+          });
+        }
+
+        // Prettier is expensive to load, so only load it if needed.
+        return require('prettier').format(source, prettierOptions);
+      }
     }
   }
 };
