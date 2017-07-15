@@ -61,6 +61,12 @@ Then, in your `.eslintrc`:
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
     ```
 
+  - Set `"prettier-eslint": true"` to use [`prettier-eslint`](https://github.com/prettier/prettier-eslint) instead of prettier.
+
+    ```json
+    "prettier/prettier": ["error", {"prettier-eslint": true}]
+    ```
+
   - Or the string `"fb"` may be used to set "Facebook style" defaults:
 
     ```json
@@ -111,7 +117,9 @@ Then, in your `.eslintrc`:
 
 ---
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules. If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules. 
+
+If your desired formatting does not match the `prettier` output, you can enable [prettier-eslint](https://github.com/prettier/prettier-eslint) integration (see above).
 
 ## Contributing
 
