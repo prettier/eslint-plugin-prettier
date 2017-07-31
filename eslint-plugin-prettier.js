@@ -9,8 +9,8 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
-const diff = require('fast-diff');
 const docblock = require('jest-docblock');
+const utils = require('./utils');
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -24,8 +24,6 @@ const FB_PRETTIER_OPTIONS = {
   jsxBracketSameLine: true,
   parser: 'flow'
 };
-
-const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 
 // ------------------------------------------------------------------------------
 //  Privates
@@ -78,124 +76,9 @@ function getLocFromIndex(context, index) {
   };
 }
 
-/**
- * Converts invisible characters to a commonly recognizable visible form.
- * @param {string} str - The string with invisibles to convert.
- * @returns {string} The converted string.
- */
-function showInvisibles(str) {
-  let ret = '';
-  for (let i = 0; i < str.length; i++) {
-    switch (str[i]) {
-      case ' ':
-        ret += '·'; // Middle Dot, \u00B7
-        break;
-      case '\n':
-        ret += '⏎'; // Return Symbol, \u23ce
-        break;
-      case '\t':
-        ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
-        break;
-      default:
-        ret += str[i];
-        break;
-    }
-  }
-  return ret;
-}
-
 // ------------------------------------------------------------------------------
 //  Rule Definition
 // ------------------------------------------------------------------------------
-
-/**
- * Reports issues where the context's source code differs from the Prettier
- formatted version.
- * @param {RuleContext} context - The ESLint rule context.
- * @param {string} prettierSource - The Prettier formatted source.
- * @returns {void}
- */
-function reportDifferences(context, prettierSource) {
-  // fast-diff returns the differences between two texts as a series of
-  // INSERT, DELETE or EQUAL operations. The results occur only in these
-  // sequences:
-  //           /-> INSERT -> EQUAL
-  //    EQUAL |           /-> EQUAL
-  //           \-> DELETE |
-  //                      \-> INSERT -> EQUAL
-  // Instead of reporting issues at each INSERT or DELETE, certain sequences
-  // are batched together and are reported as a friendlier "replace" operation:
-  // - A DELETE immediately followed by an INSERT.
-  // - Any number of INSERTs and DELETEs where the joining EQUAL of one's end
-  // and another's beginning does not have line endings (i.e. issues that occur
-  // on contiguous lines).
-
-  const source = context.getSourceCode().text;
-  const results = diff(source, prettierSource);
-
-  const batch = [];
-  let offset = 0; // NOTE: INSERT never advances the offset.
-  while (results.length) {
-    const result = results.shift();
-    const op = result[0];
-    const text = result[1];
-    switch (op) {
-      case diff.INSERT:
-      case diff.DELETE:
-        batch.push(result);
-        break;
-      case diff.EQUAL:
-        if (results.length) {
-          if (batch.length) {
-            if (LINE_ENDING_RE.test(text)) {
-              flush();
-              offset += text.length;
-            } else {
-              batch.push(result);
-            }
-          } else {
-            offset += text.length;
-          }
-        }
-        break;
-      default:
-        throw new Error(`Unexpected fast-diff operation "${op}"`);
-    }
-    if (batch.length && !results.length) {
-      flush();
-    }
-  }
-
-  function flush() {
-    let aheadDeleteText = '';
-    let aheadInsertText = '';
-    while (batch.length) {
-      const next = batch.shift();
-      const op = next[0];
-      const text = next[1];
-      switch (op) {
-        case diff.INSERT:
-          aheadInsertText += text;
-          break;
-        case diff.DELETE:
-          aheadDeleteText += text;
-          break;
-        case diff.EQUAL:
-          aheadDeleteText += text;
-          aheadInsertText += text;
-          break;
-      }
-    }
-    if (aheadDeleteText && aheadInsertText) {
-      reportReplace(context, offset, aheadDeleteText, aheadInsertText);
-    } else if (!aheadDeleteText && aheadInsertText) {
-      reportInsert(context, offset, aheadInsertText);
-    } else if (aheadDeleteText && !aheadInsertText) {
-      reportDelete(context, offset, aheadDeleteText);
-    }
-    offset += aheadDeleteText.length;
-  }
-}
 
 /**
  * Reports an "Insert ..." issue where text must be inserted.
@@ -209,7 +92,7 @@ function reportInsert(context, offset, text) {
   const range = [offset, offset];
   context.report({
     message: 'Insert `{{ code }}`',
-    data: { code: showInvisibles(text) },
+    data: { code: utils.showInvisibles(text) },
     loc: { start: pos, end: pos },
     fix(fixer) {
       return fixer.insertTextAfterRange(range, text);
@@ -230,7 +113,7 @@ function reportDelete(context, offset, text) {
   const range = [offset, offset + text.length];
   context.report({
     message: 'Delete `{{ code }}`',
-    data: { code: showInvisibles(text) },
+    data: { code: utils.showInvisibles(text) },
     loc: { start, end },
     fix(fixer) {
       return fixer.removeRange(range);
@@ -254,8 +137,8 @@ function reportReplace(context, offset, deleteText, insertText) {
   context.report({
     message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
     data: {
-      deleteCode: showInvisibles(deleteText),
-      insertCode: showInvisibles(insertText)
+      deleteCode: utils.showInvisibles(deleteText),
+      insertCode: utils.showInvisibles(insertText)
     },
     loc: { start, end },
     fix(fixer) {
@@ -326,7 +209,11 @@ module.exports.rules = {
           }
           const prettierSource = prettier.format(source, prettierOptions);
           if (source !== prettierSource) {
-            reportDifferences(context, prettierSource);
+            utils.reportDifferences(source, prettierSource, {
+              reportReplace: reportReplace.bind(null, context),
+              reportDelete: reportDelete.bind(null, context),
+              reportInsert: reportInsert.bind(null, context)
+            });
           }
         }
       };
