@@ -10,7 +10,8 @@
   ],
   "author": "Teddy Katz",
   "files": [
-    "eslint-plugin-prettier.js"
+    "eslint-plugin-prettier.js",
+    "utils.js"
   ],
   "main": "eslint-plugin-prettier.js",
   "scripts": {
