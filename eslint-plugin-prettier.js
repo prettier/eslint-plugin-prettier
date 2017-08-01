@@ -111,11 +111,15 @@ function showInvisibles(str) {
 /**
  * Reports issues where the context's source code differs from the Prettier
  formatted version.
- * @param {RuleContext} context - The ESLint rule context.
+ * @param {string} source - The original source.
  * @param {string} prettierSource - The Prettier formatted source.
+ * @param {Object} reporters - Reporters to report linter failure
+ * @param {Function} reporters.reportReplace - A function takes offset, deleteText, insertText and message
+ * @param {Function} reporters.reportInsert - A function takes offset, insertText and message
+ * @param {Function} reporters.reportDelete - A function takes offset, deleteText and message
  * @returns {void}
  */
-function reportDifferences(context, prettierSource) {
+function reportDifferences(source, prettierSource, reporters) {
   // fast-diff returns the differences between two texts as a series of
   // INSERT, DELETE or EQUAL operations. The results occur only in these
   // sequences:
@@ -130,7 +134,6 @@ function reportDifferences(context, prettierSource) {
   // and another's beginning does not have line endings (i.e. issues that occur
   // on contiguous lines).
 
-  const source = context.getSourceCode().text;
   const results = diff(source, prettierSource);
 
   const batch = [];
@@ -187,11 +190,24 @@ function reportDifferences(context, prettierSource) {
       }
     }
     if (aheadDeleteText && aheadInsertText) {
-      reportReplace(context, offset, aheadDeleteText, aheadInsertText);
+      reporters.reportReplace(
+        offset,
+        aheadDeleteText,
+        aheadInsertText,
+        `Replace \`${showInvisibles(aheadDeleteText)}\` with \`${showInvisibles(aheadInsertText)}\``
+      );
     } else if (!aheadDeleteText && aheadInsertText) {
-      reportInsert(context, offset, aheadInsertText);
+      reporters.reportInsert(
+        offset,
+        aheadInsertText,
+        `Insert \`${showInvisibles(aheadInsertText)}\``
+      );
     } else if (aheadDeleteText && !aheadInsertText) {
-      reportDelete(context, offset, aheadDeleteText);
+      reporters.reportDelete(
+        offset,
+        aheadDeleteText,
+        `Delete \`${showInvisibles(aheadDeleteText)}\``
+      );
     }
     offset += aheadDeleteText.length;
   }
@@ -202,14 +218,14 @@ function reportDifferences(context, prettierSource) {
  * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to insert text.
  * @param {string} text - The text to be inserted.
+ * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportInsert(context, offset, text) {
+function reportInsert(context, offset, text, message) {
   const pos = getLocFromIndex(context, offset);
   const range = [offset, offset];
   context.report({
-    message: 'Insert `{{ code }}`',
-    data: { code: showInvisibles(text) },
+    message,
     loc: { start: pos, end: pos },
     fix(fixer) {
       return fixer.insertTextAfterRange(range, text);
@@ -222,15 +238,15 @@ function reportInsert(context, offset, text) {
  * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to delete text.
  * @param {string} text - The text to be deleted.
+ * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportDelete(context, offset, text) {
+function reportDelete(context, offset, text, message) {
   const start = getLocFromIndex(context, offset);
   const end = getLocFromIndex(context, offset + text.length);
   const range = [offset, offset + text.length];
   context.report({
-    message: 'Delete `{{ code }}`',
-    data: { code: showInvisibles(text) },
+    message,
     loc: { start, end },
     fix(fixer) {
       return fixer.removeRange(range);
@@ -245,18 +261,15 @@ function reportDelete(context, offset, text) {
  with inserted text.
  * @param {string} deleteText - The text to be deleted.
  * @param {string} insertText - The text to be inserted.
+ * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportReplace(context, offset, deleteText, insertText) {
+function reportReplace(context, offset, deleteText, insertText, message) {
   const start = getLocFromIndex(context, offset);
   const end = getLocFromIndex(context, offset + deleteText.length);
   const range = [offset, offset + deleteText.length];
   context.report({
-    message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
-    data: {
-      deleteCode: showInvisibles(deleteText),
-      insertCode: showInvisibles(insertText)
-    },
+    message,
     loc: { start, end },
     fix(fixer) {
       return fixer.replaceTextRange(range, insertText);
@@ -268,68 +281,76 @@ function reportReplace(context, offset, deleteText, insertText) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-module.exports.rules = {
-  prettier: {
-    meta: {
-      fixable: 'code',
-      schema: [
-        // Prettier options:
-        {
-          anyOf: [
-            { enum: [null, 'fb'] },
-            { type: 'object', properties: {}, additionalProperties: true }
-          ]
-        },
-        // Pragma:
-        { type: 'string', pattern: '^@\\w+$' }
-      ]
-    },
-    create(context) {
-      const prettierOptions = context.options[0] === 'fb'
-        ? FB_PRETTIER_OPTIONS
-        : context.options[0];
+module.exports = {
+  showInvisibles,
+  reportDifferences,
+  rules: {
+    prettier: {
+      meta: {
+        fixable: 'code',
+        schema: [
+          // Prettier options:
+          {
+            anyOf: [
+              { enum: [null, 'fb'] },
+              { type: 'object', properties: {}, additionalProperties: true }
+            ]
+          },
+          // Pragma:
+          { type: 'string', pattern: '^@\\w+$' }
+        ]
+      },
+      create(context) {
+        const prettierOptions = context.options[0] === 'fb'
+          ? FB_PRETTIER_OPTIONS
+          : context.options[0];
 
-      const pragma = context.options[1]
-        ? context.options[1].slice(1) // Remove leading @
-        : null;
+        const pragma = context.options[1]
+          ? context.options[1].slice(1) // Remove leading @
+          : null;
 
-      const sourceCode = context.getSourceCode();
-      const source = sourceCode.text;
+        const sourceCode = context.getSourceCode();
+        const source = sourceCode.text;
 
-      // The pragma is only valid if it is found in a block comment at the very
-      // start of the file.
-      if (pragma) {
-        // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
-        // reports it as a "Shebang" node. This works for both versions:
-        const hasShebang = source.startsWith('#!');
-        const allComments = sourceCode.getAllComments();
-        const firstComment = hasShebang ? allComments[1] : allComments[0];
-        if (
-          !(firstComment &&
-            firstComment.type === 'Block' &&
-            firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
-            firstComment.loc.start.column === 0)
-        ) {
-          return {};
+        // The pragma is only valid if it is found in a block comment at the very
+        // start of the file.
+        if (pragma) {
+          // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
+          // reports it as a "Shebang" node. This works for both versions:
+          const hasShebang = source.startsWith('#!');
+          const allComments = sourceCode.getAllComments();
+          const firstComment = hasShebang ? allComments[1] : allComments[0];
+          if (
+            !(firstComment &&
+              firstComment.type === 'Block' &&
+              firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
+              firstComment.loc.start.column === 0)
+          ) {
+            return {};
+          }
+          const parsed = docblock.parse(firstComment.value);
+          if (parsed[pragma] !== '') {
+            return {};
+          }
         }
-        const parsed = docblock.parse(firstComment.value);
-        if (parsed[pragma] !== '') {
-          return {};
-        }
+
+        return {
+          Program() {
+            if (!prettier) {
+              // Prettier is expensive to load, so only load it if needed.
+              prettier = require('prettier');
+            }
+            const prettierSource = prettier.format(source, prettierOptions);
+            if (source !== prettierSource) {
+              reportDifferences(source, prettierSource, {
+                reportReplace: reportReplace.bind(undefined, context),
+                reportInsert: reportInsert.bind(undefined, context),
+                reportDelete: reportDelete.bind(undefined, context)
+              });
+            }
+          }
+        };
       }
-
-      return {
-        Program() {
-          if (!prettier) {
-            // Prettier is expensive to load, so only load it if needed.
-            prettier = require('prettier');
-          }
-          const prettierSource = prettier.format(source, prettierOptions);
-          if (source !== prettierSource) {
-            reportDifferences(context, prettierSource);
-          }
-        }
-      };
     }
   }
 };
