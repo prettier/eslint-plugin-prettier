@@ -27,6 +27,10 @@ const FB_PRETTIER_OPTIONS = {
 
 const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 
+const OPERATION_INSERT = 'insert';
+const OPERATION_DELETE = 'delete';
+const OPERATION_REPLACE = 'replace';
+
 // ------------------------------------------------------------------------------
 //  Privates
 // ------------------------------------------------------------------------------
@@ -104,22 +108,13 @@ function showInvisibles(str) {
   return ret;
 }
 
-// ------------------------------------------------------------------------------
-//  Rule Definition
-// ------------------------------------------------------------------------------
-
 /**
- * Reports issues where the context's source code differs from the Prettier
- formatted version.
+ * Generate results for differences between source code and formatted version.
  * @param {string} source - The original source.
  * @param {string} prettierSource - The Prettier formatted source.
- * @param {Object} reporters - Reporters to report linter failure
- * @param {Function} reporters.reportReplace - A function takes offset, deleteText, insertText and message
- * @param {Function} reporters.reportInsert - A function takes offset, insertText and message
- * @param {Function} reporters.reportDelete - A function takes offset, deleteText and message
- * @returns {void}
+ * @returns {Array} - An array contains { operation, offset, insertText, deleteText }
  */
-function reportDifferences(source, prettierSource, reporters) {
+function generateDifferences(source, prettierSource) {
   // fast-diff returns the differences between two texts as a series of
   // INSERT, DELETE or EQUAL operations. The results occur only in these
   // sequences:
@@ -134,12 +129,13 @@ function reportDifferences(source, prettierSource, reporters) {
   // and another's beginning does not have line endings (i.e. issues that occur
   // on contiguous lines).
 
-  const results = diff(source, prettierSource);
+  const diffResults = diff(source, prettierSource);
+  const returnResults = [];
 
   const batch = [];
   let offset = 0; // NOTE: INSERT never advances the offset.
-  while (results.length) {
-    const result = results.shift();
+  while (diffResults.length) {
+    const result = diffResults.shift();
     const op = result[0];
     const text = result[1];
     switch (op) {
@@ -148,7 +144,7 @@ function reportDifferences(source, prettierSource, reporters) {
         batch.push(result);
         break;
       case diff.EQUAL:
-        if (results.length) {
+        if (diffResults.length) {
           if (batch.length) {
             if (LINE_ENDING_RE.test(text)) {
               flush();
@@ -164,10 +160,12 @@ function reportDifferences(source, prettierSource, reporters) {
       default:
         throw new Error(`Unexpected fast-diff operation "${op}"`);
     }
-    if (batch.length && !results.length) {
+    if (batch.length && !diffResults.length) {
       flush();
     }
   }
+
+  return returnResults;
 
   function flush() {
     let aheadDeleteText = '';
@@ -190,42 +188,46 @@ function reportDifferences(source, prettierSource, reporters) {
       }
     }
     if (aheadDeleteText && aheadInsertText) {
-      reporters.reportReplace(
+      returnResults.push({
         offset,
-        aheadDeleteText,
-        aheadInsertText,
-        `Replace \`${showInvisibles(aheadDeleteText)}\` with \`${showInvisibles(aheadInsertText)}\``
-      );
+        operation: OPERATION_REPLACE,
+        insertText: aheadInsertText,
+        deleteText: aheadDeleteText
+      });
     } else if (!aheadDeleteText && aheadInsertText) {
-      reporters.reportInsert(
+      returnResults.push({
         offset,
-        aheadInsertText,
-        `Insert \`${showInvisibles(aheadInsertText)}\``
-      );
+        operation: OPERATION_INSERT,
+        insertText: aheadInsertText
+      });
     } else if (aheadDeleteText && !aheadInsertText) {
-      reporters.reportDelete(
+      returnResults.push({
         offset,
-        aheadDeleteText,
-        `Delete \`${showInvisibles(aheadDeleteText)}\``
-      );
+        operation: OPERATION_DELETE,
+        deleteText: aheadDeleteText
+      });
     }
     offset += aheadDeleteText.length;
   }
 }
+
+// ------------------------------------------------------------------------------
+//  Rule Definition
+// ------------------------------------------------------------------------------
 
 /**
  * Reports an "Insert ..." issue where text must be inserted.
  * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to insert text.
  * @param {string} text - The text to be inserted.
- * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportInsert(context, offset, text, message) {
+function reportInsert(context, offset, text) {
   const pos = getLocFromIndex(context, offset);
   const range = [offset, offset];
   context.report({
-    message,
+    message: 'Insert `{{ code }}`',
+    data: { code: showInvisibles(text) },
     loc: { start: pos, end: pos },
     fix(fixer) {
       return fixer.insertTextAfterRange(range, text);
@@ -238,15 +240,15 @@ function reportInsert(context, offset, text, message) {
  * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to delete text.
  * @param {string} text - The text to be deleted.
- * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportDelete(context, offset, text, message) {
+function reportDelete(context, offset, text) {
   const start = getLocFromIndex(context, offset);
   const end = getLocFromIndex(context, offset + text.length);
   const range = [offset, offset + text.length];
   context.report({
-    message,
+    message: 'Delete `{{ code }}`',
+    data: { code: showInvisibles(text) },
     loc: { start, end },
     fix(fixer) {
       return fixer.removeRange(range);
@@ -261,15 +263,18 @@ function reportDelete(context, offset, text, message) {
  with inserted text.
  * @param {string} deleteText - The text to be deleted.
  * @param {string} insertText - The text to be inserted.
- * @param {string} message - The message to be displayed.
  * @returns {void}
  */
-function reportReplace(context, offset, deleteText, insertText, message) {
+function reportReplace(context, offset, deleteText, insertText) {
   const start = getLocFromIndex(context, offset);
   const end = getLocFromIndex(context, offset + deleteText.length);
   const range = [offset, offset + deleteText.length];
   context.report({
-    message,
+    message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
+    data: {
+      deleteCode: showInvisibles(deleteText),
+      insertCode: showInvisibles(insertText)
+    },
     loc: { start, end },
     fix(fixer) {
       return fixer.replaceTextRange(range, insertText);
@@ -283,7 +288,7 @@ function reportReplace(context, offset, deleteText, insertText, message) {
 
 module.exports = {
   showInvisibles,
-  reportDifferences,
+  generateDifferences,
   rules: {
     prettier: {
       meta: {
@@ -342,10 +347,33 @@ module.exports = {
             }
             const prettierSource = prettier.format(source, prettierOptions);
             if (source !== prettierSource) {
-              reportDifferences(source, prettierSource, {
-                reportReplace: reportReplace.bind(undefined, context),
-                reportInsert: reportInsert.bind(undefined, context),
-                reportDelete: reportDelete.bind(undefined, context)
+              const differences = generateDifferences(source, prettierSource);
+
+              differences.forEach(difference => {
+                switch (difference.operation) {
+                  case OPERATION_INSERT:
+                    reportInsert(
+                      context,
+                      difference.offset,
+                      difference.insertText
+                    );
+                    break;
+                  case OPERATION_DELETE:
+                    reportDelete(
+                      context,
+                      difference.offset,
+                      difference.deleteText
+                    );
+                    break;
+                  case OPERATION_REPLACE:
+                    reportReplace(
+                      context,
+                      difference.offset,
+                      difference.deleteText,
+                      difference.insertText
+                    );
+                    break;
+                }
               });
             }
           }
