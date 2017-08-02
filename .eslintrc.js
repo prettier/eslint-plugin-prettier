@@ -12,6 +12,7 @@ module.exports = {
     'plugin:eslint-plugin/recommended',
     'prettier'
   ],
+  env: { mocha: true },
   root: true,
   rules: {
     'prettier/prettier': ['error', { singleQuote: true }],
