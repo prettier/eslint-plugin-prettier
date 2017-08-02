@@ -129,13 +129,13 @@ function generateDifferences(source, prettierSource) {
   // and another's beginning does not have line endings (i.e. issues that occur
   // on contiguous lines).
 
-  const diffResults = diff(source, prettierSource);
-  const returnResults = [];
+  const results = diff(source, prettierSource);
+  const differences = [];
 
   const batch = [];
   let offset = 0; // NOTE: INSERT never advances the offset.
-  while (diffResults.length) {
-    const result = diffResults.shift();
+  while (results.length) {
+    const result = results.shift();
     const op = result[0];
     const text = result[1];
     switch (op) {
@@ -144,7 +144,7 @@ function generateDifferences(source, prettierSource) {
         batch.push(result);
         break;
       case diff.EQUAL:
-        if (diffResults.length) {
+        if (results.length) {
           if (batch.length) {
             if (LINE_ENDING_RE.test(text)) {
               flush();
@@ -160,12 +160,12 @@ function generateDifferences(source, prettierSource) {
       default:
         throw new Error(`Unexpected fast-diff operation "${op}"`);
     }
-    if (batch.length && !diffResults.length) {
+    if (batch.length && !results.length) {
       flush();
     }
   }
 
-  return returnResults;
+  return differences;
 
   function flush() {
     let aheadDeleteText = '';
@@ -188,20 +188,20 @@ function generateDifferences(source, prettierSource) {
       }
     }
     if (aheadDeleteText && aheadInsertText) {
-      returnResults.push({
+      differences.push({
         offset,
         operation: OPERATION_REPLACE,
         insertText: aheadInsertText,
         deleteText: aheadDeleteText
       });
     } else if (!aheadDeleteText && aheadInsertText) {
-      returnResults.push({
+      differences.push({
         offset,
         operation: OPERATION_INSERT,
         insertText: aheadInsertText
       });
     } else if (aheadDeleteText && !aheadInsertText) {
-      returnResults.push({
+      differences.push({
         offset,
         operation: OPERATION_DELETE,
         deleteText: aheadDeleteText

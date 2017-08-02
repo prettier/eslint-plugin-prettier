@@ -69,20 +69,26 @@ ruleTester.run('prettier', rule, {
 
 describe('generateDifferences', () => {
   it('operation: insert', () => {
-    const results = eslintPluginPrettier.generateDifferences('abc', 'abcdef');
-    assert.deepEqual(results, [
+    const differences = eslintPluginPrettier.generateDifferences(
+      'abc',
+      'abcdef'
+    );
+    assert.deepEqual(differences, [
       { operation: 'insert', offset: 3, insertText: 'def' }
     ]);
   });
   it('operation: delete', () => {
-    const results = eslintPluginPrettier.generateDifferences('abcdef', 'abc');
-    assert.deepEqual(results, [
+    const differences = eslintPluginPrettier.generateDifferences(
+      'abcdef',
+      'abc'
+    );
+    assert.deepEqual(differences, [
       { operation: 'delete', offset: 3, deleteText: 'def' }
     ]);
   });
   it('operation: replace', () => {
-    const results = eslintPluginPrettier.generateDifferences('abc', 'def');
-    assert.deepEqual(results, [
+    const differences = eslintPluginPrettier.generateDifferences('abc', 'def');
+    assert.deepEqual(differences, [
       { operation: 'replace', offset: 0, deleteText: 'abc', insertText: 'def' }
     ]);
   });
