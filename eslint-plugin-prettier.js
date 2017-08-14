@@ -27,6 +27,10 @@ const FB_PRETTIER_OPTIONS = {
 
 const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 
+const OPERATION_INSERT = 'insert';
+const OPERATION_DELETE = 'delete';
+const OPERATION_REPLACE = 'replace';
+
 // ------------------------------------------------------------------------------
 //  Privates
 // ------------------------------------------------------------------------------
@@ -104,18 +108,13 @@ function showInvisibles(str) {
   return ret;
 }
 
-// ------------------------------------------------------------------------------
-//  Rule Definition
-// ------------------------------------------------------------------------------
-
 /**
- * Reports issues where the context's source code differs from the Prettier
- formatted version.
- * @param {RuleContext} context - The ESLint rule context.
+ * Generate results for differences between source code and formatted version.
+ * @param {string} source - The original source.
  * @param {string} prettierSource - The Prettier formatted source.
- * @returns {void}
+ * @returns {Array} - An array contains { operation, offset, insertText, deleteText }
  */
-function reportDifferences(context, prettierSource) {
+function generateDifferences(source, prettierSource) {
   // fast-diff returns the differences between two texts as a series of
   // INSERT, DELETE or EQUAL operations. The results occur only in these
   // sequences:
@@ -130,8 +129,8 @@ function reportDifferences(context, prettierSource) {
   // and another's beginning does not have line endings (i.e. issues that occur
   // on contiguous lines).
 
-  const source = context.getSourceCode().text;
   const results = diff(source, prettierSource);
+  const differences = [];
 
   const batch = [];
   let offset = 0; // NOTE: INSERT never advances the offset.
@@ -166,6 +165,8 @@ function reportDifferences(context, prettierSource) {
     }
   }
 
+  return differences;
+
   function flush() {
     let aheadDeleteText = '';
     let aheadInsertText = '';
@@ -187,15 +188,32 @@ function reportDifferences(context, prettierSource) {
       }
     }
     if (aheadDeleteText && aheadInsertText) {
-      reportReplace(context, offset, aheadDeleteText, aheadInsertText);
+      differences.push({
+        offset,
+        operation: OPERATION_REPLACE,
+        insertText: aheadInsertText,
+        deleteText: aheadDeleteText
+      });
     } else if (!aheadDeleteText && aheadInsertText) {
-      reportInsert(context, offset, aheadInsertText);
+      differences.push({
+        offset,
+        operation: OPERATION_INSERT,
+        insertText: aheadInsertText
+      });
     } else if (aheadDeleteText && !aheadInsertText) {
-      reportDelete(context, offset, aheadDeleteText);
+      differences.push({
+        offset,
+        operation: OPERATION_DELETE,
+        deleteText: aheadDeleteText
+      });
     }
     offset += aheadDeleteText.length;
   }
 }
+
+// ------------------------------------------------------------------------------
+//  Rule Definition
+// ------------------------------------------------------------------------------
 
 /**
  * Reports an "Insert ..." issue where text must be inserted.
@@ -268,68 +286,99 @@ function reportReplace(context, offset, deleteText, insertText) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-module.exports.rules = {
-  prettier: {
-    meta: {
-      fixable: 'code',
-      schema: [
-        // Prettier options:
-        {
-          anyOf: [
-            { enum: [null, 'fb'] },
-            { type: 'object', properties: {}, additionalProperties: true }
-          ]
-        },
-        // Pragma:
-        { type: 'string', pattern: '^@\\w+$' }
-      ]
-    },
-    create(context) {
-      const prettierOptions = context.options[0] === 'fb'
-        ? FB_PRETTIER_OPTIONS
-        : context.options[0];
+module.exports = {
+  showInvisibles,
+  generateDifferences,
+  rules: {
+    prettier: {
+      meta: {
+        fixable: 'code',
+        schema: [
+          // Prettier options:
+          {
+            anyOf: [
+              { enum: [null, 'fb'] },
+              { type: 'object', properties: {}, additionalProperties: true }
+            ]
+          },
+          // Pragma:
+          { type: 'string', pattern: '^@\\w+$' }
+        ]
+      },
+      create(context) {
+        const prettierOptions = context.options[0] === 'fb'
+          ? FB_PRETTIER_OPTIONS
+          : context.options[0];
 
-      const pragma = context.options[1]
-        ? context.options[1].slice(1) // Remove leading @
-        : null;
+        const pragma = context.options[1]
+          ? context.options[1].slice(1) // Remove leading @
+          : null;
 
-      const sourceCode = context.getSourceCode();
-      const source = sourceCode.text;
+        const sourceCode = context.getSourceCode();
+        const source = sourceCode.text;
 
-      // The pragma is only valid if it is found in a block comment at the very
-      // start of the file.
-      if (pragma) {
-        // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
-        // reports it as a "Shebang" node. This works for both versions:
-        const hasShebang = source.startsWith('#!');
-        const allComments = sourceCode.getAllComments();
-        const firstComment = hasShebang ? allComments[1] : allComments[0];
-        if (
-          !(firstComment &&
-            firstComment.type === 'Block' &&
-            firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
-            firstComment.loc.start.column === 0)
-        ) {
-          return {};
+        // The pragma is only valid if it is found in a block comment at the very
+        // start of the file.
+        if (pragma) {
+          // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
+          // reports it as a "Shebang" node. This works for both versions:
+          const hasShebang = source.startsWith('#!');
+          const allComments = sourceCode.getAllComments();
+          const firstComment = hasShebang ? allComments[1] : allComments[0];
+          if (
+            !(firstComment &&
+              firstComment.type === 'Block' &&
+              firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
+              firstComment.loc.start.column === 0)
+          ) {
+            return {};
+          }
+          const parsed = docblock.parse(firstComment.value);
+          if (parsed[pragma] !== '') {
+            return {};
+          }
         }
-        const parsed = docblock.parse(firstComment.value);
-        if (parsed[pragma] !== '') {
-          return {};
-        }
+
+        return {
+          Program() {
+            if (!prettier) {
+              // Prettier is expensive to load, so only load it if needed.
+              prettier = require('prettier');
+            }
+            const prettierSource = prettier.format(source, prettierOptions);
+            if (source !== prettierSource) {
+              const differences = generateDifferences(source, prettierSource);
+
+              differences.forEach(difference => {
+                switch (difference.operation) {
+                  case OPERATION_INSERT:
+                    reportInsert(
+                      context,
+                      difference.offset,
+                      difference.insertText
+                    );
+                    break;
+                  case OPERATION_DELETE:
+                    reportDelete(
+                      context,
+                      difference.offset,
+                      difference.deleteText
+                    );
+                    break;
+                  case OPERATION_REPLACE:
+                    reportReplace(
+                      context,
+                      difference.offset,
+                      difference.deleteText,
+                      difference.insertText
+                    );
+                    break;
+                }
+              });
+            }
+          }
+        };
       }
-
-      return {
-        Program() {
-          if (!prettier) {
-            // Prettier is expensive to load, so only load it if needed.
-            prettier = require('prettier');
-          }
-          const prettierSource = prettier.format(source, prettierOptions);
-          if (source !== prettierSource) {
-            reportDifferences(context, prettierSource);
-          }
-        }
-      };
     }
   }
 };

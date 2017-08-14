@@ -14,8 +14,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 
-const rule = require('..').rules.prettier;
+const eslintPluginPrettier = require('..');
+
+const rule = eslintPluginPrettier.rules.prettier;
 const RuleTester = require('eslint').RuleTester;
 
 // ------------------------------------------------------------------------------
@@ -62,6 +65,33 @@ ruleTester.run('prettier', rule, {
     '18',
     '19'
   ].map(loadInvalidFixture)
+});
+
+describe('generateDifferences', () => {
+  it('operation: insert', () => {
+    const differences = eslintPluginPrettier.generateDifferences(
+      'abc',
+      'abcdef'
+    );
+    assert.deepEqual(differences, [
+      { operation: 'insert', offset: 3, insertText: 'def' }
+    ]);
+  });
+  it('operation: delete', () => {
+    const differences = eslintPluginPrettier.generateDifferences(
+      'abcdef',
+      'abc'
+    );
+    assert.deepEqual(differences, [
+      { operation: 'delete', offset: 3, deleteText: 'def' }
+    ]);
+  });
+  it('operation: replace', () => {
+    const differences = eslintPluginPrettier.generateDifferences('abc', 'def');
+    assert.deepEqual(differences, [
+      { operation: 'replace', offset: 0, deleteText: 'abc', insertText: 'def' }
+    ]);
+  });
 });
 
 // ------------------------------------------------------------------------------
