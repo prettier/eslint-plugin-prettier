@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.0 (2017-08-16)
+
+* New: expose reporter api (fixes [#39](https://github.com/prettier/eslint-plugin-prettier/issues/39)) ([#41](https://github.com/prettier/eslint-plugin-prettier/issues/41)) ([1666067](https://github.com/prettier/eslint-plugin-prettier/commit/1666067aa396dfe6a622eb1d9fd5d21fa851a612))
+
 ## v2.1.2 (2017-06-14)
 
 * Chore: Relax peerDependencies ([#30](https://github.com/prettier/eslint-plugin-prettier/issues/30)) ([a19b8af](https://github.com/prettier/eslint-plugin-prettier/commit/a19b8afc5b3e7a05468e1c566d359f80f13b80cd))

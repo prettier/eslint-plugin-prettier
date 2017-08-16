@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prettier",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Runs prettier as an eslint rule",
   "keywords": [
     "eslint",
