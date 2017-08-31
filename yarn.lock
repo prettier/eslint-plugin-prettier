@@ -302,6 +302,10 @@ eslint-plugin-node@^4.2.2:
     resolve "^1.1.7"
     semver "5.3.0"
 
+eslint-plugin-self@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-self/-/eslint-plugin-self-1.0.1.tgz#50efd8acf33a399670b7ce7c12b2fd9868b41e7e"
+
 eslint@^3.14.1:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"

@@ -1,11 +1,7 @@
 'use strict';
 
-// Register ourselves as a plugin to avoid `node_modules` trickery.
-const Plugins = require('eslint/lib/config/plugins');
-Plugins.define('prettier', require('.'));
-
 module.exports = {
-  plugins: ['node', 'eslint-plugin', 'prettier'],
+  plugins: ['node', 'eslint-plugin', 'self'],
   extends: [
     'not-an-aardvark/node',
     'plugin:node/recommended',
@@ -15,7 +11,7 @@ module.exports = {
   env: { mocha: true },
   root: true,
   rules: {
-    'prettier/prettier': ['error', { singleQuote: true }],
+    'self/prettier': ['error', { singleQuote: true }],
     'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$']
   }
 };
