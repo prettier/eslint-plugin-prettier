@@ -10,7 +10,10 @@ const CHANGELOG_PATH = path.join(process.cwd(), 'CHANGELOG.md');
 const packageFile = require(PACKAGE_JSON_PATH);
 
 function exec(command) {
-  return childProcess.execSync(command).toString().slice(0, -1);
+  return childProcess
+    .execSync(command)
+    .toString()
+    .slice(0, -1);
 }
 
 const githubRepoUrl = exec('git config --get remote.origin.url').replace(
@@ -48,7 +51,9 @@ function getAbbreviatedCommitHash(commitHash) {
 }
 
 function getCommitLink(commitHash) {
-  return `[${getAbbreviatedCommitHash(commitHash)}](${githubRepoUrl}/commit/${commitHash})`;
+  return `[${getAbbreviatedCommitHash(
+    commitHash
+  )}](${githubRepoUrl}/commit/${commitHash})`;
 }
 
 function replaceIssueLinks(message) {
