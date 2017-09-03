@@ -306,9 +306,10 @@ module.exports = {
         ]
       },
       create(context) {
-        const prettierOptions = context.options[0] === 'fb'
-          ? FB_PRETTIER_OPTIONS
-          : context.options[0];
+        const prettierOptions =
+          context.options[0] === 'fb'
+            ? FB_PRETTIER_OPTIONS
+            : context.options[0];
 
         const pragma = context.options[1]
           ? context.options[1].slice(1) // Remove leading @
@@ -326,10 +327,12 @@ module.exports = {
           const allComments = sourceCode.getAllComments();
           const firstComment = hasShebang ? allComments[1] : allComments[0];
           if (
-            !(firstComment &&
+            !(
+              firstComment &&
               firstComment.type === 'Block' &&
               firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
-              firstComment.loc.start.column === 0)
+              firstComment.loc.start.column === 0
+            )
           ) {
             return {};
           }

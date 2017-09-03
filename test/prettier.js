@@ -34,11 +34,11 @@ ruleTester.run('prettier', rule, {
     // No pragma = No prettier check.
     { code: '""\n', options: [null, '@format'] },
     // Facebook style uses single quotes.
-    { code: `'';\n`, options: ['fb'] },
+    { code: `('');\n`, options: ['fb'] },
     // Facebook style but missing pragma.
     { code: `"";\n`, options: ['fb', '@format'] },
     // Facebook style with pragma.
-    { code: `/** @format */\n'';\n`, options: ['fb', '@format'] },
+    { code: `/** @format */\n('');\n`, options: ['fb', '@format'] },
     // Shebang with pragma.
     { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] }
   ],
