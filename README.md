@@ -38,7 +38,7 @@ npm install --save-dev prettier eslint-plugin-prettier
 
 **_`eslint-plugin-prettier` does not install Prettier or ESLint for you._** _You must install these yourself._
 
-Then, in your `.eslintrc`:
+Then, in your `.eslintrc.json`:
 
 ```json
 {
