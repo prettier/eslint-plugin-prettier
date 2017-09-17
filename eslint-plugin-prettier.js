@@ -306,11 +306,6 @@ module.exports = {
         ]
       },
       create(context) {
-        const prettierOptions =
-          context.options[0] === 'fb'
-            ? FB_PRETTIER_OPTIONS
-            : context.options[0];
-
         const pragma = context.options[1]
           ? context.options[1].slice(1) // Remove leading @
           : null;
@@ -342,12 +337,31 @@ module.exports = {
           }
         }
 
+        if (prettier) {
+          prettier.clearConfigCache();
+        }
+
         return {
           Program() {
             if (!prettier) {
               // Prettier is expensive to load, so only load it if needed.
               prettier = require('prettier');
             }
+
+            const eslintPrettierOptions =
+              context.options[0] === 'fb'
+                ? FB_PRETTIER_OPTIONS
+                : context.options[0];
+            const prettierRcOptions =
+              prettier.resolveConfig && prettier.resolveConfig.sync
+                ? prettier.resolveConfig.sync(context.getFilename())
+                : null;
+            const prettierOptions = Object.assign(
+              {},
+              prettierRcOptions,
+              eslintPrettierOptions
+            );
+
             const prettierSource = prettier.format(source, prettierOptions);
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);

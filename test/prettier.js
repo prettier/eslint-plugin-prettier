@@ -40,7 +40,21 @@ ruleTester.run('prettier', rule, {
     // Facebook style with pragma.
     { code: `/** @format */\n('');\n`, options: ['fb', '@format'] },
     // Shebang with pragma.
-    { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] }
+    { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] },
+    // Single quote from .prettierrc.
+    { code: `'';\n`, filename: getPrettierRcJsFilename('single-quote') },
+    // Override .prettierrc from object option.
+    {
+      code: `var foo = {bar: 0};\n`,
+      filename: getPrettierRcJsFilename('bracket-spacing'),
+      options: [{ bracketSpacing: false }]
+    },
+    // Override .prettierrc from facebook option.
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('double-quote'),
+      options: ['fb']
+    }
   ],
   invalid: [
     '01',
@@ -119,4 +133,13 @@ function loadInvalidFixture(name) {
     errors: eval(sections[4]) // eslint-disable-line no-eval
   };
   return item;
+}
+
+/**
+ * Builds a dummy javascript file path to trick prettier into resolving a specific .prettierrc file.
+ * @param {string} name - Prettierrc fixture basename.
+ * @returns {string} A javascript filename relative to the .prettierrc config.
+ */
+function getPrettierRcJsFilename(name) {
+  return path.resolve(__dirname, `./prettierrc/${name}/dummy.js`);
 }
