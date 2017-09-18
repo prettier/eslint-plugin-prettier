@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.3.0 (2017-09-18)
+
+* Update: Support .prettierrc config files (fixes [#46](https://github.com/prettier/eslint-plugin-prettier/issues/46)) ([#55](https://github.com/prettier/eslint-plugin-prettier/issues/55)) ([bc89153](https://github.com/prettier/eslint-plugin-prettier/commit/bc89153ffa733b3b58f123849485d7990577c216))
+* Docs: .eslintrc.json > .eslintrc ([#52](https://github.com/prettier/eslint-plugin-prettier/issues/52)) ([95f0808](https://github.com/prettier/eslint-plugin-prettier/commit/95f0808416f7493426c822790d79cf22b0db0f22))
+* Upgrade: jest-docblock to ^21.0.0 ([#50](https://github.com/prettier/eslint-plugin-prettier/issues/50)) ([c777111](https://github.com/prettier/eslint-plugin-prettier/commit/c777111a526c87236b8853d7e253ee93ac1d988d))
+* Chore: upgrade prettier to ^1.6.1 ([#49](https://github.com/prettier/eslint-plugin-prettier/issues/49)) ([56deffa](https://github.com/prettier/eslint-plugin-prettier/commit/56deffae056c0165a7ed2b993b7cf78b6c71148a))
+* Chore: use eslint-plugin-self for linting ([#47](https://github.com/prettier/eslint-plugin-prettier/issues/47)) ([5ea0526](https://github.com/prettier/eslint-plugin-prettier/commit/5ea05269cc947c2e30a42e5101140ab6faac311a))
+
 ## v2.2.0 (2017-08-16)
 
 * New: expose reporter api (fixes [#39](https://github.com/prettier/eslint-plugin-prettier/issues/39)) ([#41](https://github.com/prettier/eslint-plugin-prettier/issues/41)) ([1666067](https://github.com/prettier/eslint-plugin-prettier/commit/1666067aa396dfe6a622eb1d9fd5d21fa851a612))
