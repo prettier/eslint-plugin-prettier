@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.3.1 (2017-09-18)
+
+* Fix: Guard against older prettier installation ([#56](https://github.com/prettier/eslint-plugin-prettier/issues/56)) ([8a115f9](https://github.com/prettier/eslint-plugin-prettier/commit/8a115f9cc57dc20c9fc5c2b942f1e4770a5d730e))
+
 ## v2.3.0 (2017-09-18)
 
 * Update: Support .prettierrc config files (fixes [#46](https://github.com/prettier/eslint-plugin-prettier/issues/46)) ([#55](https://github.com/prettier/eslint-plugin-prettier/issues/55)) ([bc89153](https://github.com/prettier/eslint-plugin-prettier/commit/bc89153ffa733b3b58f123849485d7990577c216))
