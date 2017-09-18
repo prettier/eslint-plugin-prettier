@@ -54,8 +54,7 @@ Then, in your `.eslintrc.json`:
 ## Options
 
 * The first option:
-
-  - Objects are passed directly to Prettier as [options](https://github.com/prettier/prettier#api). Example:
+  - Objects are passed directly to Prettier as [options](https://github.com/prettier/prettier#options). Example:
     
     ```json
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
@@ -78,6 +77,7 @@ Then, in your `.eslintrc.json`:
       "parser": "flow"
     }]
     ```
+  NB: This option will merge and override any config set with `.prettierrc` files (for Prettier < 1.7.0, [config files are ignored](https://github.com/prettier/eslint-plugin-prettier/issues/46))
 
 * The second option:
 
