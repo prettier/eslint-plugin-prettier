@@ -337,7 +337,7 @@ module.exports = {
           }
         }
 
-        if (prettier) {
+        if (prettier && prettier.clearConfigCache) {
           prettier.clearConfigCache();
         }
 
