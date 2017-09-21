@@ -55,7 +55,7 @@ Then, in your `.eslintrc.json`:
 
 * The first option:
   - Objects are passed directly to Prettier as [options](https://github.com/prettier/prettier#options). Example:
-    
+
     ```json
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
     ```
@@ -78,6 +78,7 @@ Then, in your `.eslintrc.json`:
     }]
     ```
   NB: This option will merge and override any config set with `.prettierrc` files (for Prettier < 1.7.0, [config files are ignored](https://github.com/prettier/eslint-plugin-prettier/issues/46))
+
 
 * The second option:
 
@@ -106,6 +107,15 @@ Then, in your `.eslintrc.json`:
     ```
 
     _This option is useful if you're migrating a large codebase and already use pragmas like `@flow`._
+
+* The third option:
+
+  - Name of the NPM module to load instead of `prettier`. This is useful if you wish to use
+  a fork such as [prettier-miscellaneous](https://github.com/arijs/prettier-miscellaneous). Example:
+
+    ```json
+    "prettier/prettier": ["error", null, null, "prettier-miscellaneous"]
+    ```
 
 * The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 

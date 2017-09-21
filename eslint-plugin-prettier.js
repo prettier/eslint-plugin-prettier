@@ -302,13 +302,23 @@ module.exports = {
             ]
           },
           // Pragma:
-          { type: 'string', pattern: '^@\\w+$' }
+          {
+            anyOf: [{ enum: [null] }, { type: 'string', pattern: '^@\\w+$' }]
+          },
+          // prettier fork module name
+          { type: 'string' }
         ]
       },
       create(context) {
         const pragma = context.options[1]
           ? context.options[1].slice(1) // Remove leading @
           : null;
+
+        if (!prettier) {
+          const prettierModule = context.options[2] || 'prettier';
+          // Prettier is expensive to load, so only load it if needed.
+          prettier = require(prettierModule);
+        }
 
         const sourceCode = context.getSourceCode();
         const source = sourceCode.text;
@@ -343,11 +353,6 @@ module.exports = {
 
         return {
           Program() {
-            if (!prettier) {
-              // Prettier is expensive to load, so only load it if needed.
-              prettier = require('prettier');
-            }
-
             const eslintPrettierOptions =
               context.options[0] === 'fb'
                 ? FB_PRETTIER_OPTIONS
