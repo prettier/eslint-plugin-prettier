@@ -1,0 +1,28 @@
+CODE:
+<template>
+  <div></div>
+</template>
+
+<script>
+console.log('hello');
+</script>
+
+OUTPUT:
+<template>
+  <div></div>
+</template>
+
+<script>
+console.log("hello");
+</script>
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Replace `\'hello\'` with `"hello"`',
+    line: 6, column: 13, endLine: 6, endColumn: 20,
+  },
+]
