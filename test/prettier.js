@@ -82,22 +82,25 @@ ruleTester.run('prettier', rule, {
   ].map(loadInvalidFixture)
 });
 
-vueRuleTester.run('prettier', rule, {
-  valid: [
-    { code: 'var foo = { bar: 0 };\n' },
-    { code: '<template></template>' },
-    { code: '<script></script>' },
-    { code: '<script>\nvar foo = { bar: 0 };</script>' },
-    {
-      code: `<script>\n/** @format */\n('');</script>`,
-      options: ['fb', '@format']
-    },
-    {
-      code: '<script>\r\nvar f = { bar: 0 };\r\nvar b = { f: f };\r\n</script>'
-    }
-  ],
-  invalid: ['vue-01', 'vue-02', 'vue-03', 'vue-04'].map(loadInvalidFixture)
-});
+if (!process.env.ESLINT_VERSION || process.env.ESLINT_VERSION !== '3.15.0') {
+  vueRuleTester.run('prettier', rule, {
+    valid: [
+      { code: 'var foo = { bar: 0 };\n' },
+      { code: '<template></template>' },
+      { code: '<script></script>' },
+      { code: '<script>\nvar foo = { bar: 0 };</script>' },
+      {
+        code: `<script>\n/** @format */\n('');</script>`,
+        options: ['fb', '@format']
+      },
+      {
+        code:
+          '<script>\r\nvar f = { bar: 0 };\r\nvar b = { f: f };\r\n</script>'
+      }
+    ],
+    invalid: ['vue-01', 'vue-02', 'vue-03', 'vue-04'].map(loadInvalidFixture)
+  });
+}
 
 describe('generateDifferences', () => {
   it('operation: insert', () => {
