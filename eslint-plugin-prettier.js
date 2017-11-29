@@ -84,6 +84,20 @@ function getLocFromIndex(context, index) {
 }
 
 /**
+ * Gets the index of a given location in the source code for a given context.
+ * @param {RuleContext} context - The ESLint rule context.
+ * @param {Object} loc - An object containing numeric `line` and `column` keys.
+ * @returns {number} An index in the source code.
+ */
+function getIndexFromLoc(context, loc) {
+  const sourceCode = context.getSourceCode();
+  if (typeof sourceCode.getLocFromIndex === 'function') {
+    return sourceCode.getIndexFromLoc(loc);
+  }
+  throw new Error('Your ESLint version is not supported, please use >= 3.17.0');
+}
+
+/**
  * Converts invisible characters to a commonly recognizable visible form.
  * @param {string} str - The string with invisibles to convert.
  * @returns {string} The converted string.
@@ -349,7 +363,7 @@ module.exports = {
           : sourceCode.text;
         const startNodeLocation = sourceCode.ast.loc.start;
         const startIndex = isVue
-          ? sourceCode.getIndexFromLoc(startNodeLocation)
+          ? getIndexFromLoc(context, startNodeLocation)
           : 0;
 
         // Ensure vue script has trailing newline
