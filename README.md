@@ -33,7 +33,8 @@ error: Delete `;` (prettier/prettier) at pkg/commons-atom/ActiveEditorRegistry.j
 ## Installation
 
 ```sh
-npm install --save-dev prettier eslint-plugin-prettier
+npm install --save-dev eslint-plugin-prettier
+npm install --save-dev --save-exact prettier
 ```
 
 **_`eslint-plugin-prettier` does not install Prettier or ESLint for you._** _You must install these yourself._
@@ -51,10 +52,44 @@ Then, in your `.eslintrc.json`:
 }
 ```
 
+## Recommended Configuration
+
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
+
+If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
+
+To integrate this plugin with `eslint-config-prettier`, you can use the `"recommended"` configuration:
+
+1. In addition to the above installation instructions, install `eslint-config-prettier`:
+
+  ```sh
+  npm install --save-dev eslint-config-prettier
+  ```
+
+2. Then all you need in your `.eslintrc.json` is:
+
+  ```json
+  {
+    "extends": [
+      "plugin:prettier/recommended"
+    ]
+  }
+  ```
+
+This does three things:
+
+1. Enables `eslint-plugin-prettier`.
+2. Sets the `prettier/prettier` rule to `"error"`.
+3. Extends the `eslint-config-prettier` configuration.
+
+You can then set Prettier's own options inside a `.prettierrc` file.
+
 ## Options
 
+> Note: While it is possible to pass options to Prettier via your ESLint configuration file, it is not recommended because editor extensions such as `prettier-atom` and `prettier-vscode` **will** read [`.prettierrc`](https://prettier.io/docs/en/configuration.html), but **won't** read settings from ESLint, which can lead to an inconsistent experience.
+
 * The first option:
-  - Objects are passed directly to Prettier as [options](https://github.com/prettier/prettier#options). Example:
+  - Objects are passed directly to Prettier as [options](https://prettier.io/docs/en/options.html). Example:
     
     ```json
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
@@ -110,8 +145,6 @@ Then, in your `.eslintrc.json`:
 * The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
-
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules. If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
 
 ## Contributing
 
