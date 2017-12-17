@@ -289,6 +289,15 @@ function reportReplace(context, offset, deleteText, insertText) {
 module.exports = {
   showInvisibles,
   generateDifferences,
+  configs: {
+    recommended: {
+      extends: ['prettier'],
+      plugins: ['prettier'],
+      rules: {
+        'prettier/prettier': 'error'
+      }
+    }
+  },
   rules: {
     prettier: {
       meta: {
