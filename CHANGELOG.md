@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.4.0 (2017-12-17)
+
+* New: Add 'recommended' configuration ([#73](https://github.com/prettier/eslint-plugin-prettier/issues/73)) ([e529b60](https://github.com/prettier/eslint-plugin-prettier/commit/e529b6004b278fb8de660c75d69381ea071b2114))
+* Docs: Create ISSUE_TEMPLATE.md ([4335b08](https://github.com/prettier/eslint-plugin-prettier/commit/4335b08f2956f695eda20f9ca41653fe15b6538d))
+
 ## v2.3.1 (2017-09-18)
 
 * Fix: Guard against older prettier installation ([#56](https://github.com/prettier/eslint-plugin-prettier/issues/56)) ([8a115f9](https://github.com/prettier/eslint-plugin-prettier/commit/8a115f9cc57dc20c9fc5c2b942f1e4770a5d730e))
