@@ -1,0 +1,30 @@
+CODE:
+<script>
+// Known problem: we are not fixing indentation for the first line
+    var App = {
+    name: "App"
+    };
+</script>
+
+OUTPUT:
+<script>
+// Known problem: we are not fixing indentation for the first line
+    var App = {
+  name: "App"
+};
+</script>
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Delete `··`',
+    line: 4, column: 3, endLine: 4, endColumn: 5,
+  },
+  {
+    message: 'Delete `····`',
+    line: 5, column: 1, endLine: 5, endColumn: 5,
+  },
+]

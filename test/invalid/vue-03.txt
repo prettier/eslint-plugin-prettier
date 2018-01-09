@@ -1,0 +1,26 @@
+CODE:
+<template></template>
+
+<script>
+/** @format */
+f('');
+</script>
+
+OUTPUT:
+<template></template>
+
+<script>
+/** @format */
+f("");
+</script>
+
+OPTIONS:
+[null, '@format']
+
+ERRORS:
+[
+  {
+    message: 'Replace `\'\'` with `""`',
+    line: 5, column: 3, endLine: 5, endColumn: 5,
+  },
+]

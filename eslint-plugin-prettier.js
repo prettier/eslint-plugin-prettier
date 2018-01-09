@@ -11,6 +11,7 @@
 
 const diff = require('fast-diff');
 const docblock = require('jest-docblock');
+const path = require('path');
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -80,6 +81,20 @@ function getLocFromIndex(context, index) {
     line: line + 1,
     column: index - offset
   };
+}
+
+/**
+ * Gets the index of a given location in the source code for a given context.
+ * @param {RuleContext} context - The ESLint rule context.
+ * @param {Object} loc - An object containing numeric `line` and `column` keys.
+ * @returns {number} An index in the source code.
+ */
+function getIndexFromLoc(context, loc) {
+  const sourceCode = context.getSourceCode();
+  if (typeof sourceCode.getLocFromIndex === 'function') {
+    return sourceCode.getIndexFromLoc(loc);
+  }
+  throw new Error('Your ESLint version is not supported, please use >= 3.17.0');
 }
 
 /**
@@ -211,6 +226,37 @@ function generateDifferences(source, prettierSource) {
   }
 }
 
+/**
+ * Checks if current context is Vue file parsed with vue-eslint-parser
+ * @param {RuleContext} context - The ESLint rule context.
+ * @returns {boolean}
+ */
+function isVueContext(context) {
+  const STARTS_WITH_LT = /^\s*</;
+  const fileName = context.getFilename();
+  // We use defineTemplateBodyVisitor function provided by vue-eslint-parser
+  // to check if this parser is used
+  return (
+    (path.extname(fileName) === '.vue' ||
+      STARTS_WITH_LT.test(context.getSourceCode().text)) &&
+    typeof context.parserServices.defineTemplateBodyVisitor === 'function'
+  );
+}
+
+/**
+ * Detects line endings in given string
+ * @param {string} text - String for detecton
+ * @returns {string} - One line ending
+ */
+function guessLineEnding(text) {
+  // Based on https://github.com/prettier/prettier/blob/1.8.2/index.js#L17
+  const index = text.indexOf('\n');
+  if (index >= 0 && text.charAt(index - 1) === '\r') {
+    return '\r\n';
+  }
+  return '\n';
+}
+
 // ------------------------------------------------------------------------------
 //  Rule Definition
 // ------------------------------------------------------------------------------
@@ -322,8 +368,20 @@ module.exports = {
           ? context.options[1].slice(1) // Remove leading @
           : null;
 
+        const isVue = isVueContext(context);
         const sourceCode = context.getSourceCode();
-        const source = sourceCode.text;
+        let source = isVue
+          ? sourceCode.getText(sourceCode.ast)
+          : sourceCode.text;
+        const startNodeLocation = sourceCode.ast.loc.start;
+        const startIndex = isVue
+          ? getIndexFromLoc(context, startNodeLocation)
+          : 0;
+
+        // Ensure vue script has trailing newline
+        if (isVue && source.length && source.substr(-1) !== '\n') {
+          source += guessLineEnding(source);
+        }
 
         // The pragma is only valid if it is found in a block comment at the very
         // start of the file.
@@ -337,7 +395,9 @@ module.exports = {
             !(
               firstComment &&
               firstComment.type === 'Block' &&
-              firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
+              (firstComment.loc.start.line === (hasShebang ? 2 : 1) ||
+                (isVue &&
+                  firstComment.loc.start.line < startNodeLocation.line)) &&
               firstComment.loc.start.column === 0
             )
           ) {
@@ -383,21 +443,21 @@ module.exports = {
                   case OPERATION_INSERT:
                     reportInsert(
                       context,
-                      difference.offset,
+                      startIndex + difference.offset,
                       difference.insertText
                     );
                     break;
                   case OPERATION_DELETE:
                     reportDelete(
                       context,
-                      difference.offset,
+                      startIndex + difference.offset,
                       difference.deleteText
                     );
                     break;
                   case OPERATION_REPLACE:
                     reportReplace(
                       context,
-                      difference.offset,
+                      startIndex + difference.offset,
                       difference.deleteText,
                       difference.insertText
                     );

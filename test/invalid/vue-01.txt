@@ -1,0 +1,16 @@
+CODE:
+a();;;;;;
+
+OUTPUT:
+a();
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Delete `;;;;;`',
+    line: 1, column: 5, endLine: 1, endColumn: 10,
+  },
+]
