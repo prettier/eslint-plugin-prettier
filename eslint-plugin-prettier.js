@@ -301,6 +301,9 @@ module.exports = {
   rules: {
     prettier: {
       meta: {
+        docs: {
+          url: 'https://github.com/prettier/eslint-plugin-prettier#options'
+        },
         fixable: 'code',
         schema: [
           // Prettier options:
