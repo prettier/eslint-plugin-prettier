@@ -371,7 +371,8 @@ module.exports = {
             const prettierOptions = Object.assign(
               {},
               prettierRcOptions,
-              eslintPrettierOptions
+              eslintPrettierOptions,
+              { filepath: context.getFilename() }
             );
 
             const prettierSource = prettier.format(source, prettierOptions);
