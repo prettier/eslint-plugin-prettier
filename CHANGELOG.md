@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.5.0 (2018-01-16)
+
+* Fix: pass filepath to prettier ([#76](https://github.com/prettier/eslint-plugin-prettier/issues/76)) ([0b6ab55](https://github.com/prettier/eslint-plugin-prettier/commit/0b6ab55e0a48e9c31cfa1d7f3b891100e0580493))
+* Update: Add URL to rule documentation to the metadata ([#75](https://github.com/prettier/eslint-plugin-prettier/issues/75)) ([804ead7](https://github.com/prettier/eslint-plugin-prettier/commit/804ead7406e12024a1f9c28628024e5d63b75854))
+
 ## v2.4.0 (2017-12-17)
 
 * New: Add 'recommended' configuration ([#73](https://github.com/prettier/eslint-plugin-prettier/issues/73)) ([e529b60](https://github.com/prettier/eslint-plugin-prettier/commit/e529b6004b278fb8de660c75d69381ea071b2114))
