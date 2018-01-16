@@ -360,19 +360,24 @@ module.exports = {
               prettier = require('prettier');
             }
 
+            const filename = context.getFilename();
             const eslintPrettierOptions =
               context.options[0] === 'fb'
                 ? FB_PRETTIER_OPTIONS
                 : context.options[0];
             const prettierRcOptions =
               prettier.resolveConfig && prettier.resolveConfig.sync
-                ? prettier.resolveConfig.sync(context.getFilename())
+                ? prettier.resolveConfig.sync(filename)
                 : null;
             const prettierOptions = Object.assign(
               {},
               prettierRcOptions,
               eslintPrettierOptions
             );
+
+            if (/\.vue$/.test(filename)) {
+              prettierOptions.parser = 'vue';
+            }
 
             const prettierSource = prettier.format(source, prettierOptions);
             if (source !== prettierSource) {
