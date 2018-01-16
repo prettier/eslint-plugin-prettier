@@ -81,6 +81,24 @@ ruleTester.run('prettier', rule, {
   ].map(loadInvalidFixture)
 });
 
+const vueRuleTester = new RuleTester({
+  parser: require.resolve('vue-eslint-parser')
+});
+
+vueRuleTester.run('prettier', rule, {
+  valid: [
+    {
+      code: `<template>foo</template>\n<script>\n"";\n</script>\n`,
+      filename: 'valid.vue'
+    }
+  ],
+  invalid: [
+    Object.assign(loadInvalidFixture('vue'), {
+      filename: 'invalid.vue'
+    })
+  ]
+});
+
 describe('generateDifferences', () => {
   it('operation: insert', () => {
     const differences = eslintPluginPrettier.generateDifferences(
