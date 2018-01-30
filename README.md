@@ -152,11 +152,11 @@ You can then set Prettier's own options inside a `.prettierrc` file.
       }]
       ```
       
-    - `usePrettierRc`: Enables loading of the Prettier configuration file, set to `false` to disable. May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
+    - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
     
       ```json
       "prettier/prettier": ["error", null, {
-        "usePrettierRc": false
+        "usePrettierrc": false
       }]
       ```
 

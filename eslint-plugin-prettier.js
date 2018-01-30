@@ -297,7 +297,8 @@ function getPragma(context) {
   const pragmaRef =
     typeof pluginOptions === 'string' ? pluginOptions : pluginOptions.pragma;
 
-  return pragmaRef.slice(1); // Remove leading @
+  // Remove leading @
+  return pragmaRef ? pragmaRef.slice(1) : null;
 }
 
 // ------------------------------------------------------------------------------
@@ -339,7 +340,7 @@ module.exports = {
                 type: 'object',
                 properties: {
                   pragma: { type: 'string', pattern: '^@\\w+$' },
-                  usePrettierRc: { type: 'boolean' }
+                  usePrettierrc: { type: 'boolean' }
                 },
                 additionalProperties: true
               }
@@ -349,8 +350,8 @@ module.exports = {
       },
       create(context) {
         const pragma = getPragma(context);
-        const usePrettierRc =
-          !context.options[1] || context.options[1].usePrettierRc !== false;
+        const usePrettierrc =
+          !context.options[1] || context.options[1].usePrettierrc !== false;
         const sourceCode = context.getSourceCode();
         const source = sourceCode.text;
 
@@ -394,7 +395,7 @@ module.exports = {
                 ? FB_PRETTIER_OPTIONS
                 : context.options[0];
             const prettierRcOptions =
-              usePrettierRc &&
+              usePrettierrc &&
               prettier.resolveConfig &&
               prettier.resolveConfig.sync
                 ? prettier.resolveConfig.sync(context.getFilename())
