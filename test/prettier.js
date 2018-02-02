@@ -41,6 +41,11 @@ ruleTester.run('prettier', rule, {
     { code: `/** @format */\n('');\n`, options: ['fb', '@format'] },
     // Shebang with pragma.
     { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] },
+    // Shebang with pragma from options.
+    {
+      code: `#!/bin/node\n/** @format */\n"";\n`,
+      options: [null, { pragma: '@format' }]
+    },
     // Single quote from .prettierrc.
     { code: `'';\n`, filename: getPrettierRcJsFilename('single-quote') },
     // Override .prettierrc from object option.
@@ -54,6 +59,12 @@ ruleTester.run('prettier', rule, {
       code: `('');\n`,
       filename: getPrettierRcJsFilename('double-quote'),
       options: ['fb']
+    },
+    // Only use options from plugin, skipping .prettierrc
+    {
+      code: `var foo = {bar: 0};\n`,
+      filename: getPrettierRcJsFilename('bracket-spacing'),
+      options: [{ bracketSpacing: false }, { usePrettierrc: false }]
     }
   ],
   invalid: [

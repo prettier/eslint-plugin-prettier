@@ -141,6 +141,24 @@ You can then set Prettier's own options inside a `.prettierrc` file.
     ```
 
     _This option is useful if you're migrating a large codebase and already use pragmas like `@flow`._
+  
+  - An object with the following options
+  
+    - `pragma`: Also sets the aforementioned `pragma`: a string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`.
+    
+      ```json
+      "prettier/prettier": ["error", null, {
+        "pragma": "@prettier"
+      }]
+      ```
+      
+    - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
+    
+      ```json
+      "prettier/prettier": ["error", null, {
+        "usePrettierrc": false
+      }]
+      ```
 
 * The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 

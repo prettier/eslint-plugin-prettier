@@ -282,6 +282,25 @@ function reportReplace(context, offset, deleteText, insertText) {
   });
 }
 
+/**
+ * Get the pragma from the ESLint rule context.
+ * @param {RuleContext} context - The ESLint rule context.
+ * @returns {string|null}
+ */
+function getPragma(context) {
+  const pluginOptions = context.options[1];
+
+  if (!pluginOptions) {
+    return null;
+  }
+
+  const pragmaRef =
+    typeof pluginOptions === 'string' ? pluginOptions : pluginOptions.pragma;
+
+  // Remove leading @
+  return pragmaRef ? pragmaRef.slice(1) : null;
+}
+
 // ------------------------------------------------------------------------------
 //  Module Definition
 // ------------------------------------------------------------------------------
@@ -313,15 +332,26 @@ module.exports = {
               { type: 'object', properties: {}, additionalProperties: true }
             ]
           },
-          // Pragma:
-          { type: 'string', pattern: '^@\\w+$' }
+          {
+            anyOf: [
+              // Pragma:
+              { type: 'string', pattern: '^@\\w+$' },
+              {
+                type: 'object',
+                properties: {
+                  pragma: { type: 'string', pattern: '^@\\w+$' },
+                  usePrettierrc: { type: 'boolean' }
+                },
+                additionalProperties: true
+              }
+            ]
+          }
         ]
       },
       create(context) {
-        const pragma = context.options[1]
-          ? context.options[1].slice(1) // Remove leading @
-          : null;
-
+        const pragma = getPragma(context);
+        const usePrettierrc =
+          !context.options[1] || context.options[1].usePrettierrc !== false;
         const sourceCode = context.getSourceCode();
         const source = sourceCode.text;
 
@@ -365,7 +395,9 @@ module.exports = {
                 ? FB_PRETTIER_OPTIONS
                 : context.options[0];
             const prettierRcOptions =
-              prettier.resolveConfig && prettier.resolveConfig.sync
+              usePrettierrc &&
+              prettier.resolveConfig &&
+              prettier.resolveConfig.sync
                 ? prettier.resolveConfig.sync(context.getFilename())
                 : null;
             const prettierOptions = Object.assign(
