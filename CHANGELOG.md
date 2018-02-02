@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.6.0 (2018-02-02)
+
+* Update: Add option to skip loading prettierrc ([#83](https://github.com/prettier/eslint-plugin-prettier/issues/83)) ([9e0fb48](https://github.com/prettier/eslint-plugin-prettier/commit/9e0fb48d077214a81ac549731308ab11512c37cd))
+* Build: add Node 8 and 9 to Travis ([e5b5fa7](https://github.com/prettier/eslint-plugin-prettier/commit/e5b5fa74d06a06a53d04c4748b31e24fcd7a41b9))
+* Chore: add test for vue parsing ([1ab43fd](https://github.com/prettier/eslint-plugin-prettier/commit/1ab43fd601a67100cb03bbfe614203fd399d40bb))
+
 ## v2.5.0 (2018-01-16)
 
 * Fix: pass filepath to prettier ([#76](https://github.com/prettier/eslint-plugin-prettier/issues/76)) ([0b6ab55](https://github.com/prettier/eslint-plugin-prettier/commit/0b6ab55e0a48e9c31cfa1d7f3b891100e0580493))
