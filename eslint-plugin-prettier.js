@@ -398,7 +398,9 @@ module.exports = {
               usePrettierrc &&
               prettier.resolveConfig &&
               prettier.resolveConfig.sync
-                ? prettier.resolveConfig.sync(context.getFilename())
+                ? prettier.resolveConfig.sync(context.getFilename(), {
+                    editorconfig: true
+                  })
                 : null;
             const prettierOptions = Object.assign(
               {},
