@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.6.1 (2018-06-23)
+
+* Fix: respect editorconfig ([#92](https://github.com/prettier/eslint-plugin-prettier/issues/92)) ([0b04dd3](https://github.com/prettier/eslint-plugin-prettier/commit/0b04dd362d0d92534a7cf11eaebbab8eb59fc96d))
+
 ## v2.6.0 (2018-02-02)
 
 * Update: Add option to skip loading prettierrc ([#83](https://github.com/prettier/eslint-plugin-prettier/issues/83)) ([9e0fb48](https://github.com/prettier/eslint-plugin-prettier/commit/9e0fb48d077214a81ac549731308ab11512c37cd))
