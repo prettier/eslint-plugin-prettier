@@ -78,9 +78,9 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
 
 This does three things:
 
-1. Enables `eslint-plugin-prettier`.
-2. Sets the `prettier/prettier` rule to `"error"`.
-3. Extends the `eslint-config-prettier` configuration.
+* Enables `eslint-plugin-prettier`.
+* Sets the `prettier/prettier` rule to `"error"`.
+* Extends the `eslint-config-prettier` configuration.
 
 You can then set Prettier's own options inside a `.prettierrc` file.
 
