@@ -66,7 +66,7 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
   npm install --save-dev eslint-config-prettier
   ```
 
-2. Then all you need in your `.eslintrc.json` is:
+2. Then you need to add `plugin:prettier/recommended` as the last extension in your `.eslintrc.json`:
 
   ```json
   {
@@ -83,6 +83,21 @@ This does three things:
 3. Extends the `eslint-config-prettier` configuration.
 
 You can then set Prettier's own options inside a `.prettierrc` file.
+
+3. In order to support special ESLint plugins (e.g. [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)), add extra exclusions for the plugins you use like so:
+
+```json
+{
+  "extends": [
+    "plugin:prettier/recommended",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard"
+  ]
+}
+```
+
+For the list of every available exclusion rule set, please see the [readme of eslint-config-prettier](https://github.com/prettier/eslint-config-prettier/blob/master/README.md).
 
 ## Options
 
