@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.6.2 (2018-07-06)
+
+* Fix: Add representation for \r to showInvisibles ([#100](https://github.com/prettier/eslint-plugin-prettier/issues/100)) ([731bbb5](https://github.com/prettier/eslint-plugin-prettier/commit/731bbb576ce422a5c73a1fa9750aa3466c7da928))
+* Docs: Add clarification about Flow/React support to readme ([#96](https://github.com/prettier/eslint-plugin-prettier/issues/96)) ([977aa77](https://github.com/prettier/eslint-plugin-prettier/commit/977aa77a119f22af3f8ca8d6f47e5bcfcc9e23fb))
+
 ## v2.6.1 (2018-06-23)
 
 * Fix: respect editorconfig ([#92](https://github.com/prettier/eslint-plugin-prettier/issues/92)) ([0b04dd3](https://github.com/prettier/eslint-plugin-prettier/commit/0b04dd362d0d92534a7cf11eaebbab8eb59fc96d))
