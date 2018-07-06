@@ -110,6 +110,15 @@ vueRuleTester.run('prettier', rule, {
   ]
 });
 
+describe('showInvisibles', () => {
+  it('shows invisibles', () => {
+    assert.equal(
+      eslintPluginPrettier.showInvisibles('1 2\n3\t4\r5'),
+      '1·2⏎3↹4␍5'
+    );
+  });
+});
+
 describe('generateDifferences', () => {
   it('operation: insert', () => {
     const differences = eslintPluginPrettier.generateDifferences(

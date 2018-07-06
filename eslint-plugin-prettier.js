@@ -100,6 +100,9 @@ function showInvisibles(str) {
       case '\t':
         ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
         break;
+      case '\r':
+        ret += '␍'; // Carriage Return Symbol, \u240D
+        break;
       default:
         ret += str[i];
         break;
