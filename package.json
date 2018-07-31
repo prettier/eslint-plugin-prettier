@@ -15,7 +15,8 @@
   "main": "eslint-plugin-prettier.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && mocha"
+    "test": "npm run lint && mocha",
+    "generate-release": "node-release-script"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "prettier": ">= 0.11.0"
   },
   "devDependencies": {
+    "@not-an-aardvark/node-release-script": "^0.1.0",
     "eslint": "^3.14.1",
     "eslint-config-not-an-aardvark": "^2.0.0",
     "eslint-config-prettier": "^1.3.0",
