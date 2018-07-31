@@ -357,6 +357,7 @@ module.exports = {
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const sourceCode = context.getSourceCode();
         const source = sourceCode.text;
+        const sourceFileName = context.getFilename();
 
         // The pragma is only valid if it is found in a block comment at the very
         // start of the file.
@@ -401,7 +402,7 @@ module.exports = {
               usePrettierrc &&
               prettier.resolveConfig &&
               prettier.resolveConfig.sync
-                ? prettier.resolveConfig.sync(context.getFilename(), {
+                ? prettier.resolveConfig.sync(sourceFileName, {
                     editorconfig: true
                   })
                 : null;
@@ -409,11 +410,18 @@ module.exports = {
               {},
               prettierRcOptions,
               eslintPrettierOptions,
-              { filepath: context.getFilename() }
+              { filepath: sourceFileName }
             );
-
             const prettierSource = prettier.format(source, prettierOptions);
-            if (source !== prettierSource) {
+            const sourceFileInfo =
+              prettier.getFileInfo &&
+              prettier.getFileInfo.sync &&
+              prettier.getFileInfo.sync(sourceFileName, {
+                ignorePath: '.prettierignore'
+              });
+            const sourceFileIgnored = sourceFileInfo && sourceFileInfo.ignored;
+
+            if (!sourceFileIgnored && source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
               differences.forEach(difference => {
