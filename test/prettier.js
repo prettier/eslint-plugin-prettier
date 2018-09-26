@@ -65,6 +65,24 @@ ruleTester.run('prettier', rule, {
       code: `var foo = {bar: 0};\n`,
       filename: getPrettierRcJsFilename('bracket-spacing'),
       options: [{ bracketSpacing: false }, { usePrettierrc: false }]
+    },
+    // Ignores filenames in .prettierignore
+    {
+      code: `("");\n`,
+      filename: getPrettierRcJsFilename('single-quote', 'ignore-me.js')
+    },
+    // Sets a default parser when it can't be inferred from the file extensions
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.qqq')
+    },
+    // Overwrites the parser for file extensions prettier would try to format
+    // with not the babylon parser
+    // In the real world, eslint-plugin-markdown would transform file contents
+    // into JS snippets that would get passed to ESLint
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.md')
     }
   ],
   invalid: [
@@ -175,9 +193,12 @@ function loadInvalidFixture(name) {
 
 /**
  * Builds a dummy javascript file path to trick prettier into resolving a specific .prettierrc file.
- * @param {string} name - Prettierrc fixture basename.
+ * @param {string} dir - Prettierrc fixture basename.
  * @returns {string} A javascript filename relative to the .prettierrc config.
  */
-function getPrettierRcJsFilename(name) {
-  return path.resolve(__dirname, `./prettierrc/${name}/dummy.js`);
+function getPrettierRcJsFilename(dir, file) {
+  // Use default parameters when we drop support for node 4
+  file = typeof file !== 'undefined' ? file : 'dummy.js';
+
+  return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
 }
