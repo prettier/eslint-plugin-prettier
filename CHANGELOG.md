@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.7.0 (2018-09-26)
+
+* Update: Support prettierignore and custom processors ([#111](https://github.com/prettier/eslint-plugin-prettier/issues/111)) ([38537ba](https://github.com/prettier/eslint-plugin-prettier/commit/38537ba35fc9152852c3b91f3041d72556b43013))
+* Build: switch to release script package ([047dc8f](https://github.com/prettier/eslint-plugin-prettier/commit/047dc8ffdf006c74267df4902fec684c589dad12))
+
 ## v2.6.2 (2018-07-06)
 
 * Fix: Add representation for \r to showInvisibles ([#100](https://github.com/prettier/eslint-plugin-prettier/issues/100)) ([731bbb5](https://github.com/prettier/eslint-plugin-prettier/commit/731bbb576ce422a5c73a1fa9750aa3466c7da928))
