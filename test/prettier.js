@@ -70,6 +70,19 @@ ruleTester.run('prettier', rule, {
     {
       code: `("");\n`,
       filename: getPrettierRcJsFilename('single-quote', 'ignore-me.js')
+    },
+    // Sets a default parser when it can't be inferred from the file extensions
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.qqq')
+    },
+    // Overwrites the parser for file extensions prettier would try to format
+    // with not the babylon parser
+    // In the real world, eslint-plugin-markdown would transform file contents
+    // into JS snippets that would get passed to ESLint
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.md')
     }
   ],
   invalid: [

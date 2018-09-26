@@ -423,10 +423,10 @@ module.exports = {
 
             const initialOptions = {};
 
-            // Eslint suppports processors that let you extract and lint JS
+            // ESLint suppports processors that let you extract and lint JS
             // fragments within a non-JS language. In the cases where prettier
             // supports the same language as a processor, we want to process
-            // the provided source code as javascript (as eslint provides the
+            // the provided source code as javascript (as ESLint provides the
             // rules with fragments of JS) instead of guessing the parser
             // based off the filename. Otherwise, for instance, on a .md file we
             // end up trying to run prettier over a fragment of JS using the
@@ -437,6 +437,12 @@ module.exports = {
             // This is added to the options first, so that
             // prettierRcOptions and eslintPrettierOptions can still override
             // the parser.
+            //
+            // `parserBlocklist` should contain the list of prettier parser
+            // names for file types where:
+            // * Prettier supports parsing the file type
+            // * There is an ESLint processor that extracts JavaScript snippets
+            //   from the file type.
             const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
             if (
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
