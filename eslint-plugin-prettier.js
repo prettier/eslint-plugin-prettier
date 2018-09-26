@@ -356,6 +356,7 @@ module.exports = {
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const sourceCode = context.getSourceCode();
+        const filepath = context.getFilename();
         const source = sourceCode.text;
 
         // The pragma is only valid if it is found in a block comment at the very
@@ -397,19 +398,47 @@ module.exports = {
               context.options[0] === 'fb'
                 ? FB_PRETTIER_OPTIONS
                 : context.options[0];
+
             const prettierRcOptions =
               usePrettierrc &&
               prettier.resolveConfig &&
               prettier.resolveConfig.sync
-                ? prettier.resolveConfig.sync(context.getFilename(), {
+                ? prettier.resolveConfig.sync(filepath, {
                     editorconfig: true
                   })
                 : null;
+
+            // prettier.getFileInfo was added in v1.13
+            const prettierFileInfo =
+              prettier.getFileInfo && prettier.getFileInfo.sync
+                ? prettier.getFileInfo.sync(filepath, {
+                    ignorePath: '.prettierignore'
+                  })
+                : { ignored: false, inferredParser: null };
+
+            // Skip if file is ignored using a .prettierignore file
+            if (prettierFileInfo.ignored) {
+              return;
+            }
+
+            const initialOptions = {};
+
+            // If we can't infer the parser from from the filename, either
+            // because no filename was provided or because there is no parser
+            // found for the filename, use javascript.
+            // This is added to the options first, so that
+            // prettierRcOptions and eslintPrettierOptions can still override
+            // the parser.
+            if (!prettierFileInfo.inferredParser) {
+              initialOptions.parser = 'babylon';
+            }
+
             const prettierOptions = Object.assign(
               {},
+              initialOptions,
               prettierRcOptions,
               eslintPrettierOptions,
-              { filepath: context.getFilename() }
+              { filepath }
             );
 
             const prettierSource = prettier.format(source, prettierOptions);
