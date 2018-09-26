@@ -423,13 +423,24 @@ module.exports = {
 
             const initialOptions = {};
 
+            // Eslint suppports processors that let you extract and lint JS
+            // fragments within a non-JS language. In the cases where prettier
+            // supports the same language as a processor, we want to process
+            // the provided source code as javascript (as eslint provides the
+            // rules with fragments of JS) instead of guessing the parser
+            // based off the filename. Otherwise, for instance, on a .md file we
+            // end up trying to run prettier over a fragment of JS using the
+            // markdown parser, which throws an error.
             // If we can't infer the parser from from the filename, either
             // because no filename was provided or because there is no parser
             // found for the filename, use javascript.
             // This is added to the options first, so that
             // prettierRcOptions and eslintPrettierOptions can still override
             // the parser.
-            if (!prettierFileInfo.inferredParser) {
+            const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
+            if (
+              parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
+            ) {
               initialOptions.parser = 'babylon';
             }
 
