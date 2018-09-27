@@ -1,5 +1,5 @@
 CODE:
-var foo = ''
+var foo = "";
 OUTPUT:
 var foo = "";
 
@@ -9,7 +9,7 @@ OPTIONS:
 ERRORS:
 [
   {
-    message: 'Replace `\'\'` with `"";⏎`',
-    line: 1, column: 11, endLine: 1, endColumn: 13,
+    message: 'Insert `⏎`',
+    line: 1, column: 14, endLine: 1, endColumn: 14,
   },
 ]

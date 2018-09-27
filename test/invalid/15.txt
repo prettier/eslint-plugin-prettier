@@ -1,8 +1,7 @@
 CODE:
-var foo = { "bar": "", "baz": "" };
-
+var foo = ''
 OUTPUT:
-var foo = { bar: "", baz: "" };
+var foo = "";
 
 OPTIONS:
 []
@@ -10,7 +9,7 @@ OPTIONS:
 ERRORS:
 [
   {
-    message: 'Replace `"bar":·"",·"baz"` with `bar:·"",·baz`',
-    line: 1, column: 13, endLine: 1, endColumn: 29,
+    message: 'Replace `\'\'` with `"";⏎`',
+    line: 1, column: 11, endLine: 1, endColumn: 13,
   },
 ]

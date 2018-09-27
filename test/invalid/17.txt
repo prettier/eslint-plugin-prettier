@@ -1,5 +1,7 @@
 CODE:
+
 var foo = "";
+
 OUTPUT:
 var foo = "";
 
@@ -9,7 +11,7 @@ OPTIONS:
 ERRORS:
 [
   {
-    message: 'Insert `⏎`',
-    line: 1, column: 14, endLine: 1, endColumn: 14,
+    message: 'Delete `⏎`',
+    line: 1, column: 1, endLine: 2, endColumn: 1,
   },
 ]
