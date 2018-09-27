@@ -2,27 +2,13 @@ language: node_js
 cache: yarn
 node_js:
   - "10"
-  - "9"
   - "8"
-  - "7"
   - "6"
-  - "4"
 env:
   - ESLINT_VERSION=current
   - ESLINT_VERSION=^5
   - ESLINT_VERSION=^4
   - ESLINT_VERSION=^3
-matrix:
-  # ESLint 5 dropped support node v4 or v7
-  exclude:
-    - node_js: "7"
-      env: ESLINT_VERSION=current
-    - node_js: "4"
-      env: ESLINT_VERSION=current
-    - node_js: "7"
-      env: ESLINT_VERSION=^5
-    - node_js: "4"
-      env: ESLINT_VERSION=^5
 install:
   - if [[ $ESLINT_VERSION != "current" ]]; then
     yarn upgrade "eslint@$ESLINT_VERSION";
