@@ -114,7 +114,7 @@ vueRuleTester.run('prettier', rule, {
 
 describe('showInvisibles', () => {
   it('shows invisibles', () => {
-    assert.equal(
+    assert.strictEqual(
       eslintPluginPrettier.showInvisibles('1 2\n3\t4\r5'),
       '1·2⏎3↹4␍5'
     );
@@ -127,7 +127,7 @@ describe('generateDifferences', () => {
       'abc',
       'abcdef'
     );
-    assert.deepEqual(differences, [
+    assert.deepStrictEqual(differences, [
       { operation: 'insert', offset: 3, insertText: 'def' }
     ]);
   });
@@ -136,13 +136,13 @@ describe('generateDifferences', () => {
       'abcdef',
       'abc'
     );
-    assert.deepEqual(differences, [
+    assert.deepStrictEqual(differences, [
       { operation: 'delete', offset: 3, deleteText: 'def' }
     ]);
   });
   it('operation: replace', () => {
     const differences = eslintPluginPrettier.generateDifferences('abc', 'def');
-    assert.deepEqual(differences, [
+    assert.deepStrictEqual(differences, [
       { operation: 'replace', offset: 0, deleteText: 'abc', insertText: 'def' }
     ]);
   });
