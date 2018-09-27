@@ -196,9 +196,6 @@ function loadInvalidFixture(name) {
  * @param {string} dir - Prettierrc fixture basename.
  * @returns {string} A javascript filename relative to the .prettierrc config.
  */
-function getPrettierRcJsFilename(dir, file) {
-  // Use default parameters when we drop support for node 4
-  file = typeof file !== 'undefined' ? file : 'dummy.js';
-
+function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
 }
