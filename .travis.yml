@@ -7,8 +7,6 @@ node_js:
 env:
   - ESLINT_VERSION=current
   - ESLINT_VERSION=^5
-  - ESLINT_VERSION=^4
-  - ESLINT_VERSION=^3
 install:
   - if [[ $ESLINT_VERSION != "current" ]]; then
     yarn upgrade "eslint@$ESLINT_VERSION";
