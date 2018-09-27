@@ -125,46 +125,11 @@ For the list of every available exclusion rule set, please see the [readme of es
     }]
     ```
 
-    NB: This option will merge and override any config set with `.prettierrc` files (for Prettier < 1.7.0, [config files are ignored](https://github.com/prettier/eslint-plugin-prettier/issues/46))
+    NB: This option will merge and override any config set with `.prettierrc` files
 
 - The second option:
 
-  - A string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`. Example:
-
-    ```json
-    "prettier/prettier": ["error", null, "@prettier"]
-    ```
-
-    Only files with `@prettier` in the heading docblock will be checked:
-
-    ```js
-    /** @prettier */
-
-    console.log(1 + 2 + 3);
-    ```
-
-    Or:
-
-    ```js
-    /**
-     * @prettier
-     */
-
-    console.log(4 + 5 + 6);
-    ```
-
-    _This option is useful if you're migrating a large codebase and already use pragmas like `@flow`._
-
   - An object with the following options
-
-    - `pragma`: Also sets the aforementioned `pragma`: a string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`.
-
-      ```json
-      "prettier/prettier": ["error", null, {
-        "pragma": "@prettier"
-      }]
-      ```
-
     - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
 
       ```json

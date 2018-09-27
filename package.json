@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
   "dependencies": {
-    "fast-diff": "^1.1.1",
-    "jest-docblock": "^21.0.0"
+    "fast-diff": "^1.1.1"
   },
   "peerDependencies": {
     "prettier": ">= 1.13.0"

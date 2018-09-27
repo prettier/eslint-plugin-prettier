@@ -31,21 +31,8 @@ ruleTester.run('prettier', rule, {
   valid: [
     // Correct style.
     { code: '"";\n' },
-    // No pragma = No prettier check.
-    { code: '""\n', options: [null, '@format'] },
     // Facebook style uses single quotes.
     { code: `('');\n`, options: ['fb'] },
-    // Facebook style but missing pragma.
-    { code: `"";\n`, options: ['fb', '@format'] },
-    // Facebook style with pragma.
-    { code: `/** @format */\n('');\n`, options: ['fb', '@format'] },
-    // Shebang with pragma.
-    { code: `#!/bin/node\n/** @format */\n"";\n`, options: [null, '@format'] },
-    // Shebang with pragma from options.
-    {
-      code: `#!/bin/node\n/** @format */\n"";\n`,
-      options: [null, { pragma: '@format' }]
-    },
     // Single quote from .prettierrc.
     { code: `'';\n`, filename: getPrettierRcJsFilename('single-quote') },
     // Override .prettierrc from object option.
@@ -98,15 +85,12 @@ ruleTester.run('prettier', rule, {
     '10',
     '11-a',
     '11-b',
-    '11-c',
-    '12',
     '13',
     '14',
     '15',
     '16',
     '17',
-    '18',
-    '19'
+    '18'
   ].map(loadInvalidFixture)
 });
 
