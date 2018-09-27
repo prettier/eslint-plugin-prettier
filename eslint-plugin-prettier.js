@@ -42,46 +42,6 @@ let prettier;
 // ------------------------------------------------------------------------------
 
 /**
- * Gets the location of a given index in the source code for a given context.
- * @param {RuleContext} context - The ESLint rule context.
- * @param {number} index - An index in the source code.
- * @returns {Object} An object containing numeric `line` and `column` keys.
- */
-function getLocFromIndex(context, index) {
-  // If `sourceCode.getLocFromIndex` is available from ESLint, use it - added
-  // in ESLint 3.16.0.
-  const sourceCode = context.getSourceCode();
-  if (typeof sourceCode.getLocFromIndex === 'function') {
-    return sourceCode.getLocFromIndex(index);
-  }
-  const text = sourceCode.getText();
-  if (typeof index !== 'number') {
-    throw new TypeError('Expected `index` to be a number.');
-  }
-  if (index < 0 || index > text.length) {
-    throw new RangeError('Index out of range.');
-  }
-  // Loosely based on
-  // https://github.com/eslint/eslint/blob/18a519fa/lib/ast-utils.js#L408-L438
-  const lineEndingPattern = /\r\n|[\r\n\u2028\u2029]/g;
-  let offset = 0;
-  let line = 0;
-  let match;
-  while ((match = lineEndingPattern.exec(text))) {
-    const next = match.index + match[0].length;
-    if (index < next) {
-      break;
-    }
-    line++;
-    offset = next;
-  }
-  return {
-    line: line + 1,
-    column: index - offset
-  };
-}
-
-/**
  * Converts invisible characters to a commonly recognizable visible form.
  * @param {string} str - The string with invisibles to convert.
  * @returns {string} The converted string.
@@ -225,7 +185,7 @@ function generateDifferences(source, prettierSource) {
  * @returns {void}
  */
 function reportInsert(context, offset, text) {
-  const pos = getLocFromIndex(context, offset);
+  const pos = context.getSourceCode().getLocFromIndex(offset);
   const range = [offset, offset];
   context.report({
     message: 'Insert `{{ code }}`',
@@ -245,8 +205,8 @@ function reportInsert(context, offset, text) {
  * @returns {void}
  */
 function reportDelete(context, offset, text) {
-  const start = getLocFromIndex(context, offset);
-  const end = getLocFromIndex(context, offset + text.length);
+  const start = context.getSourceCode().getLocFromIndex(offset);
+  const end = context.getSourceCode().getLocFromIndex(offset + text.length);
   const range = [offset, offset + text.length];
   context.report({
     message: 'Delete `{{ code }}`',
@@ -268,8 +228,10 @@ function reportDelete(context, offset, text) {
  * @returns {void}
  */
 function reportReplace(context, offset, deleteText, insertText) {
-  const start = getLocFromIndex(context, offset);
-  const end = getLocFromIndex(context, offset + deleteText.length);
+  const start = context.getSourceCode().getLocFromIndex(offset);
+  const end = context
+    .getSourceCode()
+    .getLocFromIndex(offset + deleteText.length);
   const range = [offset, offset + deleteText.length];
   context.report({
     message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
