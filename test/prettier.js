@@ -85,12 +85,12 @@ ruleTester.run('prettier', rule, {
     '10',
     '11-a',
     '11-b',
+    '12',
     '13',
     '14',
     '15',
     '16',
-    '17',
-    '18'
+    '17'
   ].map(loadInvalidFixture)
 });
 
