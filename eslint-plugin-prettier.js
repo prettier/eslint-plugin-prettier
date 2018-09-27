@@ -10,7 +10,6 @@
 // ------------------------------------------------------------------------------
 
 const diff = require('fast-diff');
-const docblock = require('jest-docblock');
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -285,25 +284,6 @@ function reportReplace(context, offset, deleteText, insertText) {
   });
 }
 
-/**
- * Get the pragma from the ESLint rule context.
- * @param {RuleContext} context - The ESLint rule context.
- * @returns {string|null}
- */
-function getPragma(context) {
-  const pluginOptions = context.options[1];
-
-  if (!pluginOptions) {
-    return null;
-  }
-
-  const pragmaRef =
-    typeof pluginOptions === 'string' ? pluginOptions : pluginOptions.pragma;
-
-  // Remove leading @
-  return pragmaRef ? pragmaRef.slice(1) : null;
-}
-
 // ------------------------------------------------------------------------------
 //  Module Definition
 // ------------------------------------------------------------------------------
@@ -337,12 +317,9 @@ module.exports = {
           },
           {
             anyOf: [
-              // Pragma:
-              { type: 'string', pattern: '^@\\w+$' },
               {
                 type: 'object',
                 properties: {
-                  pragma: { type: 'string', pattern: '^@\\w+$' },
                   usePrettierrc: { type: 'boolean' }
                 },
                 additionalProperties: true
@@ -352,36 +329,11 @@ module.exports = {
         ]
       },
       create(context) {
-        const pragma = getPragma(context);
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;
-
-        // The pragma is only valid if it is found in a block comment at the very
-        // start of the file.
-        if (pragma) {
-          // ESLint 3.x reports the shebang as a "Line" node, while ESLint 4.x
-          // reports it as a "Shebang" node. This works for both versions:
-          const hasShebang = source.startsWith('#!');
-          const allComments = sourceCode.getAllComments();
-          const firstComment = hasShebang ? allComments[1] : allComments[0];
-          if (
-            !(
-              firstComment &&
-              firstComment.type === 'Block' &&
-              firstComment.loc.start.line === (hasShebang ? 2 : 1) &&
-              firstComment.loc.start.column === 0
-            )
-          ) {
-            return {};
-          }
-          const parsed = docblock.parse(firstComment.value);
-          if (parsed[pragma] !== '') {
-            return {};
-          }
-        }
 
         if (prettier && prettier.clearConfigCache) {
           prettier.clearConfigCache();
