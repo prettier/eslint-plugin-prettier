@@ -399,22 +399,15 @@ module.exports = {
                 ? FB_PRETTIER_OPTIONS
                 : context.options[0];
 
-            const prettierRcOptions =
-              usePrettierrc &&
-              prettier.resolveConfig &&
-              prettier.resolveConfig.sync
-                ? prettier.resolveConfig.sync(filepath, {
-                    editorconfig: true
-                  })
-                : null;
+            const prettierRcOptions = usePrettierrc
+              ? prettier.resolveConfig.sync(filepath, {
+                  editorconfig: true
+                })
+              : null;
 
-            // prettier.getFileInfo was added in v1.13
-            const prettierFileInfo =
-              prettier.getFileInfo && prettier.getFileInfo.sync
-                ? prettier.getFileInfo.sync(filepath, {
-                    ignorePath: '.prettierignore'
-                  })
-                : { ignored: false, inferredParser: null };
+            const prettierFileInfo = prettier.getFileInfo.sync(filepath, {
+              ignorePath: '.prettierignore'
+            });
 
             // Skip if file is ignored using a .prettierignore file
             if (prettierFileInfo.ignored) {
