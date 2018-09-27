@@ -16,6 +16,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && mocha",
+    "format": "yarn run prettier '**/*.{js,json,md,yml}' --write && yarn run lint --fix",
     "generate-release": "node-release-script"
   },
   "repository": {

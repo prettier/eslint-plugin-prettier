@@ -43,9 +43,7 @@ Then, in your `.eslintrc.json`:
 
 ```json
 {
-  "plugins": [
-    "prettier"
-  ],
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error"
   }
@@ -62,25 +60,23 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
 
 1. In addition to the above installation instructions, install `eslint-config-prettier`:
 
-  ```sh
-  npm install --save-dev eslint-config-prettier
-  ```
+    ```sh
+    npm install --save-dev eslint-config-prettier
+    ```
 
 2. Then you need to add `plugin:prettier/recommended` as the last extension in your `.eslintrc.json`:
 
-  ```json
-  {
-    "extends": [
-      "plugin:prettier/recommended"
-    ]
-  }
-  ```
+    ```json
+    {
+      "extends": ["plugin:prettier/recommended"]
+    }
+    ```
 
 This does three things:
 
-* Enables `eslint-plugin-prettier`.
-* Sets the `prettier/prettier` rule to `"error"`.
-* Extends the `eslint-config-prettier` configuration.
+- Enables `eslint-plugin-prettier`.
+- Sets the `prettier/prettier` rule to `"error"`.
+- Extends the `eslint-config-prettier` configuration.
 
 You can then set Prettier's own options inside a `.prettierrc` file.
 
@@ -103,9 +99,10 @@ For the list of every available exclusion rule set, please see the [readme of es
 
 > Note: While it is possible to pass options to Prettier via your ESLint configuration file, it is not recommended because editor extensions such as `prettier-atom` and `prettier-vscode` **will** read [`.prettierrc`](https://prettier.io/docs/en/configuration.html), but **won't** read settings from ESLint, which can lead to an inconsistent experience.
 
-* The first option:
+- The first option:
+
   - Objects are passed directly to Prettier as [options](https://prettier.io/docs/en/options.html). Example:
-    
+
     ```json
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
     ```
@@ -127,9 +124,10 @@ For the list of every available exclusion rule set, please see the [readme of es
       "parser": "flow"
     }]
     ```
-  NB: This option will merge and override any config set with `.prettierrc` files (for Prettier < 1.7.0, [config files are ignored](https://github.com/prettier/eslint-plugin-prettier/issues/46))
 
-* The second option:
+    NB: This option will merge and override any config set with `.prettierrc` files (for Prettier < 1.7.0, [config files are ignored](https://github.com/prettier/eslint-plugin-prettier/issues/46))
+
+- The second option:
 
   - A string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`. Example:
 
@@ -156,26 +154,26 @@ For the list of every available exclusion rule set, please see the [readme of es
     ```
 
     _This option is useful if you're migrating a large codebase and already use pragmas like `@flow`._
-  
+
   - An object with the following options
-  
+
     - `pragma`: Also sets the aforementioned `pragma`: a string with a pragma that triggers this rule. By default, this rule applies to all files. However, if you set a pragma (this option), only files with that pragma in the heading docblock will be checked. All pragmas must start with `@`.
-    
+
       ```json
       "prettier/prettier": ["error", null, {
         "pragma": "@prettier"
       }]
       ```
-      
+
     - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
-    
+
       ```json
       "prettier/prettier": ["error", null, {
         "usePrettierrc": false
       }]
       ```
 
-* The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
+- The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
 

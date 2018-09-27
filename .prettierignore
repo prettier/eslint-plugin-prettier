@@ -1,4 +1,5 @@
 package.json
+CHANGELOG.md
 
 # this file doesn't exist, but we use it as a filename that should be ignored
 # by prettier in the tests
