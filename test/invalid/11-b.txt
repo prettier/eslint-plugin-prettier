@@ -9,7 +9,7 @@ var a = {
 };
 
 OPTIONS:
-[null]
+[{}]
 
 ERRORS:
 [

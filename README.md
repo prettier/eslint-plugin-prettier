@@ -60,17 +60,17 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
 
 1. In addition to the above installation instructions, install `eslint-config-prettier`:
 
-    ```sh
-    npm install --save-dev eslint-config-prettier
-    ```
+   ```sh
+   npm install --save-dev eslint-config-prettier
+   ```
 
 2. Then you need to add `plugin:prettier/recommended` as the last extension in your `.eslintrc.json`:
 
-    ```json
-    {
-      "extends": ["plugin:prettier/recommended"]
-    }
-    ```
+   ```json
+   {
+     "extends": ["plugin:prettier/recommended"]
+   }
+   ```
 
 This does three things:
 
@@ -101,28 +101,10 @@ For the list of every available exclusion rule set, please see the [readme of es
 
 - The first option:
 
-  - Objects are passed directly to Prettier as [options](https://prettier.io/docs/en/options.html). Example:
+  - An object representing [options](https://prettier.io/docs/en/options.html) that will be passed into prettier. Example:
 
     ```json
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
-    ```
-
-  - Or the string `"fb"` may be used to set "Facebook style" defaults:
-
-    ```json
-    "prettier/prettier": ["error", "fb"]
-    ```
-
-    Equivalent to:
-
-    ```json
-    "prettier/prettier": ["error", {
-      "singleQuote": true,
-      "trailingComma": "all",
-      "bracketSpacing": false,
-      "jsxBracketSameLine": true,
-      "parser": "flow"
-    }]
     ```
 
     NB: This option will merge and override any config set with `.prettierrc` files
@@ -130,10 +112,11 @@ For the list of every available exclusion rule set, please see the [readme of es
 - The second option:
 
   - An object with the following options
+
     - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
 
       ```json
-      "prettier/prettier": ["error", null, {
+      "prettier/prettier": ["error", {}, {
         "usePrettierrc": false
       }]
       ```

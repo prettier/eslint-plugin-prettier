@@ -31,8 +31,6 @@ ruleTester.run('prettier', rule, {
   valid: [
     // Correct style.
     { code: '"";\n' },
-    // Facebook style uses single quotes.
-    { code: `('');\n`, options: ['fb'] },
     // Single quote from .prettierrc.
     { code: `'';\n`, filename: getPrettierRcJsFilename('single-quote') },
     // Override .prettierrc from object option.
@@ -40,12 +38,6 @@ ruleTester.run('prettier', rule, {
       code: `var foo = {bar: 0};\n`,
       filename: getPrettierRcJsFilename('bracket-spacing'),
       options: [{ bracketSpacing: false }]
-    },
-    // Override .prettierrc from facebook option.
-    {
-      code: `('');\n`,
-      filename: getPrettierRcJsFilename('double-quote'),
-      options: ['fb']
     },
     // Only use options from plugin, skipping .prettierrc
     {

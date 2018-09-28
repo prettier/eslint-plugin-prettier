@@ -15,15 +15,6 @@ const diff = require('fast-diff');
 //  Constants
 // ------------------------------------------------------------------------------
 
-// Preferred Facebook style.
-const FB_PRETTIER_OPTIONS = {
-  singleQuote: true,
-  trailingComma: 'all',
-  bracketSpacing: false,
-  jsxBracketSameLine: true,
-  parser: 'flow'
-};
-
 const LINE_ENDING_RE = /\r\n|[\r\n\u2028\u2029]/;
 
 const OPERATION_INSERT = 'insert';
@@ -272,21 +263,16 @@ module.exports = {
         schema: [
           // Prettier options:
           {
-            anyOf: [
-              { enum: [null, 'fb'] },
-              { type: 'object', properties: {}, additionalProperties: true }
-            ]
+            type: 'object',
+            properties: {},
+            additionalProperties: true
           },
           {
-            anyOf: [
-              {
-                type: 'object',
-                properties: {
-                  usePrettierrc: { type: 'boolean' }
-                },
-                additionalProperties: true
-              }
-            ]
+            type: 'object',
+            properties: {
+              usePrettierrc: { type: 'boolean' }
+            },
+            additionalProperties: true
           }
         ]
       },
@@ -308,10 +294,7 @@ module.exports = {
               prettier = require('prettier');
             }
 
-            const eslintPrettierOptions =
-              context.options[0] === 'fb'
-                ? FB_PRETTIER_OPTIONS
-                : context.options[0];
+            const eslintPrettierOptions = context.options[0] || {};
 
             const prettierRcOptions = usePrettierrc
               ? prettier.resolveConfig.sync(filepath, {
