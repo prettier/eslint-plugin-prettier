@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.0.0 (2018-10-01)
+
+* Chore: Add eslint peer-dependency ([d55d79c](https://github.com/prettier/eslint-plugin-prettier/commit/d55d79c6a64f659f405788fc75f344704619979f))
+* Breaking: Extract showInvisibles and generateDifferences ([bf7c40c](https://github.com/prettier/eslint-plugin-prettier/commit/bf7c40c240d9833548a7c9d210a28c90a4f3957b))
+* Breaking: Defining prettier options must use an object ([478c7e5](https://github.com/prettier/eslint-plugin-prettier/commit/478c7e5d2165f3e67e893c9a317b602159eaff9c))
+* Breaking: Drop support for ESLint v3 and v4 ([2326231](https://github.com/prettier/eslint-plugin-prettier/commit/232623179b16b99c0cf89ec9b8ed7660c69b092d))
+* Chore: Update dependencies ([1ec94c8](https://github.com/prettier/eslint-plugin-prettier/commit/1ec94c8e3495f6964588da5264b890cb49616fff))
+* Chore: remove two unused dependencies ([bfe459c](https://github.com/prettier/eslint-plugin-prettier/commit/bfe459c39b742115137e81278f03f8e6abfd7dcf))
+* Chore: Rename test files to keep them sequential ([d38ea52](https://github.com/prettier/eslint-plugin-prettier/commit/d38ea52debdf9da718c60933f42a709fa05f550f))
+* Breaking: Remove pragma support ([3af422c](https://github.com/prettier/eslint-plugin-prettier/commit/3af422c8e301978b611cfc665e052d48c102b443))
+* Breaking: Update minimum required pretter version to 1.13.0 ([29c0506](https://github.com/prettier/eslint-plugin-prettier/commit/29c050605674fda2975b3b620c89a7eb9332641a))
+* Breaking: Drop support for node v4, v7 and v9 ([be460bd](https://github.com/prettier/eslint-plugin-prettier/commit/be460bdd06fafb04442b440efabc7b36b12934a7))
+* Chore: Add vscode config to autoformat on save ([9fac6b4](https://github.com/prettier/eslint-plugin-prettier/commit/9fac6b4039c1983b83073fa7af7864f0d7e1f2d3))
+* Chore: Improve travis matrix ([46d2444](https://github.com/prettier/eslint-plugin-prettier/commit/46d244409e397ba9ff2dea621e99a4ea90e0585b))
+* Chore: Add format script to run prettier ([d46aa6d](https://github.com/prettier/eslint-plugin-prettier/commit/d46aa6dbd8028802121231d3ae0fe3f837bca9ad))
+
 ## v2.7.0 (2018-09-26)
 
 * Update: Support prettierignore and custom processors ([#111](https://github.com/prettier/eslint-plugin-prettier/issues/111)) ([38537ba](https://github.com/prettier/eslint-plugin-prettier/commit/38537ba35fc9152852c3b91f3041d72556b43013))
