@@ -14,7 +14,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const assert = require('assert');
 
 const eslintPluginPrettier = require('..');
 
@@ -102,42 +101,6 @@ vueRuleTester.run('prettier', rule, {
       filename: 'invalid.vue'
     })
   ]
-});
-
-describe('showInvisibles', () => {
-  it('shows invisibles', () => {
-    assert.strictEqual(
-      eslintPluginPrettier.showInvisibles('1 2\n3\t4\r5'),
-      '1·2⏎3↹4␍5'
-    );
-  });
-});
-
-describe('generateDifferences', () => {
-  it('operation: insert', () => {
-    const differences = eslintPluginPrettier.generateDifferences(
-      'abc',
-      'abcdef'
-    );
-    assert.deepStrictEqual(differences, [
-      { operation: 'insert', offset: 3, insertText: 'def' }
-    ]);
-  });
-  it('operation: delete', () => {
-    const differences = eslintPluginPrettier.generateDifferences(
-      'abcdef',
-      'abc'
-    );
-    assert.deepStrictEqual(differences, [
-      { operation: 'delete', offset: 3, deleteText: 'def' }
-    ]);
-  });
-  it('operation: replace', () => {
-    const differences = eslintPluginPrettier.generateDifferences('abc', 'def');
-    assert.deepStrictEqual(differences, [
-      { operation: 'replace', offset: 0, deleteText: 'abc', insertText: 'def' }
-    ]);
-  });
 });
 
 // ------------------------------------------------------------------------------
