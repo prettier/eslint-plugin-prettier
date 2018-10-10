@@ -121,6 +121,14 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
+    - `withNodeModules`: Prettier ignores files located in `node_modules` directories. To opt-out from this behavior set `true`, (default: `false`). May be useful if you are using multiple `node_modules` directories, example to avoid many `../..` sequences.
+    
+      ```json
+      "prettier/prettier": ["error", {}, {
+        "withNodeModules": true
+      }]
+      ```
+
 - The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
