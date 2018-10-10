@@ -142,7 +142,7 @@ module.exports = {
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const withNodeModules =
-          !context.options[1] || context.options[1].withNodeModules !== false;
+          context.options[1] && context.options[1].withNodeModules !== false;
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;

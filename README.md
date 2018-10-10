@@ -121,11 +121,11 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
-    - `withNodeModules`: Prettier ignores files located in `node_modules` directories. To opt-out from this behavior set `false`, (default: `true`). May be useful if you are using multiple `node_modules` directories, example to avoid many `../..` sequences.
+    - `withNodeModules`: Prettier ignores files located in `node_modules` directories. To opt-out from this behavior set `true`, (default: `false`). May be useful if you are using multiple `node_modules` directories, example to avoid many `../..` sequences.
     
       ```json
       "prettier/prettier": ["error", {}, {
-        "withNodeModules": false
+        "withNodeModules": true
       }]
       ```
 
