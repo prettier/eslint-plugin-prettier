@@ -207,9 +207,10 @@ eslint-config-not-an-aardvark@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-not-an-aardvark/-/eslint-config-not-an-aardvark-2.1.0.tgz#71e5fb7c43b64abb4632ef144aad6cceef520195"
 
-eslint-config-prettier@^3.1.0:
+eslint-config-prettier@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.3.0.tgz#41afc8d3b852e757f06274ed6c44ca16f939a57d"
+  integrity sha512-Bc3bh5bAcKNvs3HOpSi6EfGA2IIp7EzWcg2tS4vP7stnXu/J1opihHDM7jI9JCIckyIDTgZLSWn7J3HY0j2JfA==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -385,6 +386,7 @@ functional-red-black-tree@^1.0.1:
 get-stdin@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
+  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 glob@7.1.2:
   version "7.1.2"
