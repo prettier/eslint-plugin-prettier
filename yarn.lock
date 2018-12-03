@@ -855,9 +855,9 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vue-eslint-parser@^3.2.2:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-3.3.0.tgz#06b195d18bb66ac72c6b7f2469b549109a61d72c"
+vue-eslint-parser@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-4.0.2.tgz#7d10ec5b67d9b2ef240cac0f0e8b2f03773d810e"
   dependencies:
     debug "^4.1.0"
     eslint-scope "^4.0.0"
