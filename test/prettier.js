@@ -99,6 +99,9 @@ vueRuleTester.run('prettier', rule, {
   invalid: [
     Object.assign(loadInvalidFixture('vue'), {
       filename: 'invalid.vue'
+    }),
+    Object.assign(loadInvalidFixture('vue-syntax-error'), {
+      filename: 'syntax-error.vue'
     })
   ]
 });
