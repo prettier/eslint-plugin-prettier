@@ -92,7 +92,7 @@ const vueRuleTester = new RuleTester({
 vueRuleTester.run('prettier', rule, {
   valid: [
     {
-      code: `<template>foo</template>\n<script>\n"";\n</script>\n`,
+      code: `<template>\n  <div>HI</div>\n</template>\n<script>\n3;\n</script>\n`,
       filename: 'valid.vue'
     }
   ],
