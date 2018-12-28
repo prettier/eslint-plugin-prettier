@@ -1,0 +1,26 @@
+CODE:
+<template>
+  <div>
+</template>
+<script>
+a();
+</script>
+
+OUTPUT:
+<template>
+  <div>
+</template>
+<script>
+a();
+</script>
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Parsing error: Unexpected closing tag "template". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags',
+    line: 3, column: 2
+  },
+]

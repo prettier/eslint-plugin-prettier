@@ -209,7 +209,40 @@ module.exports = {
               { filepath }
             );
 
-            const prettierSource = prettier.format(source, prettierOptions);
+            // prettier.format() may throw a SyntaxError if it cannot parse the
+            // source code it is given. Ususally for JS files this isn't a
+            // problem as ESLint will report invalid syntax before trying to
+            // pass it to the prettier plugin. However this might be a problem
+            // for non-JS languages that are handled by a plugin. Notably Vue
+            // files throw an error if they contain unclosed elements, such as
+            // `<template><div></template>. In this case report an error at the
+            // point at which parsing failed.
+            let prettierSource;
+            try {
+              prettierSource = prettier.format(source, prettierOptions);
+            } catch (err) {
+              if (!(err instanceof SyntaxError)) {
+                throw err;
+              }
+
+              let message = 'Parsing error: ' + err.message;
+
+              // Prettier's message contains a codeframe style preview of the
+              // invalid code and the line/column at which the error occured.
+              // ESLint shows those pieces of information elsewhere already so
+              // remove them from the message
+              if (err.codeFrame) {
+                message = message.replace(`\n${err.codeFrame}`, '');
+              }
+              if (err.loc) {
+                message = message.replace(/ \(\d+:\d+\)$/, '');
+              }
+
+              context.report({ message, loc: err.loc });
+
+              return;
+            }
+
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
