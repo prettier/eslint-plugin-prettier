@@ -1,5 +1,22 @@
 # Changelog
 
+## v3.0.1 (2018-12-28)
+
+* Catch and format SyntaxErrors as eslint violations ([#141](https://github.com/prettier/eslint-plugin-prettier/issues/141)) ([4a0e57d](https://github.com/prettier/eslint-plugin-prettier/commit/4a0e57ddcc0fa2ae8e8f7d8b65ddc4ac93d9f474))
+* build(deps-dev): bump eslint from 5.11.0 to 5.11.1 ([d34daed](https://github.com/prettier/eslint-plugin-prettier/commit/d34daed47fbda09cbd19a73c38323e0aed0c30d5))
+* build(deps-dev): bump eslint from 5.10.0 to 5.11.0 ([7f4f45d](https://github.com/prettier/eslint-plugin-prettier/commit/7f4f45dd132ecd72207b536b86910bebf15693b6))
+* build(deps-dev): bump eslint-plugin-eslint-plugin from 2.0.0 to 2.0.1 ([5be3bcf](https://github.com/prettier/eslint-plugin-prettier/commit/5be3bcfce11b741cd35c92b9c972e457a4038766))
+* build(deps-dev): bump eslint from 5.9.0 to 5.10.0 ([11e7c44](https://github.com/prettier/eslint-plugin-prettier/commit/11e7c447a8ebcfae213afe6ba872f96adb43e6b9))
+* build(deps-dev): bump eslint-plugin-eslint-plugin from 1.4.1 to 2.0.0 ([9e5bf14](https://github.com/prettier/eslint-plugin-prettier/commit/9e5bf140451f82a36c78042315a9f88a12cfe45f))
+* build(deps-dev): bump vue-eslint-parser from 4.0.2 to 4.0.3 ([234583a](https://github.com/prettier/eslint-plugin-prettier/commit/234583a19a97ecd1f996542ccb1178a26d20c0fd))
+* build(deps-dev): bump vue-eslint-parser from 3.3.0 to 4.0.2 ([8675d57](https://github.com/prettier/eslint-plugin-prettier/commit/8675d5713f5171981119b89c2e8a58fda6b81259))
+* Upgrade: Bump vue-eslint-parser from 3.2.2 to 3.3.0 ([2379e93](https://github.com/prettier/eslint-plugin-prettier/commit/2379e93c7fb81ddfe306c1fe6a10d1833cfddf2c))
+* Upgrade: Bump eslint-config-prettier from 3.1.0 to 3.3.0 ([3ea0021](https://github.com/prettier/eslint-plugin-prettier/commit/3ea00218961b75e475def14372f9eab0de5ad05d))
+* Upgrade: Bump eslint from 5.8.0 to 5.9.0 ([c774fb8](https://github.com/prettier/eslint-plugin-prettier/commit/c774fb87fe53d19389964883f05e77309b321139))
+* build(deps-dev): bump eslint-plugin-node from 7.0.1 to 8.0.0 ([#121](https://github.com/prettier/eslint-plugin-prettier/issues/121)) ([2a4fba0](https://github.com/prettier/eslint-plugin-prettier/commit/2a4fba01222f62a576da48478e3dcd832e3bff7e))
+* build(deps-dev): bump eslint-plugin-eslint-plugin from 1.4.0 to 1.4.1 ([#120](https://github.com/prettier/eslint-plugin-prettier/issues/120)) ([29caa29](https://github.com/prettier/eslint-plugin-prettier/commit/29caa299612db8af7a188749a5dd8b9827f51a67))
+* build(deps-dev): bump eslint from 5.6.0 to 5.8.0 ([#119](https://github.com/prettier/eslint-plugin-prettier/issues/119)) ([2836350](https://github.com/prettier/eslint-plugin-prettier/commit/2836350829dc3c19b4c1ebca33a3a7905c1b28a5))
+
 ## v3.0.0 (2018-10-01)
 
 * Chore: Add eslint peer-dependency ([d55d79c](https://github.com/prettier/eslint-plugin-prettier/commit/d55d79c6a64f659f405788fc75f344704619979f))
