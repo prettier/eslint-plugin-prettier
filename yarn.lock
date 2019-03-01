@@ -1672,8 +1672,8 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
 
 vue-eslint-parser@^6.0.0:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-6.0.2.tgz#0fa8d960bfbfb76582ad029b4a9908816ae5d76f"
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-6.0.3.tgz#e8b4748a8c63c72889341a8a2e48c33e58d1c9d3"
   dependencies:
     debug "^4.1.1"
     eslint-scope "^4.0.0"
