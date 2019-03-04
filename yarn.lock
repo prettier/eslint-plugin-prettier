@@ -381,8 +381,8 @@ eslint-plugin-node@^8.0.0:
     semver "^5.5.0"
 
 eslint-plugin-self@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-self/-/eslint-plugin-self-1.1.0.tgz#e95b26d599f17ca0ef63dbaace8bff13c599eaef"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-self/-/eslint-plugin-self-1.2.0.tgz#b999cfed88b893afa6b1f7ce7037d208ede9b8ba"
 
 eslint-scope@^4.0.0:
   version "4.0.0"
