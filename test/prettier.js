@@ -66,12 +66,6 @@ ruleTester.run('prettier', rule, {
     {
       code: 'a();;;;;;\n',
       filename: 'node_modules/dummy.js'
-    },
-    // Should check files from node_modules too
-    {
-      code: 'a();\n',
-      filename: 'node_modules/dummy.js',
-      options: [{}, { withNodeModules: true }]
     }
   ],
   invalid: [

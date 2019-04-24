@@ -5,7 +5,7 @@ OUTPUT:
 a();
 
 OPTIONS:
-[{}, { withNodeModules: true }]
+[{}, { fileInfoOptions: { withNodeModules: true } }]
 
 ERRORS:
 [

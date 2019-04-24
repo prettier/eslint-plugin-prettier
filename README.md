@@ -121,11 +121,13 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
-    - `withNodeModules`: Prettier ignores files located in `node_modules` directories. To opt-out from this behavior set `true`, (default: `false`). May be useful if you are using multiple `node_modules` directories, example to avoid many `../..` sequences.
-    
+    - `fileInfoOptions`: Options that are passed to [prettier.getFileInfo](https://prettier.io/docs/en/api.html#prettiergetfileinfofilepath-options) to decide whether a file needs to be formatted. Can be used for example to opt-out from ignoring files located in `node_modules` directories.
+
       ```json
       "prettier/prettier": ["error", {}, {
-        "withNodeModules": true
+        "fileInfoOptions": {
+          "withNodeModules": true
+        }
       }]
       ```
 
