@@ -131,7 +131,12 @@ module.exports = {
           {
             type: 'object',
             properties: {
-              usePrettierrc: { type: 'boolean' }
+              usePrettierrc: { type: 'boolean' },
+              fileInfoOptions: {
+                type: 'object',
+                properties: {},
+                additionalProperties: true
+              }
             },
             additionalProperties: true
           }
@@ -140,6 +145,8 @@ module.exports = {
       create(context) {
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
+        const eslintFileInfoOptions =
+          (context.options[1] && context.options[1].fileInfoOptions) || {};
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;
@@ -163,9 +170,14 @@ module.exports = {
                 })
               : null;
 
-            const prettierFileInfo = prettier.getFileInfo.sync(filepath, {
-              ignorePath: '.prettierignore'
-            });
+            const prettierFileInfo = prettier.getFileInfo.sync(
+              filepath,
+              Object.assign(
+                {},
+                { ignorePath: '.prettierignore' },
+                eslintFileInfoOptions
+              )
+            );
 
             // Skip if file is ignored using a .prettierignore file
             if (prettierFileInfo.ignored) {

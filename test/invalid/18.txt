@@ -1,0 +1,19 @@
+CODE:
+a();;;;
+
+OUTPUT:
+a();
+
+OPTIONS:
+[{}, { fileInfoOptions: { withNodeModules: true } }]
+
+ERRORS:
+[
+  {
+    message: 'Delete `;;;`',
+    line: 1, column: 5, endLine: 1, endColumn: 8,
+  },
+]
+
+FILENAME:
+node_modules/dummy.js

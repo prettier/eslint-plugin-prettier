@@ -121,6 +121,16 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
+    - `fileInfoOptions`: Options that are passed to [prettier.getFileInfo](https://prettier.io/docs/en/api.html#prettiergetfileinfofilepath-options) to decide whether a file needs to be formatted. Can be used for example to opt-out from ignoring files located in `node_modules` directories.
+
+      ```json
+      "prettier/prettier": ["error", {}, {
+        "fileInfoOptions": {
+          "withNodeModules": true
+        }
+      }]
+      ```
+
 - The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---

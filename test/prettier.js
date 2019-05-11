@@ -61,6 +61,11 @@ ruleTester.run('prettier', rule, {
     {
       code: `('');\n`,
       filename: getPrettierRcJsFilename('single-quote', 'dummy.md')
+    },
+    // Should ignore files from node_modules
+    {
+      code: 'a();;;;;;\n',
+      filename: 'node_modules/dummy.js'
     }
   ],
   invalid: [
@@ -81,7 +86,8 @@ ruleTester.run('prettier', rule, {
     '14',
     '15',
     '16',
-    '17'
+    '17',
+    '18'
   ].map(loadInvalidFixture)
 });
 
@@ -130,6 +136,9 @@ function loadInvalidFixture(name) {
     options: eval(sections[3]), // eslint-disable-line no-eval
     errors: eval(sections[4]) // eslint-disable-line no-eval
   };
+  if (sections.length >= 6) {
+    item.filename = sections[5];
+  }
   return item;
 }
 
