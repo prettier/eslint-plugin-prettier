@@ -131,6 +131,8 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
+    - `prettier`: If supplied, this is a custom path to where `prettier` can be found. This is very useful if you are using Yarn PNP or similar and Prettier isn't installed at the root of the project. Defaults to `require.resolve("prettier")`.
+
 - The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---

@@ -21,13 +21,6 @@ const {
 const { INSERT, DELETE, REPLACE } = generateDifferences;
 
 // ------------------------------------------------------------------------------
-//  Privates
-// ------------------------------------------------------------------------------
-
-// Lazily-loaded Prettier.
-let prettier;
-
-// ------------------------------------------------------------------------------
 //  Rule Definition
 // ------------------------------------------------------------------------------
 
@@ -136,7 +129,8 @@ module.exports = {
                 type: 'object',
                 properties: {},
                 additionalProperties: true
-              }
+              },
+              prettier: { type: 'string' }
             },
             additionalProperties: true
           }
@@ -147,9 +141,14 @@ module.exports = {
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const eslintFileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const prettierPackage =
+          (context.options[1] && context.options[1].prettier) || 'prettier';
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;
+
+        // Lazily-loaded Prettier.
+        let prettier;
 
         if (prettier && prettier.clearConfigCache) {
           prettier.clearConfigCache();
@@ -159,7 +158,7 @@ module.exports = {
           Program() {
             if (!prettier) {
               // Prettier is expensive to load, so only load it if needed.
-              prettier = require('prettier');
+              prettier = require(prettierPackage);
             }
 
             const eslintPrettierOptions = context.options[0] || {};
