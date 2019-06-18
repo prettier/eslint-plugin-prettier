@@ -210,7 +210,7 @@ module.exports = {
             if (
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
             ) {
-              initialOptions.parser = 'babylon';
+              initialOptions.parser = 'babel';
             }
 
             const prettierOptions = Object.assign(
