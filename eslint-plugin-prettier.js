@@ -210,7 +210,13 @@ module.exports = {
             if (
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
             ) {
-              initialOptions.parser = 'babylon';
+              // Prettier v1.16.0 renamed the `babylon` parser to `babel`
+              // Use the modern name if available
+              const supportBabelParser = prettier
+                .getSupportInfo()
+                .languages.some(language => language.parsers.includes('babel'));
+
+              initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
             }
 
             const prettierOptions = Object.assign(
