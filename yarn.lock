@@ -231,8 +231,8 @@ eslint-config-not-an-aardvark@^2.1.0:
   resolved "https://registry.yarnpkg.com/eslint-config-not-an-aardvark/-/eslint-config-not-an-aardvark-2.1.0.tgz#71e5fb7c43b64abb4632ef144aad6cceef520195"
 
 eslint-config-prettier@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.0.0.tgz#f429a53bde9fc7660e6353910fd996d6284d3c25"
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.1.0.tgz#e6f678ba367fbd1273998d5510f76f004e9dce7b"
   dependencies:
     get-stdin "^6.0.0"
 
