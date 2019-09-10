@@ -66,6 +66,14 @@ ruleTester.run('prettier', rule, {
     {
       code: 'a();;;;;;\n',
       filename: 'node_modules/dummy.js'
+    },
+    // Set default prettier options
+    {
+      code: `var a = 'text'\n`,
+      options: [
+        { semi: false },
+        { defaultPrettierOptions: { singleQuote: true } }
+      ]
     }
   ],
   invalid: [

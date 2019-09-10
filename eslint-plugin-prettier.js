@@ -147,6 +147,9 @@ module.exports = {
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const eslintFileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const eslintPrettierDefaultOptions =
+          (context.options[1] && context.options[1].defaultPrettierOptions) ||
+          {};
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;
@@ -221,6 +224,7 @@ module.exports = {
 
             const prettierOptions = Object.assign(
               {},
+              eslintPrettierDefaultOptions,
               initialOptions,
               prettierRcOptions,
               eslintPrettierOptions,

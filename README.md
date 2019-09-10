@@ -131,6 +131,16 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
+    - `defaultPrettierOptions`: An object representing [options](https://prettier.io/docs/en/options.html) that will be passed into prettier with lower priority and will be replaced options from `.prettierrc` and the first option
+
+      ```json
+      "prettier/prettier": ["error", {}, {
+        "defaultPrettierOptions": {
+          "singleQuote": true
+        }
+      }]
+      ```
+
 - The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
