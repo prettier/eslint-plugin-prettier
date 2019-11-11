@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.1.2 (2019-11-11)
+
+* build(deps-dev): bump prettier from 1.18.2 to 1.19.1 ([10b4676](git@github.com:sangeeth96/eslint-plugin-prettier/commit/10b46763fd007a8f939e43635831aec590717e87))
+* build(deps-dev): bump eslint from 6.5.1 to 6.6.0 ([53eaeae](git@github.com:sangeeth96/eslint-plugin-prettier/commit/53eaeaec91c158b66cc04dbf80f9631bb82285bf))
+* build(deps-dev): bump eslint-config-prettier from 6.4.0 to 6.5.0 ([ad3321c](git@github.com:sangeeth96/eslint-plugin-prettier/commit/ad3321c3ae6e963317fedcdd205ba719bf933d74))
+* build(deps-dev): bump mocha from 6.2.1 to 6.2.2 ([b7280b6](git@github.com:sangeeth96/eslint-plugin-prettier/commit/b7280b68eaae243aa33de364576cddf0844c6848))
+* build(deps-dev): bump eslint-config-prettier from 6.3.0 to 6.4.0 ([4c1d69a](git@github.com:sangeeth96/eslint-plugin-prettier/commit/4c1d69a8022c709cd62e964a82c7dbc7963f0544))
+* build(deps-dev): bump eslint from 6.5.0 to 6.5.1 ([c109a7a](git@github.com:sangeeth96/eslint-plugin-prettier/commit/c109a7a5acca9533feae6258e9ac4934359ed9b3))
+* build(deps-dev): bump mocha from 6.2.0 to 6.2.1 ([3134bea](git@github.com:sangeeth96/eslint-plugin-prettier/commit/3134beab61dee13aa2c73762a55f51f868553e8a))
+* build(deps-dev): bump eslint from 6.4.0 to 6.5.0 ([7c290d7](git@github.com:sangeeth96/eslint-plugin-prettier/commit/7c290d799e319b39519d81a110b62846894bc7ba))
+
 ## v3.1.1 (2019-09-18)
 
 * build(deps-dev): bump eslint from 6.3.0 to 6.4.0 ([8a793eb](git@github.com:prettier/eslint-plugin-prettier/commit/8a793eba54ff01493e3ee83daf4dcb782d039fdd))
