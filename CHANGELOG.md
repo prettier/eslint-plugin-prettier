@@ -1,5 +1,23 @@
 # Changelog
 
+## v3.1.2 (2019-12-15)
+
+* Resolve config when getting list of inferred parsers ([1ad45be](git@github.com:prettier/eslint-plugin-prettier/commit/1ad45be48ea1ed16e0eb3ba6247163724b956516))
+* Fix tests now they to stop them inheriting from base prettierrc file ([14840fa](git@github.com:prettier/eslint-plugin-prettier/commit/14840fa4c88c938bf30c1fdf1c26c32b2708a3b6))
+* Move prettier config into dedicated file, so vscode plugins pick it up ([c49334a](git@github.com:prettier/eslint-plugin-prettier/commit/c49334a846afa6f688695a4774f7824ee3a05e1c))
+* build(deps-dev): bump eslint from 6.7.1 to 6.7.2 ([15e6cf9](git@github.com:prettier/eslint-plugin-prettier/commit/15e6cf91509cb5b819d2e1fb19dbe9bc71c87893))
+* build(deps-dev): bump eslint from 6.6.0 to 6.7.1 ([e8ad019](git@github.com:prettier/eslint-plugin-prettier/commit/e8ad0195000af416f3315396e9c02fea261391cc))
+* build(deps-dev): bump eslint-config-prettier from 6.6.0 to 6.7.0 ([44f4bfe](git@github.com:prettier/eslint-plugin-prettier/commit/44f4bfe0b6f63234afeba266928b39b762269282))
+* build(deps-dev): bump eslint-config-prettier from 6.5.0 to 6.6.0 ([46580c5](git@github.com:prettier/eslint-plugin-prettier/commit/46580c55914057dee5089e9c6e525e41996888d1))
+* build(deps-dev): bump prettier from 1.18.2 to 1.19.1 ([10b4676](git@github.com:prettier/eslint-plugin-prettier/commit/10b46763fd007a8f939e43635831aec590717e87))
+* build(deps-dev): bump eslint from 6.5.1 to 6.6.0 ([53eaeae](git@github.com:prettier/eslint-plugin-prettier/commit/53eaeaec91c158b66cc04dbf80f9631bb82285bf))
+* build(deps-dev): bump eslint-config-prettier from 6.4.0 to 6.5.0 ([ad3321c](git@github.com:prettier/eslint-plugin-prettier/commit/ad3321c3ae6e963317fedcdd205ba719bf933d74))
+* build(deps-dev): bump mocha from 6.2.1 to 6.2.2 ([b7280b6](git@github.com:prettier/eslint-plugin-prettier/commit/b7280b68eaae243aa33de364576cddf0844c6848))
+* build(deps-dev): bump eslint-config-prettier from 6.3.0 to 6.4.0 ([4c1d69a](git@github.com:prettier/eslint-plugin-prettier/commit/4c1d69a8022c709cd62e964a82c7dbc7963f0544))
+* build(deps-dev): bump eslint from 6.5.0 to 6.5.1 ([c109a7a](git@github.com:prettier/eslint-plugin-prettier/commit/c109a7a5acca9533feae6258e9ac4934359ed9b3))
+* build(deps-dev): bump mocha from 6.2.0 to 6.2.1 ([3134bea](git@github.com:prettier/eslint-plugin-prettier/commit/3134beab61dee13aa2c73762a55f51f868553e8a))
+* build(deps-dev): bump eslint from 6.4.0 to 6.5.0 ([7c290d7](git@github.com:prettier/eslint-plugin-prettier/commit/7c290d799e319b39519d81a110b62846894bc7ba))
+
 ## v3.1.1 (2019-09-18)
 
 * build(deps-dev): bump eslint from 6.3.0 to 6.4.0 ([8a793eb](git@github.com:prettier/eslint-plugin-prettier/commit/8a793eba54ff01493e3ee83daf4dcb782d039fdd))
