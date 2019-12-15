@@ -174,7 +174,7 @@ module.exports = {
               filepath,
               Object.assign(
                 {},
-                { ignorePath: '.prettierignore' },
+                { resolveConfig: true, ignorePath: '.prettierignore' },
                 eslintFileInfoOptions
               )
             );
