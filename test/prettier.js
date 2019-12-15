@@ -29,9 +29,9 @@ const ruleTester = new RuleTester();
 ruleTester.run('prettier', rule, {
   valid: [
     // Correct style.
-    { code: '"";\n' },
-    // Single quote from .prettierrc.
-    { code: `'';\n`, filename: getPrettierRcJsFilename('single-quote') },
+    { code: `'';\n` },
+    // Double quote from .prettierrc.
+    { code: '"";\n', filename: getPrettierRcJsFilename('double-quote') },
     // Override .prettierrc from object option.
     {
       code: `var foo = {bar: 0};\n`,
@@ -134,7 +134,8 @@ function loadInvalidFixture(name) {
     code: sections[1],
     output: sections[2],
     options: eval(sections[3]), // eslint-disable-line no-eval
-    errors: eval(sections[4]) // eslint-disable-line no-eval
+    errors: eval(sections[4]), // eslint-disable-line no-eval
+    filename: getPrettierRcJsFilename('double-quote', name + '.txt')
   };
   if (sections.length >= 6) {
     item.filename = sections[5];
