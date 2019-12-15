@@ -11,7 +11,7 @@ module.exports = {
   env: { mocha: true },
   root: true,
   rules: {
-    'self/prettier': ['error', { singleQuote: true }],
+    'self/prettier': ['error'],
     'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$']
   }
 };

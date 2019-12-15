@@ -5,7 +5,6 @@
     "**/.git": true,
     "**/node_modules": true
   },
-  "prettier.eslintIntegration": true,
   "search.exclude": {
     "**/node_modules": true
   }
