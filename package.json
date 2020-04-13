@@ -43,7 +43,7 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-self": "^1.1.0",
     "mocha": "^6.0.0",
-    "prettier": "^1.15.3",
+    "prettier": "^2.0.4",
     "vue-eslint-parser": "^6.0.0"
   },
   "engines": {
