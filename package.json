@@ -31,20 +31,20 @@
     "prettier-linter-helpers": "^1.0.0"
   },
   "peerDependencies": {
-    "eslint": ">= 5.0.0",
-    "prettier": ">= 1.13.0"
+    "eslint": ">=5.0.0",
+    "prettier": ">=2.0.5"
   },
   "devDependencies": {
     "@not-an-aardvark/node-release-script": "^0.1.0",
     "eslint": "^6.0.0",
     "eslint-config-not-an-aardvark": "^2.1.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-eslint-plugin": "^2.0.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-self": "^1.1.0",
-    "mocha": "^6.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-eslint-plugin": "^2.2.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-self": "^1.2.0",
+    "mocha": "^7.1.1",
     "prettier": "^2.0.5",
-    "vue-eslint-parser": "^6.0.0"
+    "vue-eslint-parser": "^7.0.0"
   },
   "engines": {
     "node": ">=6.0.0"

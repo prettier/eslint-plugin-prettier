@@ -11,7 +11,7 @@
 
 const {
   showInvisibles,
-  generateDifferences
+  generateDifferences,
 } = require('prettier-linter-helpers');
 
 // ------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ function reportInsert(context, offset, text) {
     loc: { start: pos, end: pos },
     fix(fixer) {
       return fixer.insertTextAfterRange(range, text);
-    }
+    },
   });
 }
 
@@ -68,7 +68,7 @@ function reportDelete(context, offset, text) {
     loc: { start, end },
     fix(fixer) {
       return fixer.removeRange(range);
-    }
+    },
   });
 }
 
@@ -91,12 +91,12 @@ function reportReplace(context, offset, deleteText, insertText) {
     message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
     data: {
       deleteCode: showInvisibles(deleteText),
-      insertCode: showInvisibles(insertText)
+      insertCode: showInvisibles(insertText),
     },
     loc: { start, end },
     fix(fixer) {
       return fixer.replaceTextRange(range, insertText);
-    }
+    },
   });
 }
 
@@ -110,15 +110,15 @@ module.exports = {
       extends: ['prettier'],
       plugins: ['prettier'],
       rules: {
-        'prettier/prettier': 'error'
-      }
-    }
+        'prettier/prettier': 'error',
+      },
+    },
   },
   rules: {
     prettier: {
       meta: {
         docs: {
-          url: 'https://github.com/prettier/eslint-plugin-prettier#options'
+          url: 'https://github.com/prettier/eslint-plugin-prettier#options',
         },
         type: 'layout',
         fixable: 'code',
@@ -127,7 +127,7 @@ module.exports = {
           {
             type: 'object',
             properties: {},
-            additionalProperties: true
+            additionalProperties: true,
           },
           {
             type: 'object',
@@ -136,12 +136,12 @@ module.exports = {
               fileInfoOptions: {
                 type: 'object',
                 properties: {},
-                additionalProperties: true
-              }
+                additionalProperties: true,
+              },
             },
-            additionalProperties: true
-          }
-        ]
+            additionalProperties: true,
+          },
+        ],
       },
       create(context) {
         const usePrettierrc =
@@ -167,7 +167,7 @@ module.exports = {
 
             const prettierRcOptions = usePrettierrc
               ? prettier.resolveConfig.sync(filepath, {
-                  editorconfig: true
+                  editorconfig: true,
                 })
               : null;
 
@@ -215,7 +215,9 @@ module.exports = {
               // Use the modern name if available
               const supportBabelParser = prettier
                 .getSupportInfo()
-                .languages.some(language => language.parsers.includes('babel'));
+                .languages.some((language) =>
+                  language.parsers.includes('babel')
+                );
 
               initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
             }
@@ -265,7 +267,7 @@ module.exports = {
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
-              differences.forEach(difference => {
+              differences.forEach((difference) => {
                 switch (difference.operation) {
                   case INSERT:
                     reportInsert(
@@ -292,9 +294,9 @@ module.exports = {
                 }
               });
             }
-          }
+          },
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

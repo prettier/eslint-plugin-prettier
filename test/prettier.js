@@ -36,23 +36,23 @@ ruleTester.run('prettier', rule, {
     {
       code: `var foo = {bar: 0};\n`,
       filename: getPrettierRcJsFilename('bracket-spacing'),
-      options: [{ bracketSpacing: false }]
+      options: [{ bracketSpacing: false }],
     },
     // Only use options from plugin, skipping .prettierrc
     {
       code: `var foo = {bar: 0};\n`,
       filename: getPrettierRcJsFilename('bracket-spacing'),
-      options: [{ bracketSpacing: false }, { usePrettierrc: false }]
+      options: [{ bracketSpacing: false }, { usePrettierrc: false }],
     },
     // Ignores filenames in .prettierignore
     {
       code: `("");\n`,
-      filename: getPrettierRcJsFilename('single-quote', 'ignore-me.js')
+      filename: getPrettierRcJsFilename('single-quote', 'ignore-me.js'),
     },
     // Sets a default parser when it can't be inferred from the file extensions
     {
       code: `('');\n`,
-      filename: getPrettierRcJsFilename('single-quote', 'dummy.qqq')
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.qqq'),
     },
     // Overwrites the parser for file extensions prettier would try to format
     // with not the babylon parser
@@ -60,13 +60,13 @@ ruleTester.run('prettier', rule, {
     // into JS snippets that would get passed to ESLint
     {
       code: `('');\n`,
-      filename: getPrettierRcJsFilename('single-quote', 'dummy.md')
+      filename: getPrettierRcJsFilename('single-quote', 'dummy.md'),
     },
     // Should ignore files from node_modules
     {
       code: 'a();;;;;;\n',
-      filename: 'node_modules/dummy.js'
-    }
+      filename: 'node_modules/dummy.js',
+    },
   ],
   invalid: [
     '01',
@@ -87,29 +87,29 @@ ruleTester.run('prettier', rule, {
     '15',
     '16',
     '17',
-    '18'
-  ].map(loadInvalidFixture)
+    '18',
+  ].map(loadInvalidFixture),
 });
 
 const vueRuleTester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser')
+  parser: require.resolve('vue-eslint-parser'),
 });
 
 vueRuleTester.run('prettier', rule, {
   valid: [
     {
       code: `<template>\n  <div>HI</div>\n</template>\n<script>\n3;\n</script>\n`,
-      filename: 'valid.vue'
-    }
+      filename: 'valid.vue',
+    },
   ],
   invalid: [
     Object.assign(loadInvalidFixture('vue'), {
-      filename: 'invalid.vue'
+      filename: 'invalid.vue',
     }),
     Object.assign(loadInvalidFixture('vue-syntax-error'), {
-      filename: 'syntax-error.vue'
-    })
-  ]
+      filename: 'syntax-error.vue',
+    }),
+  ],
 });
 
 // ------------------------------------------------------------------------------
@@ -129,13 +129,13 @@ function loadInvalidFixture(name) {
   const src = fs.readFileSync(filename, 'utf8');
   const sections = src
     .split(/^[A-Z]+:\n/m)
-    .map(x => x.replace(/(?=\n)\n$/, ''));
+    .map((x) => x.replace(/(?=\n)\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
     options: eval(sections[3]), // eslint-disable-line no-eval
     errors: eval(sections[4]), // eslint-disable-line no-eval
-    filename: getPrettierRcJsFilename('double-quote', name + '.txt')
+    filename: getPrettierRcJsFilename('double-quote', name + '.txt'),
   };
   if (sections.length >= 6) {
     item.filename = sections[5];

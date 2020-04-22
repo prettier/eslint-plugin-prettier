@@ -5,7 +5,7 @@ b: 1
 
 OUTPUT:
 var a = {
-	b: 1
+	b: 1,
 };
 
 OPTIONS:
@@ -14,7 +14,7 @@ OPTIONS:
 ERRORS:
 [
   {
-    message: 'Insert `↹`',
-    line: 2, column: 1, endLine: 2, endColumn: 1,
+    message: 'Replace `b:·1` with `↹b:·1,`',
+    line: 2, column: 1, endLine: 2, endColumn: 5,
   },
 ]
