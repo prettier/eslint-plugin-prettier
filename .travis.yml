@@ -1,9 +1,8 @@
 language: node_js
 cache: yarn
 node_js:
+  - '12'
   - '10'
-  - '8'
-  - '6'
 env:
   - ESLINT_VERSION=current
   - ESLINT_VERSION=^5
