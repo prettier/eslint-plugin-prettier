@@ -3,17 +3,6 @@ cache: yarn
 node_js:
   - '12'
   - '10'
-env:
-  - ESLINT_VERSION=current
-  - ESLINT_VERSION=^5
-matrix:
-  exclude:
-    # eslint 6 only supports node >=8.10
-    - node_js: '6'
-      env: ESLINT_VERSION=current
 install:
-  - if [[ $ESLINT_VERSION != "current" ]]; then
-    yarn upgrade "eslint@$ESLINT_VERSION";
-    fi
   - yarn install
   - yarn run --silent eslint --version
