@@ -280,8 +280,9 @@ eslint-plugin-es@^1.3.1:
     regexpp "^2.0.0"
 
 eslint-plugin-eslint-plugin@^2.0.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-eslint-plugin/-/eslint-plugin-eslint-plugin-2.2.1.tgz#9d567f2bb6891935d5d3e741f66c9ac42dc688fd"
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-eslint-plugin/-/eslint-plugin-eslint-plugin-2.2.2.tgz#12c20be154ab8b37497bbc6159d87c14f9d4a863"
+  integrity sha512-JlDG/Bzel1Fl+qbDyP52AaMpgBF7GE3bhlQCWae8MTbwnDvFViCaAyHp8lOvmCOVzHozGalcS3QsuvAX+bOR0w==
 
 eslint-plugin-node@^8.0.0:
   version "8.0.1"
