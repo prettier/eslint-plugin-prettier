@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  ci:
+    name: 'Test: Node ${{ matrix.node-version }} - ESLint ${{ matrix.eslint-version }}'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        eslint-version: [7.x, 6.x, 5.x]
+        node-version: [14.x, 12.x, 10.x, 8.x, 6.x]
+
+        exclude:
+          # eslint 7 does not support node 6 or 8
+          - eslint-version: 7.x
+            node-version: 8.x
+          - eslint-version: 7.x
+            node-version: 6.x
+          # eslint 6 does not support node 6
+          - eslint-version: 6.x
+            node-version: 6.x
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Use ESLint ${{ matrix.eslint-version }}
+        run: yarn upgrade eslint@${{ matrix.eslint-version }}
+
+      - name: Install
+        run: yarn install
+
+      - name: Test
+        run: yarn run test
