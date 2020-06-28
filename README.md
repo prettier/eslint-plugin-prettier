@@ -131,6 +131,14 @@ For the list of every available exclusion rule set, please see the [readme of es
       }]
       ```
 
+    - `useEditorConfig`: Enables [resolving editorconfig](https://prettier.io/docs/en/api.html#prettierresolveconfigfilepath--options) file options (default: `true`).
+
+      ```json
+      "prettier/prettier": ["error", {}, {
+        "useEditorConfig": false
+      }]
+      ```
+
 - The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---

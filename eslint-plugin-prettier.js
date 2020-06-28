@@ -137,7 +137,8 @@ module.exports = {
                 type: 'object',
                 properties: {},
                 additionalProperties: true
-              }
+              },
+              useEditorConfig: { type: 'boolean' }
             },
             additionalProperties: true
           }
@@ -148,6 +149,8 @@ module.exports = {
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const eslintFileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const useEditorConfig =
+          !context.options[1] || context.options[1].useEditorConfig !== false;
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         const source = sourceCode.text;
@@ -172,7 +175,7 @@ module.exports = {
 
             const prettierRcOptions = usePrettierrc
               ? prettier.resolveConfig.sync(filepath, {
-                  editorconfig: true
+                  editorconfig: useEditorConfig
                 })
               : null;
 
