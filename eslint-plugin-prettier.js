@@ -192,7 +192,7 @@ module.exports = {
 
             const initialOptions = {};
 
-            // ESLint suppports processors that let you extract and lint JS
+            // ESLint supports processors that let you extract and lint JS
             // fragments within a non-JS language. In the cases where prettier
             // supports the same language as a processor, we want to process
             // the provided source code as javascript (as ESLint provides the
