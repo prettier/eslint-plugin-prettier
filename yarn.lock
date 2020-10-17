@@ -255,8 +255,9 @@ eslint-config-not-an-aardvark@^2.1.0:
   resolved "https://registry.yarnpkg.com/eslint-config-not-an-aardvark/-/eslint-config-not-an-aardvark-2.1.0.tgz#71e5fb7c43b64abb4632ef144aad6cceef520195"
 
 eslint-config-prettier@^6.0.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.11.0.tgz#f6d2238c1290d01c859a8b5c1f7d352a0b0da8b1"
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.13.0.tgz#207d88796b5624e5bb815bbbdfc5891ceb9ebffa"
+  integrity sha512-LcT0i0LSmnzqK2t764pyIt7kKH2AuuqKRTtJTdddWxOiUja9HdG5GXBVF2gmCTvVYWVsTu8J2MhJLVGRh+pj8w==
   dependencies:
     get-stdin "^6.0.0"
 
