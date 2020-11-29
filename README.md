@@ -2,6 +2,8 @@
 
 Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](http://eslint.org) rule and reports differences as individual ESLint issues.
 
+If your desired formatting does not match Prettier’s output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
+
 ## Sample
 
 ```js
@@ -52,11 +54,9 @@ Then, in your `.eslintrc.json`:
 
 ## Recommended Configuration
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect patterns in the AST. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect potential bugs. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
 
-If your desired formatting does not match the `prettier` output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
-
-To integrate this plugin with `eslint-config-prettier`, you can use the `"recommended"` configuration:
+This plugin ships with a `plugin:prettier/recommended` config that sets up both the plugin and `eslint-config-prettier` in one go.
 
 1. In addition to the above installation instructions, install `eslint-config-prettier`:
 
@@ -64,7 +64,12 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
    npm install --save-dev eslint-config-prettier
    ```
 
-2. Then you need to add `plugin:prettier/recommended` as the last extension in your `.eslintrc.json`:
+   Compatibility:
+
+   - eslint-plugin-prettier@>=4 ↔ eslint-config-prettier@>=7
+   - eslint-plugin-prettier@<4 ↔ eslint-config-prettier@<7
+
+2. Then you need to add `plugin:prettier/recommended` as the _last_ extension in your `.eslintrc.json`:
 
    ```json
    {
@@ -72,28 +77,29 @@ To integrate this plugin with `eslint-config-prettier`, you can use the `"recomm
    }
    ```
 
-This does three things:
+   See [eslint-config-prettier’s explanation](https://github.com/prettier/eslint-config-prettier#eslint-plugin-prettier) for more information about what this config does.
 
-- Enables `eslint-plugin-prettier`.
-- Sets the `prettier/prettier` rule to `"error"`.
-- Extends the `eslint-config-prettier` configuration.
+   You can then set Prettier's own options inside a `.prettierrc` file.
 
-You can then set Prettier's own options inside a `.prettierrc` file.
+3. Some ESLint plugins (such as [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)) also contain rules that conflict with Prettier. Add extra exclusions for the plugins you use like so:
 
-3. In order to support special ESLint plugins (e.g. [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)), add extra exclusions for the plugins you use like so:
+   ```json
+   {
+     "extends": [
+       "plugin:prettier/recommended",
+       "prettier/flowtype",
+       "prettier/react",
+       "prettier/standard"
+     ]
+   }
+   ```
 
-```json
-{
-  "extends": [
-    "plugin:prettier/recommended",
-    "prettier/flowtype",
-    "prettier/react",
-    "prettier/standard"
-  ]
-}
-```
+   For the list of every available exclusion rule set, please see the [readme of eslint-config-prettier](https://github.com/prettier/eslint-config-prettier/blob/master/README.md).
 
-For the list of every available exclusion rule set, please see the [readme of eslint-config-prettier](https://github.com/prettier/eslint-config-prettier/blob/master/README.md).
+## Known issues
+
+- eslint-plugin-prettier can be quite slow sometimes: [#304](https://github.com/prettier/eslint-plugin-prettier/issues/304)
+- `arrow-body-style` and `prefer-arrow-callback` autofix can conflict with `prettier/prettier` autofix: [#65](https://github.com/prettier/eslint-plugin-prettier/issues/65)
 
 ## Options
 

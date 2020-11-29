@@ -107,7 +107,7 @@ function reportReplace(context, offset, deleteText, insertText) {
 module.exports = {
   configs: {
     recommended: {
-      extends: ['prettier'],
+      extends: ['prettier', 'prettier/prettier'],
       plugins: ['prettier'],
       rules: {
         'prettier/prettier': 'error'
