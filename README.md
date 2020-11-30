@@ -64,11 +64,6 @@ This plugin ships with a `plugin:prettier/recommended` config that sets up both 
    npm install --save-dev eslint-config-prettier
    ```
 
-   Compatibility:
-
-   - eslint-plugin-prettier@>=4 ↔ eslint-config-prettier@>=7
-   - eslint-plugin-prettier@<4 ↔ eslint-config-prettier@<7
-
 2. Then you need to add `plugin:prettier/recommended` as the _last_ extension in your `.eslintrc.json`:
 
    ```json
@@ -76,8 +71,6 @@ This plugin ships with a `plugin:prettier/recommended` config that sets up both 
      "extends": ["plugin:prettier/recommended"]
    }
    ```
-
-   See [eslint-config-prettier’s explanation](https://github.com/prettier/eslint-config-prettier#eslint-plugin-prettier) for more information about what this config does.
 
    You can then set Prettier's own options inside a `.prettierrc` file.
 
@@ -88,18 +81,41 @@ This plugin ships with a `plugin:prettier/recommended` config that sets up both 
      "extends": [
        "plugin:prettier/recommended",
        "prettier/flowtype",
-       "prettier/react",
-       "prettier/standard"
+       "prettier/react"
      ]
    }
    ```
 
    For the list of every available exclusion rule set, please see the [readme of eslint-config-prettier](https://github.com/prettier/eslint-config-prettier/blob/master/README.md).
 
-## Known issues
+Exactly what does `plugin:prettier/recommended` do? Well, this is what it expands to:
 
-- eslint-plugin-prettier can be quite slow sometimes: [#304](https://github.com/prettier/eslint-plugin-prettier/issues/304)
-- `arrow-body-style` and `prefer-arrow-callback` autofix can conflict with `prettier/prettier` autofix: [#65](https://github.com/prettier/eslint-plugin-prettier/issues/65)
+```json
+{
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off"
+  }
+}
+```
+
+- `"extends": ["prettier"]` enables the main config from `eslint-config-prettier`, which turns off some ESLint core rules that conflict with Prettier.
+- `"plugins": ["prettier"]` registers this plugin.
+- `"prettier/prettier": "error"` turns on the rule provided by this plugin, which runs Prettier from within ESLint.
+- `"arrow-body-style": "off"` and `"prefer-arrow-callback": "off"` turns off two ESLint core rules that unfortunately are problematic with this plugin – see the next section.
+
+## `arrow-body-style` and `prefer-arrow-callback` issue
+
+If you use [arrow-body-style](https://eslint.org/docs/rules/arrow-body-style) or [prefer-arrow-callback](https://eslint.org/docs/rules/prefer-arrow-callback) together with the `prettier/prettier` rule from this plugin, you can in some cases end up with invalid code due to a bug in ESLint’s autofix – see [issue #65](https://github.com/prettier/eslint-plugin-prettier/issues/65).
+
+For this reason, it’s recommended to turn off these rules. The `plugin:prettier/recommended` config does that for you.
+
+You _can_ still use these rules together with this plugin if you want, because the bug does not occur _all the time._ But if you do, you need to keep in mind that you might end up with invalid code, where you manually have to insert a missing closing parenthesis to get going again.
+
+If you’re fixing large of amounts of previously unformatted code, consider temporarily disabling the `prettier/prettier` rule and running `eslint --fix` and `prettier --write` separately.
 
 ## Options
 
