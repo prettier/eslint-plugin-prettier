@@ -27,7 +27,6 @@ jobs:
           - eslint-version: 6.x
             node-version: 6.x
 
-
     steps:
       - uses: actions/checkout@v2
 
