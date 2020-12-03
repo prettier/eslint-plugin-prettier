@@ -21,8 +21,12 @@ jobs:
           - eslint-version: 7.x
             node-version: 6.x
           # eslint 6 does not support node 6
+          # the version of chalk used in eslint 6 does not support node 8
+          - eslint-version: 6.x
+            node-version: 8.x
           - eslint-version: 6.x
             node-version: 6.x
+
 
     steps:
       - uses: actions/checkout@v2
