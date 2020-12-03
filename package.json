@@ -40,7 +40,7 @@
     "eslint-config-not-an-aardvark": "^2.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-eslint-plugin": "^2.0.0",
-    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-self": "^1.1.0",
     "mocha": "^6.0.0",
     "prettier": "^1.15.3",
