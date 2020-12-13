@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.3.0 (2020-12-13)
+
+* Minor: Perf improvement: Do not clear the config cache on each run ([#368](git@github.com:prettier/eslint-plugin-prettier/issues/368)) ([1b90ea7](git@github.com:prettier/eslint-plugin-prettier/commit/1b90ea752636959babb27ebca5d67093c346dab9))
+* Add peerDependenciesMeta block ([#367](git@github.com:prettier/eslint-plugin-prettier/issues/367)) ([86608d5](git@github.com:prettier/eslint-plugin-prettier/commit/86608d5084692ab0d1f2f49a3df4909d04c39ae7))
+* build(deps-dev): bump eslint from 7.14.0 to 7.15.0 ([885f484](git@github.com:prettier/eslint-plugin-prettier/commit/885f48405e0fc9f312acdd3e3487c824bd59c102))
+* build(deps-dev): bump eslint from 7.3.1 to 7.14.0 ([cebc80b](git@github.com:prettier/eslint-plugin-prettier/commit/cebc80b39d3d09f957a73536e54f6d8dd4567080))
+
 ## v3.2.0 (2020-12-03)
 
 * Skip CI for eslint 6 + node 8 ([#364](git@github.com:prettier/eslint-plugin-prettier/issues/364)) ([f8f08e4](git@github.com:prettier/eslint-plugin-prettier/commit/f8f08e483522d74bc4dd93d9813914aa7ba9314b))
