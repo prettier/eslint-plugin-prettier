@@ -46,6 +46,11 @@
     "prettier": "^1.15.3",
     "vue-eslint-parser": "^6.0.0"
   },
+  "peerDependenciesMeta": {
+    "eslint-plugin-prettier": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">=6.0.0"
   },
