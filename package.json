@@ -47,7 +47,7 @@
     "vue-eslint-parser": "^6.0.0"
   },
   "peerDependenciesMeta": {
-    "eslint-plugin-prettier": {
+    "eslint-config-prettier": {
       "optional": true
     }
   },
