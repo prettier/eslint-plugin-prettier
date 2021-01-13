@@ -4,6 +4,8 @@ Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](http://esli
 
 If your desired formatting does not match Prettier’s output, you should use a different tool such as [prettier-eslint](https://github.com/prettier/prettier-eslint) instead.
 
+Please read [Integrating with linters](https://prettier.io/docs/en/integrating-with-linters.html) before installing.
+
 ## Sample
 
 ```js
