@@ -14,11 +14,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const assert = require('assert');
 
 const eslintPluginPrettier = require('..');
 
 const rule = eslintPluginPrettier.rules.prettier;
-const RuleTester = require('eslint').RuleTester;
+const eslint = require('eslint');
+const RuleTester = eslint.RuleTester;
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -87,7 +89,8 @@ ruleTester.run('prettier', rule, {
     '15',
     '16',
     '17',
-    '18'
+    '18',
+    '19'
   ].map(loadInvalidFixture)
 });
 
@@ -110,6 +113,60 @@ vueRuleTester.run('prettier', rule, {
       filename: 'syntax-error.vue'
     })
   ]
+});
+
+it('Should fix conflicts with `arrow-body-style` rule', () => {
+  const linter = new eslint.Linter();
+  linter.defineRules({
+    'arrow-body-style': require('eslint/lib/rules/arrow-body-style'),
+    'prettier/prettier': rule
+  });
+  const code = `
+const foo = a => a.map(b => {
+  return b.map(
+    c => {
+      return {};
+    }
+  );
+});
+`;
+  const output =
+    `
+const foo = a =>
+  a.map(b =>
+    b.map(c => ({})
+  );
+`.trim() + '\n';
+  const outputWithExperimentalFix =
+    `
+const foo = a => a.map(b => b.map(c => ({})));
+`.trim() + '\n';
+  const [result, resultWithExperimentalFix] = [false, true].map(
+    experimentalFix =>
+      linter.verifyAndFix(code, {
+        parserOptions: { ecmaVersion: 2015 },
+        rules: {
+          'arrow-body-style': ['error'],
+          'prettier/prettier': ['error', {}, { experimentalFix }]
+        }
+      })
+  );
+  assert.strictEqual(result.output, output);
+  assert.deepStrictEqual(result.messages, [
+    {
+      column: 4,
+      fatal: true,
+      line: 4,
+      message: 'Parsing error: Unexpected token ;',
+      ruleId: null,
+      severity: 2
+    }
+  ]);
+  assert.strictEqual(
+    resultWithExperimentalFix.output,
+    outputWithExperimentalFix
+  );
+  assert.deepStrictEqual(resultWithExperimentalFix.messages, []);
 });
 
 // ------------------------------------------------------------------------------

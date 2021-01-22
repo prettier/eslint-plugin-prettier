@@ -1,0 +1,39 @@
+CODE:
+a = 1.0000;
+b = 2.00000000;
+
+OUTPUT:
+a = 1.0;
+b = 2.0;
+
+OPTIONS:
+[{}, {experimentalFix: true}]
+
+ERRORS:
+[
+  {
+    message: 'Delete `000`(Apply fix in editor will fix all prettier/prettier errors)',
+    line: 1, column: 8, endLine: 1, endColumn: 11,
+    suggestions: [
+      {
+        desc: 'Delete `000`',
+        output: 'a = 1.0;\nb = 2.00000000;\n'
+      }
+    ]
+  },
+  {
+    message: 'Delete `0000000`(Apply fix in editor will fix all prettier/prettier errors)',
+    line: 2, column: 7, endLine: 2, endColumn: 14,
+    suggestions: [
+      {
+        desc: 'Delete `0000000`',
+        output: 'a = 1.0000;\nb = 2.0;\n'
+      }
+    ]
+  },
+]
+
+
+FILENAME:
+experimental-fix.js
+
