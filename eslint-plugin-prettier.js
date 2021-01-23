@@ -32,9 +32,9 @@ let prettier;
 // ------------------------------------------------------------------------------
 
 /**
- * Reports difference.
- * @param {RuleContext} context - The ESLint rule context.
- * @param {Difference} difference - The difference object.
+ * Reports a difference.
+ * @param {import('eslint').Rule.RuleContext} context - The ESLint rule context.
+ * @param {import('prettier-linter-helpers').Difference} difference - The difference object.
  * @returns {void}
  */
 function reportDifference(context, difference) {
@@ -100,8 +100,8 @@ module.exports = {
           }
         ],
         messages: {
-          [DELETE]: 'Delete `{{ deleteText }}`',
           [INSERT]: 'Insert `{{ insertText }}`',
+          [DELETE]: 'Delete `{{ deleteText }}`',
           [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`'
         }
       },
