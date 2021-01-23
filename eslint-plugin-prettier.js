@@ -32,95 +32,97 @@ let prettier;
 // ------------------------------------------------------------------------------
 
 /**
+ * Extend fix range to prevent changes from other rules.
+ * @param {ruleFixer} fixer - The fixer to fix.
+ * @param {int[]} range - The extended range node.
+ */
+function* extendFixRange(fixer, range) {
+  yield fixer.insertTextBeforeRange(range, '');
+  yield fixer.insertTextAfterRange(range, '');
+}
+
+/**
  * Reports an "Insert ..." issue where text must be inserted.
+ * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to insert text.
  * @param {string} text - The text to be inserted.
- * @returns {{message: string, data: {code: string}, range: number[], fix: function}}
+ * @param {boolean} experimentalFix - Use the new way to fix code.
+ * @returns {void}
  */
-function parseInsert(offset, text) {
+function reportInsert(context, offset, text, experimentalFix) {
+  const pos = context.getSourceCode().getLocFromIndex(offset);
   const range = [offset, offset];
-  return {
+  context.report({
     message: 'Insert `{{ code }}`',
     data: { code: showInvisibles(text) },
-    range,
-    fix: fixer => fixer.insertTextAfterRange(range, text)
-  };
+    loc: { start: pos, end: pos },
+    *fix(fixer) {
+      yield fixer.insertTextAfterRange(range, text);
+      if (experimentalFix)
+        yield* extendFixRange(fixer, [0, context.getSourceCode().text.length]);
+    }
+  });
 }
 
 /**
  * Reports a "Delete ..." issue where text must be deleted.
+ * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to delete text.
  * @param {string} text - The text to be deleted.
- * @returns {{message: string, data: {code: string}, range: number[], fix: function}}
+ * @param {boolean} experimentalFix - Use the new way to fix code.
+ * @returns {void}
  */
-function parseDelete(offset, text) {
+function reportDelete(context, offset, text, experimentalFix) {
+  const start = context.getSourceCode().getLocFromIndex(offset);
+  const end = context.getSourceCode().getLocFromIndex(offset + text.length);
   const range = [offset, offset + text.length];
-  return {
+  context.report({
     message: 'Delete `{{ code }}`',
     data: { code: showInvisibles(text) },
-    range,
-    fix: fixer => fixer.removeRange(range)
-  };
+    loc: { start, end },
+    *fix(fixer) {
+      yield fixer.removeRange(range);
+      if (experimentalFix)
+        yield* extendFixRange(fixer, [0, context.getSourceCode().text.length]);
+    }
+  });
 }
 
 /**
  * Reports a "Replace ... with ..." issue where text must be replaced.
+ * @param {RuleContext} context - The ESLint rule context.
  * @param {number} offset - The source offset where to replace deleted text
  with inserted text.
  * @param {string} deleteText - The text to be deleted.
  * @param {string} insertText - The text to be inserted.
- * @returns {{message: string, data: {deleteCode: string, insetCode: string}, range: number[], fix: function}}
+ * @param {boolean} experimentalFix - Use the new way to fix code.
+ * @returns {void}
  */
-function parseReplace(offset, deleteText, insertText) {
+function reportReplace(
+  context,
+  offset,
+  deleteText,
+  insertText,
+  experimentalFix
+) {
+  const start = context.getSourceCode().getLocFromIndex(offset);
+  const end = context
+    .getSourceCode()
+    .getLocFromIndex(offset + deleteText.length);
   const range = [offset, offset + deleteText.length];
-  return {
+  context.report({
     message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
     data: {
       deleteCode: showInvisibles(deleteText),
       insertCode: showInvisibles(insertText)
     },
-    range,
-    fix: fixer => fixer.replaceTextRange(range, insertText)
-  };
-}
-
-/**
- * Reports ESLint problems.
- * @param {RuleContext} context - The ESLint rule context.
- * @param {object} result - The parsed data.
- * @param {function} [fixAll] - The function fixes whole file.
- * @returns {void}
- */
-function report(context, result, fixAll) {
-  const { message, data, range, fix } = result;
-  const [start, end] = range.map(index =>
-    context.getSourceCode().getLocFromIndex(index)
-  );
-
-  const problem = {
-    message,
-    data,
-    loc: {
-      start,
-      end
+    loc: { start, end },
+    *fix(fixer) {
+      yield fixer.replaceTextRange(range, insertText);
+      if (experimentalFix)
+        yield* extendFixRange(fixer, [0, context.getSourceCode().text.length]);
     }
-  };
-
-  if (fixAll) {
-    problem.message = `${message}(Apply fix in editor will fix all prettier/prettier errors)`;
-    problem.fix = fixAll;
-    problem.suggest = [
-      {
-        desc: message,
-        data,
-        fix
-      }
-    ];
-  } else {
-    problem.fix = fix;
-  }
-
-  context.report(problem);
+  });
 }
 
 // ------------------------------------------------------------------------------
@@ -289,48 +291,37 @@ module.exports = {
               return;
             }
 
-            let fix;
-            if (experimentalFix) {
-              let result;
-              fix = fixer => {
-                if (!result) {
-                  result = fixer.replaceTextRange(
-                    [0, source.length],
-                    prettierSource
-                  );
-                }
-                return result;
-              };
-            }
-
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
               differences.forEach(difference => {
-                let result;
                 switch (difference.operation) {
                   case INSERT:
-                    result = parseInsert(
+                    reportInsert(
+                      context,
                       difference.offset,
-                      difference.insertText
+                      difference.insertText,
+                      experimentalFix
                     );
                     break;
                   case DELETE:
-                    result = parseDelete(
+                    reportDelete(
+                      context,
                       difference.offset,
-                      difference.deleteText
+                      difference.deleteText,
+                      experimentalFix
                     );
                     break;
                   case REPLACE:
-                    result = parseReplace(
+                    reportReplace(
+                      context,
                       difference.offset,
                       difference.deleteText,
-                      difference.insertText
+                      difference.insertText,
+                      experimentalFix
                     );
                     break;
                 }
-
-                report(context, result, fix);
               });
             }
           }

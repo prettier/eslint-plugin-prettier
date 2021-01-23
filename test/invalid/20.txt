@@ -1,20 +1,16 @@
 CODE:
-a = 1.0000;
+a = 1.0;
 b = 2.00000000;
 
 OUTPUT:
 a = 1.0;
-b = 2.00000000;
+b = 2.0;
 
 OPTIONS:
 [{}, {experimentalFix: true}]
 
 ERRORS:
 [
-  {
-    message: 'Delete `000`',
-    line: 1, column: 8, endLine: 1, endColumn: 11
-  },
   {
     message: 'Delete `0000000`',
     line: 2, column: 7, endLine: 2, endColumn: 14
@@ -24,4 +20,3 @@ ERRORS:
 
 FILENAME:
 experimental-fix.js
-
