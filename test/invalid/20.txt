@@ -13,7 +13,7 @@ ERRORS:
 [
   {
     message: 'Delete `0000000`',
-    line: 2, column: 7, endLine: 2, endColumn: 14
+    line: 2, column: 8, endLine: 2, endColumn: 15
   },
 ]
 
