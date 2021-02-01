@@ -32,86 +32,39 @@ let prettier;
 // ------------------------------------------------------------------------------
 
 /**
- * Reports an "Insert ..." issue where text must be inserted.
- * @param {number} offset - The source offset where to insert text.
- * @param {string} text - The text to be inserted.
- * @returns {{message: string, data: {code: string}, range: number[], fix: function}}
- */
-function parseInsert(offset, text) {
-  const range = [offset, offset];
-  return {
-    message: 'Insert `{{ code }}`',
-    data: { code: showInvisibles(text) },
-    range,
-    fix: fixer => fixer.insertTextAfterRange(range, text)
-  };
-}
-
-/**
- * Reports a "Delete ..." issue where text must be deleted.
- * @param {number} offset - The source offset where to delete text.
- * @param {string} text - The text to be deleted.
- * @returns {{message: string, data: {code: string}, range: number[], fix: function}}
- */
-function parseDelete(offset, text) {
-  const range = [offset, offset + text.length];
-  return {
-    message: 'Delete `{{ code }}`',
-    data: { code: showInvisibles(text) },
-    range,
-    fix: fixer => fixer.removeRange(range)
-  };
-}
-
-/**
- * Reports a "Replace ... with ..." issue where text must be replaced.
- * @param {number} offset - The source offset where to replace deleted text
- with inserted text.
- * @param {string} deleteText - The text to be deleted.
- * @param {string} insertText - The text to be inserted.
- * @returns {{message: string, data: {deleteCode: string, insetCode: string}, range: number[], fix: function}}
- */
-function parseReplace(offset, deleteText, insertText) {
-  const range = [offset, offset + deleteText.length];
-  return {
-    message: 'Replace `{{ deleteCode }}` with `{{ insertCode }}`',
-    data: {
-      deleteCode: showInvisibles(deleteText),
-      insertCode: showInvisibles(insertText)
-    },
-    range,
-    fix: fixer => fixer.replaceTextRange(range, insertText)
-  };
-}
-
-/**
- * Reports ESLint problems.
- * @param {RuleContext} context - The ESLint rule context.
- * @param {object} result - The parsed data.
- * @param {function} [fixAll] - The function fixes whole file.
+ * Reports a difference.
+ * @param {import('eslint').Rule.RuleContext} context - The ESLint rule context.
+ * @param {import('prettier-linter-helpers').Difference} difference - The difference object.
  * @returns {void}
  */
-function report(context, result, fixAll) {
-  const { message, data, range, fix } = result;
+function reportDifference(context, difference, fixAll) {
+  const { operation, offset, deleteText = '', insertText = '' } = difference;
+  const range = [offset, offset + deleteText.length];
   const [start, end] = range.map(index =>
     context.getSourceCode().getLocFromIndex(index)
   );
-
+  const data = {
+    deleteText: showInvisibles(deleteText),
+    insertText: showInvisibles(insertText),
+    extraMessage: ''
+  };
+  const fix = fixer => fixer.replaceTextRange(range, insertText);
   const problem = {
-    message,
+    messageId: operation,
     data,
-    loc: {
-      start,
-      end
-    }
+    loc: { start, end }
   };
 
   if (fixAll) {
-    problem.message = `${message}(Apply fix in editor will fix all prettier/prettier errors)`;
+    problem.data = {
+      ...data,
+      extraMessage:
+        '(Apply fix in editor will fix all prettier/prettier errors)'
+    };
     problem.fix = fixAll;
     problem.suggest = [
       {
-        desc: message,
+        messageId: operation,
         data,
         fix
       }
@@ -170,7 +123,13 @@ module.exports = {
             },
             additionalProperties: true
           }
-        ]
+        ],
+        messages: {
+          [INSERT]: 'Insert `{{ insertText }}`{{extraMessage}}',
+          [DELETE]: 'Delete `{{ deleteText }}`{{extraMessage}}',
+          [REPLACE]:
+            'Replace `{{ deleteText }}` with `{{ insertText }}`{{extraMessage}}'
+        }
       },
       create(context) {
         const usePrettierrc =
@@ -306,32 +265,9 @@ module.exports = {
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
-              differences.forEach(difference => {
-                let result;
-                switch (difference.operation) {
-                  case INSERT:
-                    result = parseInsert(
-                      difference.offset,
-                      difference.insertText
-                    );
-                    break;
-                  case DELETE:
-                    result = parseDelete(
-                      difference.offset,
-                      difference.deleteText
-                    );
-                    break;
-                  case REPLACE:
-                    result = parseReplace(
-                      difference.offset,
-                      difference.deleteText,
-                      difference.insertText
-                    );
-                    break;
-                }
-
-                report(context, result, fix);
-              });
+              for (const difference of differences) {
+                reportDifference(context, difference, fix);
+              }
             }
           }
         };
