@@ -52,7 +52,8 @@ function reportDifference(context, difference, fixAll) {
   const problem = {
     messageId: operation,
     data,
-    loc: { start, end }
+    loc: { start, end },
+    fix: fixAll || fix
   };
 
   if (fixAll) {
@@ -69,8 +70,6 @@ function reportDifference(context, difference, fixAll) {
         fix
       }
     ];
-  } else {
-    problem.fix = fix;
   }
 
   context.report(problem);
