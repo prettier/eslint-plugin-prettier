@@ -76,20 +76,6 @@ This plugin ships with a `plugin:prettier/recommended` config that sets up both 
 
    You can then set Prettier's own options inside a `.prettierrc` file.
 
-3. Some ESLint plugins (such as [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)) also contain rules that conflict with Prettier. Add extra exclusions for the plugins you use like so:
-
-   ```json
-   {
-     "extends": [
-       "plugin:prettier/recommended",
-       "prettier/flowtype",
-       "prettier/react"
-     ]
-   }
-   ```
-
-   For the list of every available exclusion rule set, please see the [readme of eslint-config-prettier](https://github.com/prettier/eslint-config-prettier/blob/master/README.md).
-
 Exactly what does `plugin:prettier/recommended` do? Well, this is what it expands to:
 
 ```json
@@ -104,7 +90,7 @@ Exactly what does `plugin:prettier/recommended` do? Well, this is what it expand
 }
 ```
 
-- `"extends": ["prettier"]` enables the main config from `eslint-config-prettier`, which turns off some ESLint core rules that conflict with Prettier.
+- `"extends": ["prettier"]` enables the config from `eslint-config-prettier`, which turns off some ESLint rules that conflict with Prettier.
 - `"plugins": ["prettier"]` registers this plugin.
 - `"prettier/prettier": "error"` turns on the rule provided by this plugin, which runs Prettier from within ESLint.
 - `"arrow-body-style": "off"` and `"prefer-arrow-callback": "off"` turns off two ESLint core rules that unfortunately are problematic with this plugin – see the next section.
