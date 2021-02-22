@@ -1,26 +1,22 @@
-- [eslint-plugin-prettier ![Build Status](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amaster)](#eslint-plugin-prettier-)
-  - [Sample](#sample)
-  - [Installation](#installation)
-  - [Recommended Configuration](#recommended-configuration)
-  - [Practical Examples](#practical-examples)
-    - [Just Eslint-Plugin-Prettier](#just-eslint-plugin-prettier)
-      - [How this works](#how-this-works)
-    - [With Eslint-Config-Prettier](#with-eslint-config-prettier)
-      - [How this works](#how-this-works-1)
-      - [Alternative Method](#alternative-method)
-    - [With Airbnb](#with-airbnb)
-      - [How This Works](#how-this-works-2)
-    - [With Airbnb and Eslint-Config-Prettier](#with-airbnb-and-eslint-config-prettier)
-      - [How this works](#how-this-works-3)
-      - [Alternative Method](#alternative-method-1)
-    - [With React and Eslint-Config-Prettier](#with-react-and-eslint-config-prettier)
-      - [How this works](#how-this-works-4)
-      - [Alternative Method](#alternative-method-2)
-  - [`arrow-body-style` and `prefer-arrow-callback` issue](#arrow-body-style-and-prefer-arrow-callback-issue)
-  - [Options](#options)
-  - [Contributing](#contributing)
+# Eslint-Plugin-Prettier <!-- omit in toc -->
 
-# eslint-plugin-prettier [![Build Status](https://github.com/prettier/eslint-plugin-prettier/workflows/CI/badge.svg?branch=master)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amaster)
+[![Build Status](https://github.com/prettier/eslint-plugin-prettier/workflows/CI/badge.svg?branch=master)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amaster)
+
+- [Overview](#overview)
+- [Sample](#sample)
+- [Installation](#installation)
+- [Recommended Configuration](#recommended-configuration)
+- [Practical Examples](#practical-examples)
+  - [Just Eslint-Plugin-Prettier](#just-eslint-plugin-prettier)
+  - [With Eslint-Config-Prettier](#with-eslint-config-prettier)
+  - [With Airbnb](#with-airbnb)
+  - [With Airbnb and Eslint-Config-Prettier](#with-airbnb-and-eslint-config-prettier)
+  - [With React and Eslint-Config-Prettier](#with-react-and-eslint-config-prettier)
+- [`arrow-body-style` and `prefer-arrow-callback` issue](#arrow-body-style-and-prefer-arrow-callback-issue)
+- [Options](#options)
+- [Contributing](#contributing)
+
+## Overview
 
 Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](http://eslint.org) rule and reports differences as individual ESLint issues.
 
