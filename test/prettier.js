@@ -66,6 +66,10 @@ ruleTester.run('prettier', rule, {
     {
       code: 'a();;;;;;\n',
       filename: 'node_modules/dummy.js'
+    },
+    {
+      code: `('');\n`,
+      filename: path.join(__filename, '0_fake_virtual_name.js')
     }
   ],
   invalid: [

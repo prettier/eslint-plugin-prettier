@@ -9,6 +9,8 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
+const path = require('path');
+
 const {
   showInvisibles,
   generateDifferences
@@ -25,6 +27,9 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 // ------------------------------------------------------------------------------
 
 // Lazily-loaded Prettier.
+/**
+ * @type {import('prettier')}
+ */
 let prettier;
 
 // ------------------------------------------------------------------------------
@@ -53,6 +58,41 @@ function reportDifference(context, difference) {
     loc: { start, end },
     fix: fixer => fixer.replaceTextRange(range, insertText)
   });
+}
+
+/**
+ * Get prettier config options, handle virtual filename correctly
+ * @template T
+ * @template O
+ * @param {(filepath: string, options: O) => T} getter
+ * @param {string} filepath
+ * @param {O} options
+ * @returns {{result: T, realpath: string}}
+ */
+function tryToGet(getter, filepath, options) {
+  try {
+    return {
+      result: getter(filepath, options),
+      realpath: filepath
+    };
+  } catch (err) {
+    // https://github.com/eslint/eslint/issues/11989
+    if (
+      err.code !== 'ENOTDIR' ||
+      !/[/\\]\d+_[^/\\]*\.[\da-z]+$/i.test(filepath)
+    ) {
+      throw err;
+    }
+    try {
+      filepath = path.dirname(filepath);
+      return {
+        result: getter(filepath, options),
+        realpath: filepath
+      };
+    } catch (e) {
+      throw err;
+    }
+  }
 }
 
 // ------------------------------------------------------------------------------
@@ -124,12 +164,13 @@ module.exports = {
             const eslintPrettierOptions = context.options[0] || {};
 
             const prettierRcOptions = usePrettierrc
-              ? prettier.resolveConfig.sync(filepath, {
+              ? tryToGet(prettier.resolveConfig.sync, filepath, {
                   editorconfig: true
-                })
+                }).result
               : null;
 
-            const prettierFileInfo = prettier.getFileInfo.sync(
+            const { realpath, result: prettierFileInfo } = tryToGet(
+              prettier.getFileInfo.sync,
               filepath,
               Object.assign(
                 {},
@@ -145,7 +186,8 @@ module.exports = {
 
             const initialOptions = {};
 
-            // ESLint suppports processors that let you extract and lint JS
+            // for ESLint < 6.0
+            // it supports processors that let you extract and lint JS
             // fragments within a non-JS language. In the cases where prettier
             // supports the same language as a processor, we want to process
             // the provided source code as javascript (as ESLint provides the
@@ -165,8 +207,13 @@ module.exports = {
             // * Prettier supports parsing the file type
             // * There is an ESLint processor that extracts JavaScript snippets
             //   from the file type.
+            //
+            // for ESLint >= 6.0
+            // it supports virtual filename, if filepath is not same as realpath,
+            // it means filepath is virtual name, and we can guess the file type by prettier automatically
             const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
             if (
+              filepath === realpath &&
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
             ) {
               // Prettier v1.16.0 renamed the `babylon` parser to `babel`
@@ -187,7 +234,7 @@ module.exports = {
             );
 
             // prettier.format() may throw a SyntaxError if it cannot parse the
-            // source code it is given. Ususally for JS files this isn't a
+            // source code it is given. Usually for JS files this isn't a
             // problem as ESLint will report invalid syntax before trying to
             // pass it to the prettier plugin. However this might be a problem
             // for non-JS languages that are handled by a plugin. Notably Vue
@@ -205,7 +252,7 @@ module.exports = {
               let message = 'Parsing error: ' + err.message;
 
               // Prettier's message contains a codeframe style preview of the
-              // invalid code and the line/column at which the error occured.
+              // invalid code and the line/column at which the error occurred.
               // ESLint shows those pieces of information elsewhere already so
               // remove them from the message
               if (err.codeFrame) {
