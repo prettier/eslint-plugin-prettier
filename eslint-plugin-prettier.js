@@ -9,6 +9,7 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
+const fs = require('fs');
 const path = require('path');
 
 const {
@@ -61,38 +62,23 @@ function reportDifference(context, difference) {
 }
 
 /**
- * Get prettier config options, handle virtual filename correctly
- * @template T
- * @template O
- * @param {(filepath: string, options: O) => T} getter
+ * get normalized filepath in case of virtual filename
  * @param {string} filepath
- * @param {O} options
- * @returns {{result: T, realpath: string}}
+ * @returns {string}
  */
-function tryToGet(getter, filepath, options) {
+function normalizeFilepath(filepath) {
   try {
-    return {
-      result: getter(filepath, options),
-      realpath: filepath
-    };
+    if (fs.statSync(filepath).isFile()) {
+      return filepath;
+    }
   } catch (err) {
     // https://github.com/eslint/eslint/issues/11989
-    if (
-      err.code !== 'ENOTDIR' ||
-      !/[/\\]\d+_[^/\\]*\.[\da-z]+$/i.test(filepath)
-    ) {
-      throw err;
-    }
-    try {
-      filepath = path.dirname(filepath);
-      return {
-        result: getter(filepath, options),
-        realpath: filepath
-      };
-    } catch (e) {
-      throw err;
+    if (err.code === 'ENOTDIR') {
+      return normalizeFilepath(path.dirname(filepath));
     }
   }
+
+  return filepath;
 }
 
 // ------------------------------------------------------------------------------
@@ -152,6 +138,7 @@ module.exports = {
           (context.options[1] && context.options[1].fileInfoOptions) || {};
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
+        const normalizedFilepath = normalizeFilepath(filepath);
         const source = sourceCode.text;
 
         return {
@@ -164,14 +151,13 @@ module.exports = {
             const eslintPrettierOptions = context.options[0] || {};
 
             const prettierRcOptions = usePrettierrc
-              ? tryToGet(prettier.resolveConfig.sync, filepath, {
+              ? prettier.resolveConfig.sync(normalizedFilepath, {
                   editorconfig: true
-                }).result
+                })
               : null;
 
-            const { realpath, result: prettierFileInfo } = tryToGet(
-              prettier.getFileInfo.sync,
-              filepath,
+            const prettierFileInfo = prettier.getFileInfo.sync(
+              normalizedFilepath,
               Object.assign(
                 {},
                 { resolveConfig: true, ignorePath: '.prettierignore' },
@@ -209,11 +195,11 @@ module.exports = {
             //   from the file type.
             //
             // for ESLint >= 6.0
-            // it supports virtual filename, if filepath is not same as realpath,
+            // it supports virtual filename, if filepath is not same as normalizedFilepath,
             // it means filepath is virtual name, and we can guess the file type by prettier automatically
             const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
             if (
-              filepath === realpath &&
+              filepath === normalizedFilepath &&
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
             ) {
               // Prettier v1.16.0 renamed the `babylon` parser to `babel`
