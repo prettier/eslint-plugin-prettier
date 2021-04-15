@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.4.0 (2021-04-15)
+
+* feat: support processor virtual filename ([#401](git@github.com:prettier/eslint-plugin-prettier/issues/401)) ([ee0ccc6](git@github.com:prettier/eslint-plugin-prettier/commit/ee0ccc6ac06d13cd546e78b444e53164f59eb27f))
+* Simplify report logic ([#380](git@github.com:prettier/eslint-plugin-prettier/issues/380)) ([d993f24](git@github.com:prettier/eslint-plugin-prettier/commit/d993f247b5661683af031ab3b93955a0dfe448fa))
+* Update: README.md ([#375](git@github.com:prettier/eslint-plugin-prettier/issues/375)) ([3ea4242](git@github.com:prettier/eslint-plugin-prettier/commit/3ea4242a8d4acdb76eb7e7dca9e44d3e87db70e3))
+
 ## v3.3.1 (2021-01-04)
 
 * fix: add eslint-config-prettier as an optional peer dependency ([#374](git@github.com:prettier/eslint-plugin-prettier/issues/374)) ([d59df27](git@github.com:prettier/eslint-plugin-prettier/commit/d59df27890aaffec9e528ceb3155831a0261848d))
