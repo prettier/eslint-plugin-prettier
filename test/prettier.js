@@ -67,6 +67,13 @@ ruleTester.run('prettier', rule, {
       code: 'a();;;;;;\n',
       filename: 'node_modules/dummy.js'
     },
+    // ESLint processors can provide virtual filenames. E.g. fenced code blocks
+    // in a markdown file may be processed with the filenames
+    // `a-markdown-file.md/1.js` / `a-markdown-file.md/2.js`
+    // If we try and pass those filenames into prettier's `resolveConfig` and
+    // `getFileInfo` methods they throw up because the it doesn't like treating
+    // `markdown-file.md` as a directory.
+    // Make sure we handle that case internally so this does not crash
     {
       code: `('');\n`,
       filename: path.join(__filename, '0_fake_virtual_name.js')

@@ -62,11 +62,13 @@ function reportDifference(context, difference) {
 }
 
 /**
- * get normalized filepath in case of virtual filename
+ * Given a filepath, get the nearest path that is a regular file.
+ * The filepath provided by eslint may be a virtual filepath rather than a file
+ * on disk. This attempts to transform a virtual path into an on-disk path
  * @param {string} filepath
  * @returns {string}
  */
-function normalizeFilepath(filepath) {
+function getOnDiskFilepath(filepath) {
   try {
     if (fs.statSync(filepath).isFile()) {
       return filepath;
@@ -74,7 +76,7 @@ function normalizeFilepath(filepath) {
   } catch (err) {
     // https://github.com/eslint/eslint/issues/11989
     if (err.code === 'ENOTDIR') {
-      return normalizeFilepath(path.dirname(filepath));
+      return getOnDiskFilepath(path.dirname(filepath));
     }
   }
 
@@ -138,7 +140,14 @@ module.exports = {
           (context.options[1] && context.options[1].fileInfoOptions) || {};
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
-        const normalizedFilepath = normalizeFilepath(filepath);
+        // Processors that extract content from a file, such as the markdown
+        // plugin extracting fenced code blocks may choose to specify virtual
+        // file paths. If this is the case then we need to resolve prettier
+        // config and file info using the on-disk path instead of the virtual
+        // path.
+        // See https://github.com/eslint/eslint/issues/11989 for ideas around
+        // being able to get this value directly from eslint in the future.
+        const onDiskFilepath = getOnDiskFilepath(filepath);
         const source = sourceCode.text;
 
         return {
@@ -151,13 +160,13 @@ module.exports = {
             const eslintPrettierOptions = context.options[0] || {};
 
             const prettierRcOptions = usePrettierrc
-              ? prettier.resolveConfig.sync(normalizedFilepath, {
+              ? prettier.resolveConfig.sync(onDiskFilepath, {
                   editorconfig: true
                 })
               : null;
 
             const prettierFileInfo = prettier.getFileInfo.sync(
-              normalizedFilepath,
+              onDiskFilepath,
               Object.assign(
                 {},
                 { resolveConfig: true, ignorePath: '.prettierignore' },
@@ -172,8 +181,7 @@ module.exports = {
 
             const initialOptions = {};
 
-            // for ESLint < 6.0
-            // it supports processors that let you extract and lint JS
+            // ESLint supports processors that let you extract and lint JS
             // fragments within a non-JS language. In the cases where prettier
             // supports the same language as a processor, we want to process
             // the provided source code as javascript (as ESLint provides the
@@ -181,9 +189,14 @@ module.exports = {
             // based off the filename. Otherwise, for instance, on a .md file we
             // end up trying to run prettier over a fragment of JS using the
             // markdown parser, which throws an error.
-            // If we can't infer the parser from from the filename, either
-            // because no filename was provided or because there is no parser
-            // found for the filename, use javascript.
+            // Processors may set virtual filenames for these extracted blocks.
+            // If they do so then we want to trust the file extension they
+            // provide, and no override is needed.
+            // If the processor does not set any virtual filename (signified by
+            // `filepath` and `onDiskFilepath` being equal) AND we can't
+            // infer the parser from the filename, either because no filename
+            // was provided or because there is no parser found for the
+            // filename, use javascript.
             // This is added to the options first, so that
             // prettierRcOptions and eslintPrettierOptions can still override
             // the parser.
@@ -193,13 +206,9 @@ module.exports = {
             // * Prettier supports parsing the file type
             // * There is an ESLint processor that extracts JavaScript snippets
             //   from the file type.
-            //
-            // for ESLint >= 6.0
-            // it supports virtual filename, if filepath is not same as normalizedFilepath,
-            // it means filepath is virtual name, and we can guess the file type by prettier automatically
             const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
             if (
-              filepath === normalizedFilepath &&
+              filepath === onDiskFilepath &&
               parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
             ) {
               // Prettier v1.16.0 renamed the `babylon` parser to `babel`
