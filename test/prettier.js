@@ -26,6 +26,14 @@ const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester();
 
+let graphqlEslintParserPath;
+
+try {
+  graphqlEslintParserPath = require.resolve('@graphql-eslint/eslint-plugin');
+} catch (e) {
+  // ignore
+}
+
 ruleTester.run('prettier', rule, {
   valid: [
     // Correct style.
@@ -84,16 +92,19 @@ ruleTester.run('prettier', rule, {
       parserOptions: {
         ecmaVersion: 2015
       }
-    },
-    {
-      code: `type Query {
+    }
+  ].concat(
+    graphqlEslintParserPath
+      ? {
+          code: `type Query {
   foo: String!
 }
 `,
-      filename: 'valid.graphql',
-      parser: require.resolve('@graphql-eslint/eslint-plugin')
-    }
-  ],
+          filename: 'valid.graphql',
+          parser: graphqlEslintParserPath
+        }
+      : []
+  ),
   invalid: [
     '01',
     '02',
