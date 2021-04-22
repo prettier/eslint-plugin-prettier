@@ -165,7 +165,7 @@ module.exports = {
                 })
               : null;
 
-            const prettierFileInfo = prettier.getFileInfo.sync(
+            const { ignored, inferredParser } = prettier.getFileInfo.sync(
               onDiskFilepath,
               Object.assign(
                 {},
@@ -175,7 +175,7 @@ module.exports = {
             );
 
             // Skip if file is ignored using a .prettierignore file
-            if (prettierFileInfo.ignored) {
+            if (ignored) {
               return;
             }
 
@@ -206,11 +206,21 @@ module.exports = {
             // * Prettier supports parsing the file type
             // * There is an ESLint processor that extracts JavaScript snippets
             //   from the file type.
-            const parserBlocklist = [null, 'graphql', 'markdown', 'html'];
+            const parserBlocklist = [null, 'markdown', 'html'];
+
+            let inferParserToBabel =
+              parserBlocklist.indexOf(inferredParser) !== -1;
+
             if (
-              filepath === onDiskFilepath &&
-              parserBlocklist.indexOf(prettierFileInfo.inferredParser) !== -1
+              // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
+              inferredParser === 'graphql' &&
+              // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
+              source.startsWith('ESLintPluginGraphQLFile`')
             ) {
+              inferParserToBabel = true;
+            }
+
+            if (filepath === onDiskFilepath && inferParserToBabel) {
               // Prettier v1.16.0 renamed the `babylon` parser to `babel`
               // Use the modern name if available
               const supportBabelParser = prettier

@@ -77,6 +77,21 @@ ruleTester.run('prettier', rule, {
     {
       code: `('');\n`,
       filename: path.join(__filename, '0_fake_virtual_name.js')
+    },
+    {
+      code: 'ESLintPluginGraphQLFile`type Query {\n  foo: String!\n}`\n',
+      filename: getPrettierRcJsFilename('no-semi', 'dummy.graphql'),
+      parserOptions: {
+        ecmaVersion: 2015
+      }
+    },
+    {
+      code: `type Query {
+  foo: String!
+}
+`,
+      filename: 'valid.graphql',
+      parser: require.resolve('@graphql-eslint/eslint-plugin')
     }
   ],
   invalid: [
