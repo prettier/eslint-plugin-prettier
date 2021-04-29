@@ -77,6 +77,12 @@ ruleTester.run('prettier', rule, {
     {
       code: `('');\n`,
       filename: path.join(__filename, '0_fake_virtual_name.js')
+    },
+    // Prioritize .prettierrc options, overriding specified eslint options
+    {
+      code: `var foo = { bar: 0 };\n`,
+      filename: getPrettierRcJsFilename('bracket-spacing'),
+      options: [{ bracketSpacing: false }, { priorityOptions: 'prettierRc' }]
     }
   ],
   invalid: [

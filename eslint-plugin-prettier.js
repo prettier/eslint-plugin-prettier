@@ -122,6 +122,11 @@ module.exports = {
                 type: 'object',
                 properties: {},
                 additionalProperties: true
+              },
+              priorityOptions: {
+                type: 'string',
+                enum: ['prettierRc', 'eslint'],
+                default: 'eslint'
               }
             },
             additionalProperties: true
@@ -134,10 +139,10 @@ module.exports = {
         }
       },
       create(context) {
-        const usePrettierrc =
-          !context.options[1] || context.options[1].usePrettierrc !== false;
-        const eslintFileInfoOptions =
-          (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const eslintOptions = context.options[1] || {};
+        const usePrettierrc = eslintOptions.usePrettierrc !== false;
+        const eslintFileInfoOptions = eslintOptions.fileInfoOptions || {};
+        const priorityOptions = eslintOptions.priorityOptions || 'eslint';
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         // Processors that extract content from a file, such as the markdown
@@ -220,11 +225,24 @@ module.exports = {
               initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
             }
 
+            // by default, eslintPrettierOptions take precedence
+            // and override any config set with `.prettierrc` files
+            const prioritizedOptions = [
+              prettierRcOptions,
+              eslintPrettierOptions
+            ];
+
+            // with priorityOptions set to 'prettierRc', any config set with
+            // `.prettierrc` files override any eslint prettier options
+            if (priorityOptions === 'prettierRc') {
+              prioritizedOptions.reverse();
+            }
+
             const prettierOptions = Object.assign(
               {},
               initialOptions,
-              prettierRcOptions,
-              eslintPrettierOptions,
+              prioritizedOptions[0],
+              prioritizedOptions[1],
               { filepath }
             );
 

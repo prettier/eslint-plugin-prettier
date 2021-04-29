@@ -117,7 +117,7 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
     "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
     ```
 
-    NB: This option will merge and override any config set with `.prettierrc` files
+    NB: This option will merge and override any config set with `.prettierrc` files (unless you specify `priorityOptions: 'prettierRc'` in the second option (see below))
 
 - The second option:
 
@@ -138,6 +138,19 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
         "fileInfoOptions": {
           "withNodeModules": true
         }
+      }]
+      ```
+
+    - `priorityOptions`: An enum deciding which options should take precedence when merging. You might want to set `prettierRc` as the priority if you want to use `.prettierrc` files to override eslint settings (useful for distributing a shared eslint config).
+
+      - `prettierRc`: the `.prettierrc` file options take precedence over the eslint prettier options
+      - `eslint` (default): as stated above, eslint options will merge and override any config set with `.prettierrc` files
+
+      ```json
+      "prettier/prettier": ["error", {
+        tabWidth: 4
+      }, {
+        "priorityOptions": "prettierRc"
       }]
       ```
 
