@@ -13,6 +13,7 @@ jobs:
       matrix:
         eslint-version: [7.x, 6.x, 5.x]
         node-version: [16.x, 14.x, 12.x, 10.x, 8.x, 6.x]
+        test-graphql: [true, false]
 
         exclude:
           # eslint 7 does not support node 6 or 8
@@ -25,6 +26,11 @@ jobs:
           - eslint-version: 6.x
             node-version: 8.x
           - eslint-version: 6.x
+            node-version: 6.x
+          # the version of graphql-config used in @graphql-eslint/eslint-plugin does not support node 8
+          - test-graphql: true
+            node-version: 8.x
+          - test-graphql: true
             node-version: 6.x
 
     steps:
@@ -40,6 +46,9 @@ jobs:
 
       - name: Install
         run: yarn install
+
+      - if: matrix.test-graphql == true
+        run: yarn add -D @graphql-eslint/eslint-plugin graphql
 
       - name: Test
         run: yarn run test
