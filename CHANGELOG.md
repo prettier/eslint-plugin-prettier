@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.4.1 (2021-08-20)
+
+* build(deps): Bump glob-parent from 5.0.0 to 5.1.2 ([#420](git@github.com:prettier/eslint-plugin-prettier/issues/420)) ([b6d075c](git@github.com:prettier/eslint-plugin-prettier/commit/b6d075cf7111468e8af4161c306c7f37f09f220e))
+* build(deps): Bump path-parse from 1.0.6 to 1.0.7 ([#425](git@github.com:prettier/eslint-plugin-prettier/issues/425)) ([24f957e](git@github.com:prettier/eslint-plugin-prettier/commit/24f957ee2a5476bb9cc8e64921b9841fc751391e))
+* feat: support `@graphql-eslint/eslint-plugin` out of box ([#413](git@github.com:prettier/eslint-plugin-prettier/issues/413)) ([ec6fbb1](git@github.com:prettier/eslint-plugin-prettier/commit/ec6fbb159e2454c6e145db55480932dc953cf7c1))
+* chore: add tests for Node 16 ([#410](git@github.com:prettier/eslint-plugin-prettier/issues/410)) ([76bd45e](git@github.com:prettier/eslint-plugin-prettier/commit/76bd45ece6d56eb52f75db6b4a1efdd2efb56392))
+
 ## v3.4.0 (2021-04-15)
 
 * feat: support processor virtual filename ([#401](git@github.com:prettier/eslint-plugin-prettier/issues/401)) ([ee0ccc6](git@github.com:prettier/eslint-plugin-prettier/commit/ee0ccc6ac06d13cd546e78b444e53164f59eb27f))
