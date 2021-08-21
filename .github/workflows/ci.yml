@@ -27,7 +27,9 @@ jobs:
             node-version: 8.x
           - eslint-version: 6.x
             node-version: 6.x
-          # the version of graphql-config used in @graphql-eslint/eslint-plugin does not support node 8
+          # @graphql-eslint/eslint-plugin does not support node 6 or 8 or 10
+          - test-graphql: true
+            node-version: 10.x
           - test-graphql: true
             node-version: 8.x
           - test-graphql: true
