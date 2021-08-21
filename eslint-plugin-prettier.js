@@ -221,6 +221,7 @@ module.exports = {
                 'markdown',
                 'html',
                 'mdx',
+                'angular',
               ];
               if (parserBlocklist.indexOf(inferredParser) !== -1) {
                 return;
