@@ -220,6 +220,7 @@ module.exports = {
                 'vue',
                 'markdown',
                 'html',
+                'mdx',
               ];
               if (parserBlocklist.indexOf(inferredParser) !== -1) {
                 return;
