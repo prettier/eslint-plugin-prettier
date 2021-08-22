@@ -26,14 +26,6 @@ const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester();
 
-let graphqlEslintParserPath;
-
-try {
-  graphqlEslintParserPath = require.resolve('@graphql-eslint/eslint-plugin');
-} catch (e) {
-  // ignore
-}
-
 ruleTester.run('prettier', rule, {
   valid: [
     // Correct style.
@@ -86,25 +78,7 @@ ruleTester.run('prettier', rule, {
       code: `('');\n`,
       filename: path.join(__filename, '0_fake_virtual_name.js'),
     },
-    {
-      code: 'ESLintPluginGraphQLFile`type Query {\n  foo: String!\n}`\n',
-      filename: getPrettierRcJsFilename('no-semi', 'dummy.graphql'),
-      parserOptions: {
-        ecmaVersion: 2015,
-      },
-    },
-  ].concat(
-    graphqlEslintParserPath
-      ? {
-          code: `type Query {
-  foo: String!
-}
-`,
-          filename: 'valid.graphql',
-          parser: graphqlEslintParserPath,
-        }
-      : []
-  ),
+  ],
   invalid: [
     '01',
     '02',
@@ -132,7 +106,7 @@ const vueRuleTester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
 });
 
-vueRuleTester.run('prettier', rule, {
+vueRuleTester.run('vue', rule, {
   valid: [
     {
       code: `<template>\n  <div>HI</div>\n</template>\n<script>\n3;\n</script>\n`,
@@ -147,6 +121,48 @@ vueRuleTester.run('prettier', rule, {
       filename: 'syntax-error.vue',
     }),
   ],
+});
+
+const atGraphqlEslintRuleTester = new RuleTester({
+  parser: require.resolve('@graphql-eslint/eslint-plugin'),
+});
+
+atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
+  valid: [
+    {
+      code: `type Query {\n  foo: String!\n}\n`,
+      filename: 'valid.graphql',
+    },
+  ],
+  invalid: [
+    Object.assign(loadInvalidFixture('graphql'), {
+      filename: 'invalid.graphql',
+    }),
+  ],
+});
+
+// eslint-plugin-graphql handles literal graphql files by tranforming graphql
+// code with a processor, instead of using a parser. Unfortunatly we cant
+// specify custom processors in a RuleTester, so instead we have write test code
+// that is the result of eslint-plugin-graphql's processing - this is the
+// ESLintPluginGraphQLFile tagged template literal. See
+// https://github.com/apollographql/eslint-plugin-graphql/blob/c465fedc8fea239ee1731ad4ec3ee1183a3cdddf/src/index.js#L404
+// In the future if ESLint supports processors (https://github.com/eslint/rfcs/pull/31)
+// we should be define a RuleTester like
+// `newRuleTester({processor: require('eslint-plugin-graphql').processor['.graphql']})
+// and then pass in pure graphql into the code value.
+const eslintPluginGraphqlRuleTester = new RuleTester({
+  parserOptions: { ecmaVersion: 2015 },
+});
+
+eslintPluginGraphqlRuleTester.run('eslint-plugin-graphql', rule, {
+  valid: [
+    {
+      code: 'ESLintPluginGraphQLFile`type Query {\n  foo: String!\n}`\n',
+      filename: getPrettierRcJsFilename('no-semi', 'dummy.graphql'),
+    },
+  ],
+  invalid: [],
 });
 
 // ------------------------------------------------------------------------------

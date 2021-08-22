@@ -1,0 +1,20 @@
+CODE:
+type Query {
+foo: String!
+}
+
+OUTPUT:
+type Query {
+  foo: String!
+}
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Insert `··`',
+    line: 2, column: 1, endLine: 2, endColumn: 1,
+  },
+]
