@@ -14,7 +14,7 @@ const path = require('path');
 
 const {
   showInvisibles,
-  generateDifferences
+  generateDifferences,
 } = require('prettier-linter-helpers');
 
 // ------------------------------------------------------------------------------
@@ -54,10 +54,10 @@ function reportDifference(context, difference) {
     messageId: operation,
     data: {
       deleteText: showInvisibles(deleteText),
-      insertText: showInvisibles(insertText)
+      insertText: showInvisibles(insertText),
     },
     loc: { start, end },
-    fix: (fixer) => fixer.replaceTextRange(range, insertText)
+    fix: (fixer) => fixer.replaceTextRange(range, insertText),
   });
 }
 
@@ -95,15 +95,15 @@ module.exports = {
       rules: {
         'prettier/prettier': 'error',
         'arrow-body-style': 'off',
-        'prefer-arrow-callback': 'off'
-      }
-    }
+        'prefer-arrow-callback': 'off',
+      },
+    },
   },
   rules: {
     prettier: {
       meta: {
         docs: {
-          url: 'https://github.com/prettier/eslint-plugin-prettier#options'
+          url: 'https://github.com/prettier/eslint-plugin-prettier#options',
         },
         type: 'layout',
         fixable: 'code',
@@ -112,7 +112,7 @@ module.exports = {
           {
             type: 'object',
             properties: {},
-            additionalProperties: true
+            additionalProperties: true,
           },
           {
             type: 'object',
@@ -121,17 +121,17 @@ module.exports = {
               fileInfoOptions: {
                 type: 'object',
                 properties: {},
-                additionalProperties: true
-              }
+                additionalProperties: true,
+              },
             },
-            additionalProperties: true
-          }
+            additionalProperties: true,
+          },
         ],
         messages: {
           [INSERT]: 'Insert `{{ insertText }}`',
           [DELETE]: 'Delete `{{ deleteText }}`',
-          [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`'
-        }
+          [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`',
+        },
       },
       create(context) {
         const usePrettierrc =
@@ -161,7 +161,7 @@ module.exports = {
 
             const prettierRcOptions = usePrettierrc
               ? prettier.resolveConfig.sync(onDiskFilepath, {
-                  editorconfig: true
+                  editorconfig: true,
                 })
               : null;
 
@@ -281,9 +281,9 @@ module.exports = {
                 reportDifference(context, difference);
               }
             }
-          }
+          },
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };
