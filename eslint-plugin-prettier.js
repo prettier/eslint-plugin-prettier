@@ -221,15 +221,7 @@ module.exports = {
             }
 
             if (filepath === onDiskFilepath && inferParserToBabel) {
-              // Prettier v1.16.0 renamed the `babylon` parser to `babel`
-              // Use the modern name if available
-              const supportBabelParser = prettier
-                .getSupportInfo()
-                .languages.some((language) =>
-                  language.parsers.includes('babel')
-                );
-
-              initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
+              initialOptions.parser = 'babel';
             }
 
             const prettierOptions = Object.assign(
