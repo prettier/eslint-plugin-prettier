@@ -1,11 +1,11 @@
 CODE:
 var a = {
-b: 1
+b: 1,
 };
 
 OUTPUT:
 var a = {
-	b: 1
+	b: 1,
 };
 
 OPTIONS:

@@ -46,7 +46,7 @@ let prettier;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = [offset, offset + deleteText.length];
-  const [start, end] = range.map(index =>
+  const [start, end] = range.map((index) =>
     context.getSourceCode().getLocFromIndex(index)
   );
 
@@ -57,7 +57,7 @@ function reportDifference(context, difference) {
       insertText: showInvisibles(insertText)
     },
     loc: { start, end },
-    fix: fixer => fixer.replaceTextRange(range, insertText)
+    fix: (fixer) => fixer.replaceTextRange(range, insertText)
   });
 }
 
@@ -225,7 +225,9 @@ module.exports = {
               // Use the modern name if available
               const supportBabelParser = prettier
                 .getSupportInfo()
-                .languages.some(language => language.parsers.includes('babel'));
+                .languages.some((language) =>
+                  language.parsers.includes('babel')
+                );
 
               initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
             }

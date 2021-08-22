@@ -166,7 +166,7 @@ function loadInvalidFixture(name) {
   const src = fs.readFileSync(filename, 'utf8');
   const sections = src
     .split(/^[A-Z]+:\n/m)
-    .map(x => x.replace(/(?=\n)\n$/, ''));
+    .map((x) => x.replace(/(?=\n)\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
