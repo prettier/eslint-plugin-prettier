@@ -43,22 +43,42 @@ let prettier;
  * @param {import('prettier-linter-helpers').Difference} difference - The difference object.
  * @returns {void}
  */
-function reportDifference(context, difference) {
+function reportDifference(context, difference, fixAll) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = [offset, offset + deleteText.length];
   const [start, end] = range.map(index =>
     context.getSourceCode().getLocFromIndex(index)
   );
-
-  context.report({
+  const data = {
+    deleteText: showInvisibles(deleteText),
+    insertText: showInvisibles(insertText),
+    extraMessage: ''
+  };
+  const fix = fixer => fixer.replaceTextRange(range, insertText);
+  const problem = {
     messageId: operation,
-    data: {
-      deleteText: showInvisibles(deleteText),
-      insertText: showInvisibles(insertText)
-    },
+    data,
     loc: { start, end },
-    fix: fixer => fixer.replaceTextRange(range, insertText)
-  });
+    fix: fixAll || fix
+  };
+
+  if (fixAll) {
+    problem.data = {
+      ...data,
+      extraMessage:
+        '(Apply fix in editor will fix all prettier/prettier errors)'
+    };
+    problem.fix = fixAll;
+    problem.suggest = [
+      {
+        messageId: operation,
+        data,
+        fix
+      }
+    ];
+  }
+
+  context.report(problem);
 }
 
 /**
@@ -122,15 +142,20 @@ module.exports = {
                 type: 'object',
                 properties: {},
                 additionalProperties: true
+              },
+              experimentalFix: {
+                type: 'boolean',
+                default: false
               }
             },
             additionalProperties: true
           }
         ],
         messages: {
-          [INSERT]: 'Insert `{{ insertText }}`',
-          [DELETE]: 'Delete `{{ deleteText }}`',
-          [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`'
+          [INSERT]: 'Insert `{{ insertText }}`{{extraMessage}}',
+          [DELETE]: 'Delete `{{ deleteText }}`{{extraMessage}}',
+          [REPLACE]:
+            'Replace `{{ deleteText }}` with `{{ insertText }}`{{extraMessage}}'
         }
       },
       create(context) {
@@ -138,6 +163,8 @@ module.exports = {
           !context.options[1] || context.options[1].usePrettierrc !== false;
         const eslintFileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const experimentalFix =
+          context.options[1] && context.options[1].experimentalFix === true;
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
         // Processors that extract content from a file, such as the markdown
@@ -272,11 +299,25 @@ module.exports = {
               return;
             }
 
+            let fix;
+            if (experimentalFix) {
+              let result;
+              fix = fixer => {
+                if (!result) {
+                  result = fixer.replaceTextRange(
+                    [0, source.length],
+                    prettierSource
+                  );
+                }
+                return result;
+              };
+            }
+
             if (source !== prettierSource) {
               const differences = generateDifferences(source, prettierSource);
 
               for (const difference of differences) {
-                reportDifference(context, difference);
+                reportDifference(context, difference, fix);
               }
             }
           }
