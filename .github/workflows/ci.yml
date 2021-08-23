@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         eslint-version: [7.x]
-        node-version: [16.x, 14.x, 12.x, 10.x]
+        node-version: [16.x, 14.x, 12.x]
 
     steps:
       - uses: actions/checkout@v2
