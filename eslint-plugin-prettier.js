@@ -9,9 +9,6 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
-const fs = require('fs');
-const path = require('path');
-
 const {
   showInvisibles,
   generateDifferences,
@@ -59,28 +56,6 @@ function reportDifference(context, difference) {
     loc: { start, end },
     fix: (fixer) => fixer.replaceTextRange(range, insertText),
   });
-}
-
-/**
- * Given a filepath, get the nearest path that is a regular file.
- * The filepath provided by eslint may be a virtual filepath rather than a file
- * on disk. This attempts to transform a virtual path into an on-disk path
- * @param {string} filepath
- * @returns {string}
- */
-function getOnDiskFilepath(filepath) {
-  try {
-    if (fs.statSync(filepath).isFile()) {
-      return filepath;
-    }
-  } catch (err) {
-    // https://github.com/eslint/eslint/issues/11989
-    if (err.code === 'ENOTDIR') {
-      return getOnDiskFilepath(path.dirname(filepath));
-    }
-  }
-
-  return filepath;
 }
 
 // ------------------------------------------------------------------------------
@@ -145,9 +120,7 @@ module.exports = {
         // file paths. If this is the case then we need to resolve prettier
         // config and file info using the on-disk path instead of the virtual
         // path.
-        // See https://github.com/eslint/eslint/issues/11989 for ideas around
-        // being able to get this value directly from eslint in the future.
-        const onDiskFilepath = getOnDiskFilepath(filepath);
+        const onDiskFilepath = context.getPhysicalFilename();
         const source = sourceCode.text;
 
         return {
