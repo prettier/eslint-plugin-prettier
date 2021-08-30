@@ -9,12 +9,9 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
-const fs = require('fs');
-const path = require('path');
-
 const {
   showInvisibles,
-  generateDifferences
+  generateDifferences,
 } = require('prettier-linter-helpers');
 
 // ------------------------------------------------------------------------------
@@ -46,7 +43,7 @@ let prettier;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = [offset, offset + deleteText.length];
-  const [start, end] = range.map(index =>
+  const [start, end] = range.map((index) =>
     context.getSourceCode().getLocFromIndex(index)
   );
 
@@ -54,33 +51,11 @@ function reportDifference(context, difference) {
     messageId: operation,
     data: {
       deleteText: showInvisibles(deleteText),
-      insertText: showInvisibles(insertText)
+      insertText: showInvisibles(insertText),
     },
     loc: { start, end },
-    fix: fixer => fixer.replaceTextRange(range, insertText)
+    fix: (fixer) => fixer.replaceTextRange(range, insertText),
   });
-}
-
-/**
- * Given a filepath, get the nearest path that is a regular file.
- * The filepath provided by eslint may be a virtual filepath rather than a file
- * on disk. This attempts to transform a virtual path into an on-disk path
- * @param {string} filepath
- * @returns {string}
- */
-function getOnDiskFilepath(filepath) {
-  try {
-    if (fs.statSync(filepath).isFile()) {
-      return filepath;
-    }
-  } catch (err) {
-    // https://github.com/eslint/eslint/issues/11989
-    if (err.code === 'ENOTDIR') {
-      return getOnDiskFilepath(path.dirname(filepath));
-    }
-  }
-
-  return filepath;
 }
 
 // ------------------------------------------------------------------------------
@@ -95,15 +70,15 @@ module.exports = {
       rules: {
         'prettier/prettier': 'error',
         'arrow-body-style': 'off',
-        'prefer-arrow-callback': 'off'
-      }
-    }
+        'prefer-arrow-callback': 'off',
+      },
+    },
   },
   rules: {
     prettier: {
       meta: {
         docs: {
-          url: 'https://github.com/prettier/eslint-plugin-prettier#options'
+          url: 'https://github.com/prettier/eslint-plugin-prettier#options',
         },
         type: 'layout',
         fixable: 'code',
@@ -112,7 +87,7 @@ module.exports = {
           {
             type: 'object',
             properties: {},
-            additionalProperties: true
+            additionalProperties: true,
           },
           {
             type: 'object',
@@ -121,17 +96,17 @@ module.exports = {
               fileInfoOptions: {
                 type: 'object',
                 properties: {},
-                additionalProperties: true
-              }
+                additionalProperties: true,
+              },
             },
-            additionalProperties: true
-          }
+            additionalProperties: true,
+          },
         ],
         messages: {
           [INSERT]: 'Insert `{{ insertText }}`',
           [DELETE]: 'Delete `{{ deleteText }}`',
-          [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`'
-        }
+          [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`',
+        },
       },
       create(context) {
         const usePrettierrc =
@@ -145,9 +120,7 @@ module.exports = {
         // file paths. If this is the case then we need to resolve prettier
         // config and file info using the on-disk path instead of the virtual
         // path.
-        // See https://github.com/eslint/eslint/issues/11989 for ideas around
-        // being able to get this value directly from eslint in the future.
-        const onDiskFilepath = getOnDiskFilepath(filepath);
+        const onDiskFilepath = context.getPhysicalFilename();
         const source = sourceCode.text;
 
         return {
@@ -161,7 +134,7 @@ module.exports = {
 
             const prettierRcOptions = usePrettierrc
               ? prettier.resolveConfig.sync(onDiskFilepath, {
-                  editorconfig: true
+                  editorconfig: true,
                 })
               : null;
 
@@ -221,13 +194,7 @@ module.exports = {
             }
 
             if (filepath === onDiskFilepath && inferParserToBabel) {
-              // Prettier v1.16.0 renamed the `babylon` parser to `babel`
-              // Use the modern name if available
-              const supportBabelParser = prettier
-                .getSupportInfo()
-                .languages.some(language => language.parsers.includes('babel'));
-
-              initialOptions.parser = supportBabelParser ? 'babel' : 'babylon';
+              initialOptions.parser = 'babel';
             }
 
             const prettierOptions = Object.assign(
@@ -279,9 +246,9 @@ module.exports = {
                 reportDifference(context, difference);
               }
             }
-          }
+          },
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

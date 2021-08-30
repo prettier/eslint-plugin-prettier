@@ -1,20 +1,20 @@
 CODE:
-var a = {
-b: 1,
-};
+type Query {
+foo: String!
+}
 
 OUTPUT:
-var a = {
-	b: 1,
-};
+type Query {
+  foo: String!
+}
 
 OPTIONS:
-[{useTabs: true}]
+[]
 
 ERRORS:
 [
   {
-    message: 'Insert `↹`',
+    message: 'Insert `··`',
     line: 2, column: 1, endLine: 2, endColumn: 1,
   },
 ]

@@ -5,7 +5,7 @@ var a = {
 
 OUTPUT:
 var a = {
-  b: ""
+  b: "",
 };
 
 OPTIONS:
@@ -14,7 +14,7 @@ OPTIONS:
 ERRORS:
 [
   {
-    message: 'Replace `\'\',` with `""`',
-    line: 2, column: 6, endLine: 2, endColumn: 9,
+    message: 'Replace `\'\'` with `""`',
+    line: 2, column: 6, endLine: 2, endColumn: 8,
   },
 ]
