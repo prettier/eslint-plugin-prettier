@@ -1,5 +1,13 @@
 # Changelog
 
+## v4.0.0 (2021-08-30)
+
+This breaking change drops support for old versions of ESLint, Prettier and
+Node. You must use at least ESLint v7.28.0, Prettier v2.0.0 and Node v12.0.0.
+Aside from that, usage of this plugin remains identical.
+
+* v4 - Drop support for eslint 5/6, prettier 1, node 6/8 ([#429](git@github.com:prettier/eslint-plugin-prettier/issues/429)) ([acb56f3](git@github.com:prettier/eslint-plugin-prettier/commit/acb56f3b2891b2a6998a75a7d4406183d452ba16))
+
 ## v3.4.1 (2021-08-20)
 
 * build(deps): Bump glob-parent from 5.0.0 to 5.1.2 ([#420](git@github.com:prettier/eslint-plugin-prettier/issues/420)) ([b6d075c](git@github.com:prettier/eslint-plugin-prettier/commit/b6d075cf7111468e8af4161c306c7f37f09f220e))
