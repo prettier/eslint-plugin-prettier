@@ -151,14 +151,14 @@
     strip-json-comments "^3.1.1"
 
 "@graphql-eslint/eslint-plugin@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@graphql-eslint/eslint-plugin/-/eslint-plugin-2.0.1.tgz#d4528f28b0a26e15490bd54241d95e1dddb463f6"
-  integrity sha512-KxYnp6aHRXxx2B125GXGKELMvcmtJ7hkxwx/8JkZZq1VJOjgVPAxSno5zeXHg9pKVZR8DJ2aojckGg/jCiVQvg==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@graphql-eslint/eslint-plugin/-/eslint-plugin-2.0.2.tgz#e76a9eb94f7bbc3c07a09db0a7a88edcb052a189"
+  integrity sha512-E5LPCPRYNFinsDMvApuCjRE2XfZy1r1s40ncyNb2aWM2urFJndN+wLCtBPR1KkMraqCsfwavRIHvAoPLQKj43A==
   dependencies:
-    "@graphql-tools/code-file-loader" "^7.0.1"
-    "@graphql-tools/graphql-tag-pluck" "^7.0.1"
+    "@graphql-tools/code-file-loader" "^7.0.2"
+    "@graphql-tools/graphql-tag-pluck" "^7.0.2"
     "@graphql-tools/import" "^6.3.1"
-    "@graphql-tools/utils" "^8.0.1"
+    "@graphql-tools/utils" "^8.0.2"
     graphql-config "^4.0.1"
     graphql-depth-limit "1.1.0"
 
@@ -172,13 +172,13 @@
     tslib "~2.3.0"
     value-or-promise "1.0.10"
 
-"@graphql-tools/code-file-loader@^7.0.1":
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/code-file-loader/-/code-file-loader-7.0.6.tgz#f6ca4554c11a9554fc305cf2d587148626d879e9"
-  integrity sha512-+xddAWyvrcW5Em3Yx+RJ7vwFMyOoS8pwqgeVr0CTZF9YbrQSPz7wQJRAVFZNJQaJOalKlPWxsmKkSyMQRG+t4A==
+"@graphql-tools/code-file-loader@^7.0.2":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/code-file-loader/-/code-file-loader-7.1.0.tgz#3fd040ce92510a12c361bac85d0d954951e231f5"
+  integrity sha512-1EVuKGzTDcZoPQAjJYy0Fw2vwLN1ZnWYDlCZLaqml87tCUzJcqcHlQw26SRhDEvVnJC/oCV+mH+2QE55UxqWuA==
   dependencies:
-    "@graphql-tools/graphql-tag-pluck" "^7.0.5"
-    "@graphql-tools/utils" "^8.1.1"
+    "@graphql-tools/graphql-tag-pluck" "^7.1.0"
+    "@graphql-tools/utils" "^8.2.0"
     globby "^11.0.3"
     tslib "~2.3.0"
     unixify "^1.0.0"
@@ -206,15 +206,15 @@
     tslib "~2.3.0"
     unixify "^1.0.0"
 
-"@graphql-tools/graphql-tag-pluck@^7.0.1", "@graphql-tools/graphql-tag-pluck@^7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-tag-pluck/-/graphql-tag-pluck-7.0.5.tgz#b21137c0fc364da283fdf7c7de8973cf183d3dc0"
-  integrity sha512-/eNFl/4gshnlgNvx1Koaey3036edcv5/Nko+px/DbkfjKedwikRWubURcCaMp/4VE6CyIUibxRrP6TzVByhVrw==
+"@graphql-tools/graphql-tag-pluck@^7.0.2", "@graphql-tools/graphql-tag-pluck@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-tag-pluck/-/graphql-tag-pluck-7.1.0.tgz#1116ef046370723b7d63ee1f66167129a6fcb8c9"
+  integrity sha512-Y0iRqHKoB0i1RCpskuFKmvnehBcKSu9awEq7ml4/RWSMHRkVlJs8PAFuChyOO6jASC2ttkyfssB6qLJugvc+DQ==
   dependencies:
     "@babel/parser" "7.15.3"
     "@babel/traverse" "7.15.0"
     "@babel/types" "7.15.0"
-    "@graphql-tools/utils" "^8.1.1"
+    "@graphql-tools/utils" "^8.2.0"
     tslib "~2.3.0"
 
 "@graphql-tools/import@^6.2.6", "@graphql-tools/import@^6.3.1":
@@ -306,10 +306,10 @@
   dependencies:
     tslib "~2.3.0"
 
-"@graphql-tools/utils@^8.0.1", "@graphql-tools/utils@^8.1.1":
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.1.1.tgz#2ef056a1d6e1e909085e1115d3bb48f890c2a2b6"
-  integrity sha512-QbFNoBmBiZ+ej4y6mOv8Ba4lNhcrTEKXAhZ0f74AhdEXi7b9xbGUH/slO5JaSyp85sGQYIPmxjRPpXBjLklbmw==
+"@graphql-tools/utils@^8.0.1", "@graphql-tools/utils@^8.0.2", "@graphql-tools/utils@^8.1.1", "@graphql-tools/utils@^8.2.0":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.2.1.tgz#381e79fa04041f91f132d252216adcb3970e3c1e"
+  integrity sha512-xjyetFpDy2/MY8P4+NiE7i1czCrAI36Twjm+jcoBfPctMnJegZkZnLfepmjwYQ92Sv9hnhr+x52OUQAddj29CQ==
   dependencies:
     tslib "~2.3.0"
 
