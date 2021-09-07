@@ -26,6 +26,30 @@ const { ESLint, RuleTester } = require('eslint');
 // Tests
 // ------------------------------------------------------------------------------
 
+const eslint = new ESLint({
+  baseConfig: {
+    parserOptions: {
+      ecmaVersion: 2021,
+      ecmaFeatures: {
+        jsx: true,
+      },
+      sourceType: 'module',
+    },
+    extends: 'plugin:prettier/recommended',
+    overrides: [
+      {
+        files: '*.mdx',
+        extends: 'plugin:mdx/recommended',
+        settings: {
+          'mdx/code-block': true,
+        },
+      },
+    ],
+  },
+  useEslintrc: false,
+  ignore: false,
+});
+
 const ruleTester = new RuleTester();
 
 ruleTester.run('prettier', rule, {
@@ -256,30 +280,6 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
 }
 
 function runFixture(name, asserts) {
-  const eslint = new ESLint({
-    baseConfig: {
-      parserOptions: {
-        ecmaVersion: 2021,
-        ecmaFeatures: {
-          jsx: true,
-        },
-        sourceType: 'module',
-      },
-      extends: 'plugin:prettier/recommended',
-      overrides: [
-        {
-          files: '*.mdx',
-          extends: 'plugin:mdx/recommended',
-          settings: {
-            'mdx/code-block': true,
-          },
-        },
-      ],
-    },
-    useEslintrc: false,
-    ignore: false,
-  });
-
   return eslint
     .lintFiles(`test/fixtures/${name}.*`)
     .then((results) =>
