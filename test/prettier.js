@@ -18,7 +18,9 @@ const path = require('path');
 const eslintPluginPrettier = require('..');
 
 const rule = eslintPluginPrettier.rules.prettier;
-const RuleTester = require('eslint').RuleTester;
+
+const assert = require('assert');
+const { ESLint, RuleTester } = require('eslint');
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -154,6 +156,65 @@ eslintPluginGraphqlRuleTester.run('eslint-plugin-graphql', rule, {
   invalid: [],
 });
 
+const mdxRuleTester = new RuleTester({
+  parser: require.resolve('eslint-mdx'),
+  parserOptions: require('eslint-mdx').DEFAULT_PARSER_OPTIONS,
+});
+
+mdxRuleTester.run('eslint-plugin-mdx', rule, {
+  valid: [
+    {
+      code: [
+        "import React from 'react';",
+        '',
+        '<div>Hello World</div>',
+        '',
+      ].join('\n'),
+      filename: 'valid.mdx',
+    },
+  ],
+  invalid: [
+    Object.assign(loadInvalidFixture('mdx'), {
+      filename: 'invalid.mdx',
+    }),
+  ],
+});
+
+runFixture('mdx', [
+  [
+    {
+      column: 33,
+      endColumn: 33,
+      endLine: 1,
+      fix: {
+        range: [32, 32],
+        text: ';',
+      },
+      line: 1,
+      message: 'Insert `;`',
+      messageId: 'insert',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+    {
+      column: 27,
+      endColumn: 27,
+      endLine: 6,
+      fix: {
+        range: [91, 91],
+        text: ';',
+      },
+      line: 6,
+      message: 'Insert `;`',
+      messageId: 'insert',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
+
 // ------------------------------------------------------------------------------
 //  Helpers
 // ------------------------------------------------------------------------------
@@ -192,4 +253,45 @@ function loadInvalidFixture(name) {
  */
 function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
+}
+
+function runFixture(name, asserts) {
+  const eslint = new ESLint({
+    baseConfig: {
+      parserOptions: {
+        ecmaVersion: 2021,
+        ecmaFeatures: {
+          jsx: true,
+        },
+        sourceType: 'module',
+      },
+      extends: 'plugin:prettier/recommended',
+      overrides: [
+        {
+          files: '*.mdx',
+          extends: 'plugin:mdx/recommended',
+          settings: {
+            'mdx/code-block': true,
+          },
+        },
+      ],
+    },
+    useEslintrc: false,
+    ignore: false,
+  });
+
+  return eslint
+    .lintFiles(`test/fixtures/${name}.*`)
+    .then((results) =>
+      assert.deepStrictEqual(
+        asserts,
+        results.map(({ messages }) => messages)
+      )
+    )
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      // eslint-disable-next-line no-process-exit
+      process.exit(1);
+    });
 }
