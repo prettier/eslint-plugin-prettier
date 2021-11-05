@@ -130,9 +130,9 @@
     strip-json-comments "^3.1.1"
 
 "@graphql-eslint/eslint-plugin@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@graphql-eslint/eslint-plugin/-/eslint-plugin-2.3.0.tgz#4e500466fa56b64680c67d7639f1bdf11d890f8a"
-  integrity sha512-YYTBKhadvdTO6myWFm3O8A8dP/ca5NsyB2FKYoHGUIToEl25xAMuj2yzvhIjIBwA/yhlLRPe9+EIQ+8f0kjBDg==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@graphql-eslint/eslint-plugin/-/eslint-plugin-2.4.0.tgz#b90e3659dd62566ae831126c7522e7d144b99487"
+  integrity sha512-O7o8w4GZS7VQdZFfjpx+DWJPCm67+m7ccGKUNGLvkwQcglOW5Z17Ad9TTLpuxYF7sJL7ipOP2c6UNOwXwg3+eg==
   dependencies:
     "@graphql-tools/code-file-loader" "^7.0.2"
     "@graphql-tools/graphql-tag-pluck" "^7.0.2"
