@@ -123,7 +123,7 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 
   - An object with the following options
 
-    - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
+    - use `.prettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
 
       ```json
       "prettier/prettier": ["error", {}, {
