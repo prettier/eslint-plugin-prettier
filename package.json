@@ -17,8 +17,7 @@
     "lint": "eslint .",
     "test": "npm run lint && mocha",
     "format": "yarn run prettier '**/*.{js,json,md,yml}' --write && yarn run lint --fix",
-    "generate-release": "node-release-script",
-    "prepare": "patch-package || exit 0"
+    "generate-release": "node-release-script"
   },
   "repository": {
     "type": "git",
@@ -50,7 +49,6 @@
     "eslint-plugin-self": "^1.2.1",
     "graphql": "^16.5.0",
     "mocha": "^9.2.2",
-    "patch-package": "^6.4.7",
     "prettier": "^2.7.1",
     "vue-eslint-parser": "^8.3.0"
   },
