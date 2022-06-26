@@ -35,27 +35,30 @@
     "prettier": ">=2.0.0"
   },
   "devDependencies": {
-    "@graphql-eslint/eslint-plugin": "^2.3.0",
+    "@graphql-eslint/eslint-plugin": "^2.5.0",
     "@not-an-aardvark/node-release-script": "^0.1.0",
-    "@typescript-eslint/parser": "^4.31.0",
-    "eslint": "^8.1.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "^8.18.0",
     "eslint-config-not-an-aardvark": "^2.1.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-mdx": "^1.17.0",
-    "eslint-plugin-eslint-plugin": "^4.0.2",
+    "eslint-plugin-eslint-plugin": "^4.3.0",
     "eslint-plugin-mdx": "^1.17.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "link:.",
     "eslint-plugin-self": "^1.2.1",
-    "graphql": "^15.7.1",
-    "mocha": "^6.2.3",
-    "prettier": "^2.4.1",
-    "vue-eslint-parser": "^8.0.0"
+    "graphql": "^16.5.0",
+    "mocha": "^9.2.2",
+    "prettier": "^2.7.1",
+    "vue-eslint-parser": "^8.3.0"
   },
   "peerDependenciesMeta": {
     "eslint-config-prettier": {
       "optional": true
     }
+  },
+  "resolutions": {
+    "@babel/traverse": "^7.18.5"
   },
   "engines": {
     "node": ">=12.0.0"
