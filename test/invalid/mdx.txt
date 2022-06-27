@@ -1,0 +1,20 @@
+CODE:
+import React from 'react'
+
+<div>Hello World</div>
+
+OUTPUT:
+import React from 'react';
+
+<div>Hello World</div>
+
+OPTIONS:
+[]
+
+ERRORS:
+[
+  {
+    message: 'Insert `;`',
+    line: 1, column: 26, endLine: 1, endColumn: 26,
+  },
+]
