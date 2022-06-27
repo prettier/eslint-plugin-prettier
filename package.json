@@ -35,7 +35,7 @@
     "prettier": ">=2.0.0"
   },
   "devDependencies": {
-    "@graphql-eslint/eslint-plugin": "^2.5.0",
+    "@graphql-eslint/eslint-plugin": "^3.10.4",
     "@not-an-aardvark/node-release-script": "^0.1.0",
     "@typescript-eslint/parser": "^5.29.0",
     "eslint": "^8.18.0",
