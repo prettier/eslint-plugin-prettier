@@ -9,15 +9,19 @@
     "prettier"
   ],
   "author": "Teddy Katz",
+  "contributors": [
+    "JounQin (https://github.com/JounQin) <admin@1stg.me>"
+  ],
   "files": [
     "eslint-plugin-prettier.js"
   ],
   "main": "eslint-plugin-prettier.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && mocha",
-    "format": "yarn run prettier '**/*.{js,json,md,yml}' --write && yarn run lint --fix",
-    "generate-release": "node-release-script"
+    "test": "yarn lint && mocha",
+    "format": "yarn prettier '**/*.{js,json,md,yml}' --write && yarn lint --fix",
+    "release": "changeset release",
+    "prerelease": "yarn format && yarn test"
   },
   "repository": {
     "type": "git",
@@ -35,8 +39,9 @@
     "prettier": ">=2.0.0"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.5",
+    "@changesets/cli": "^2.23.0",
     "@graphql-eslint/eslint-plugin": "^2.5.0",
-    "@not-an-aardvark/node-release-script": "^0.1.0",
     "@typescript-eslint/parser": "^5.29.0",
     "eslint": "^8.18.0",
     "eslint-config-not-an-aardvark": "^2.1.0",
