@@ -1,0 +1,21 @@
+diff --git a/node_modules/@pkgr/utils/lib/index.cjs b/node_modules/@pkgr/utils/lib/index.cjs
+index cb7909a..a609f19 100644
+--- a/node_modules/@pkgr/utils/lib/index.cjs
++++ b/node_modules/@pkgr/utils/lib/index.cjs
+@@ -3,13 +3,13 @@
+ Object.defineProperty(exports, '__esModule', { value: true });
+ 
+ var child_process = require('child_process');
+-var path = require('node:path');
+-var node_url = require('node:url');
++var path = require('path');
++var node_url = require('url');
+ var spawn = require('cross-spawn');
+ var open = require('open');
+ var picocolors = require('picocolors');
+ var module$1 = require('module');
+-var fs = require('node:fs');
++var fs = require('fs');
+ var isGlob = require('is-glob');
+ 
+ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }

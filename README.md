@@ -114,7 +114,9 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
   - An object representing [options](https://prettier.io/docs/en/options.html) that will be passed into prettier. Example:
 
     ```json
-    "prettier/prettier": ["error", {"singleQuote": true, "parser": "flow"}]
+    {
+      "prettier/prettier": ["error", { "singleQuote": true, "parser": "flow" }]
+    }
     ```
 
     NB: This option will merge and override any config set with `.prettierrc` files
@@ -126,22 +128,34 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
     - `usePrettierrc`: Enables loading of the Prettier configuration file, (default: `true`). May be useful if you are using multiple tools that conflict with each other, or do not wish to mix your ESLint settings with your Prettier configuration.
 
       ```json
-      "prettier/prettier": ["error", {}, {
-        "usePrettierrc": false
-      }]
+      {
+        "prettier/prettier": [
+          "error",
+          {},
+          {
+            "usePrettierrc": false
+          }
+        ]
+      }
       ```
 
     - `fileInfoOptions`: Options that are passed to [prettier.getFileInfo](https://prettier.io/docs/en/api.html#prettiergetfileinfofilepath--options) to decide whether a file needs to be formatted. Can be used for example to opt-out from ignoring files located in `node_modules` directories.
 
       ```json
-      "prettier/prettier": ["error", {}, {
-        "fileInfoOptions": {
-          "withNodeModules": true
-        }
-      }]
+      {
+        "prettier/prettier": [
+          "error",
+          {},
+          {
+            "fileInfoOptions": {
+              "withNodeModules": true
+            }
+          }
+        ]
+      }
       ```
 
-- The rule is autofixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
+- The rule is auto fixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
 
