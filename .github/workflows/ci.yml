@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
 
 jobs:
@@ -11,8 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        eslint-version: [7, 8]
-        node-version: [12, 14, 16]
+        eslint-version:
+          - 7
+          - 8
+        node-version:
+          - 12
+          - 14
+          - 16
 
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +32,7 @@ jobs:
         run: yarn upgrade eslint@${{ matrix.eslint-version }}
 
       - name: Install
-        run: yarn install
+        run: yarn --frozen-lockfile
 
       - name: Test
-        run: yarn run test
+        run: yarn test
