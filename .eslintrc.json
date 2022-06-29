@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "env": {
+    "mocha": true
+  },
+  "extends": [
+    "plugin:n/recommended",
+    "plugin:sonar/recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:eslint-plugin/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "self"
+  ],
+  "rules": {
+    "self/prettier": [
+      "error"
+    ],
+    "eslint-plugin/report-message-format": [
+      "error",
+      "^[^a-z].*\\.$"
+    ]
+  }
+}

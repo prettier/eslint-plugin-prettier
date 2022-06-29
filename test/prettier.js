@@ -1,5 +1,7 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+
 /**
- * @fileoverview Runs `prettier` as an ESLint rule.
+ * @file Runs `prettier` as an ESLint rule.
  * @author Andres Suarez
  */
 
@@ -12,15 +14,15 @@
 // Requirements
 // ------------------------------------------------------------------------------
 
+const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+
+const { ESLint, RuleTester } = require('eslint');
 
 const eslintPluginPrettier = require('..');
 
 const rule = eslintPluginPrettier.rules.prettier;
-
-const assert = require('assert');
-const { ESLint, RuleTester } = require('eslint');
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -114,7 +116,7 @@ ruleTester.run('prettier', rule, {
     '16',
     '17',
     '18',
-  ].map(loadInvalidFixture),
+  ].map(name => loadInvalidFixture(name)),
 });
 
 const vueRuleTester = new RuleTester({
@@ -252,20 +254,21 @@ runFixture('mdx', [
  * The fixture format aims to reduce the pain of debugging offsets by keeping
  * the lines and columns of the test code as close to what the rule will report
  * as possible.
+ *
  * @param {string} name - Fixture basename.
- * @returns {Object} A {code, output, options, errors} test object.
+ * @returns {object} A {code, output, options, errors} test object.
  */
 function loadInvalidFixture(name) {
   const filename = path.join(__dirname, 'invalid', name + '.txt');
   const src = fs.readFileSync(filename, 'utf8');
   const sections = src
     .split(/^[A-Z]+:\n/m)
-    .map((x) => x.replace(/(?=\n)\n$/, ''));
+    .map(x => x.replace(/(?=\n)\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
-    options: eval(sections[3]), // eslint-disable-line no-eval
-    errors: eval(sections[4]), // eslint-disable-line no-eval
+    options: eval(sections[3]), // eslint-disable-line no-eval, sonar/code-eval
+    errors: eval(sections[4]), // eslint-disable-line no-eval, sonar/code-eval
     filename: getPrettierRcJsFilename('double-quote', name + '.txt'),
   };
   if (sections.length >= 6) {
@@ -276,26 +279,24 @@ function loadInvalidFixture(name) {
 
 /**
  * Builds a dummy javascript file path to trick prettier into resolving a specific .prettierrc file.
+ *
  * @param {string} dir - Prettierrc fixture basename.
+ * @param {string} file
  * @returns {string} A javascript filename relative to the .prettierrc config.
  */
 function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
 }
 
-function runFixture(name, asserts) {
-  return eslint
-    .lintFiles(`test/fixtures/${name}.*`)
-    .then((results) =>
-      assert.deepStrictEqual(
-        asserts,
-        results.map(({ messages }) => messages)
-      )
-    )
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      // eslint-disable-next-line no-process-exit
-      process.exit(1);
-    });
+async function runFixture(name, asserts) {
+  try {
+    const results = await eslint.lintFiles(`test/fixtures/${name}.*`);
+    return assert.deepStrictEqual(
+      asserts,
+      results.map(({ messages }) => messages),
+    );
+  } catch (err) {
+    console.error(err);
+    process.exitCode = 1;
+  }
 }

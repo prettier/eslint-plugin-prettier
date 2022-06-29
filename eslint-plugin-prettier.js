@@ -1,5 +1,5 @@
 /**
- * @fileoverview Runs `prettier` as an ESLint rule.
+ * @file Runs `prettier` as an ESLint rule.
  * @author Andres Suarez
  */
 
@@ -36,6 +36,7 @@ let prettier;
 
 /**
  * Reports a difference.
+ *
  * @param {import('eslint').Rule.RuleContext} context - The ESLint rule context.
  * @param {import('prettier-linter-helpers').Difference} difference - The difference object.
  * @returns {void}
@@ -43,8 +44,8 @@ let prettier;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = [offset, offset + deleteText.length];
-  const [start, end] = range.map((index) =>
-    context.getSourceCode().getLocFromIndex(index)
+  const [start, end] = range.map(index =>
+    context.getSourceCode().getLocFromIndex(index),
   );
 
   context.report({
@@ -54,7 +55,7 @@ function reportDifference(context, difference) {
       insertText: showInvisibles(insertText),
     },
     loc: { start, end },
-    fix: (fixer) => fixer.replaceTextRange(range, insertText),
+    fix: fixer => fixer.replaceTextRange(range, insertText),
   });
 }
 
@@ -124,6 +125,7 @@ module.exports = {
         const source = sourceCode.text;
 
         return {
+          // eslint-disable-next-line sonarjs/cognitive-complexity
           Program() {
             if (!prettier) {
               // Prettier is expensive to load, so only load it if needed.
@@ -140,11 +142,11 @@ module.exports = {
 
             const { ignored, inferredParser } = prettier.getFileInfo.sync(
               onDiskFilepath,
-              Object.assign(
-                {},
-                { resolveConfig: true, ignorePath: '.prettierignore' },
-                eslintFileInfoOptions
-              )
+              {
+                resolveConfig: true,
+                ignorePath: '.prettierignore',
+                ...eslintFileInfoOptions,
+              },
             );
 
             // Skip if file is ignored using a .prettierignore file
@@ -189,8 +191,7 @@ module.exports = {
               // 3. `eslint-plugin-html`
               const parserBlocklist = [null, 'markdown', 'html'];
 
-              let inferParserToBabel =
-                parserBlocklist.indexOf(inferredParser) !== -1;
+              let inferParserToBabel = parserBlocklist.includes(inferredParser);
 
               if (
                 // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
@@ -223,18 +224,17 @@ module.exports = {
                 'mdx',
                 'angular',
               ];
-              if (parserBlocklist.indexOf(inferredParser) !== -1) {
+              if (parserBlocklist.includes(inferredParser)) {
                 return;
               }
             }
 
-            const prettierOptions = Object.assign(
-              {},
-              initialOptions,
-              prettierRcOptions,
-              eslintPrettierOptions,
-              { filepath }
-            );
+            const prettierOptions = {
+              ...initialOptions,
+              ...prettierRcOptions,
+              ...eslintPrettierOptions,
+              filepath,
+            };
 
             // prettier.format() may throw a SyntaxError if it cannot parse the
             // source code it is given. Usually for JS files this isn't a

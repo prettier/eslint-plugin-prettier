@@ -2,54 +2,59 @@
   "name": "eslint-plugin-prettier",
   "version": "4.1.0",
   "description": "Runs prettier as an eslint rule",
+  "repository": "git+https://github.com/prettier/eslint-plugin-prettier.git",
+  "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
+  "author": "Teddy Katz",
+  "contributors": [
+    "JounQin (https://github.com/JounQin) <admin@1stg.me>"
+  ],
+  "license": "MIT",
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "main": "eslint-plugin-prettier.js",
+  "files": [
+    "eslint-plugin-prettier.js"
+  ],
   "keywords": [
     "eslint",
     "eslintplugin",
     "eslint-plugin",
     "prettier"
   ],
-  "author": "Teddy Katz",
-  "contributors": [
-    "JounQin (https://github.com/JounQin) <admin@1stg.me>"
-  ],
-  "files": [
-    "eslint-plugin-prettier.js"
-  ],
-  "main": "eslint-plugin-prettier.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "yarn lint && mocha",
     "format": "yarn prettier '**/*.{js,json,md,yml}' --write && yarn lint --fix",
+    "lint": "eslint . --cache -f friendly --max-warnings 10",
+    "prepare": "simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
+    "prerelease": "yarn format && yarn test",
     "release": "changeset release",
-    "prerelease": "yarn format && yarn test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/prettier/eslint-plugin-prettier.git"
-  },
-  "bugs": {
-    "url": "https://github.com/prettier/eslint-plugin-prettier/issues"
-  },
-  "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
-  "dependencies": {
-    "prettier-linter-helpers": "^1.0.0"
+    "test": "yarn lint && mocha"
   },
   "peerDependencies": {
     "eslint": ">=7.28.0",
     "prettier": ">=2.0.0"
   },
+  "peerDependenciesMeta": {
+    "eslint-config-prettier": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "prettier-linter-helpers": "^1.0.0"
+  },
   "devDependencies": {
+    "@1stg/common-config": "^4.4.0",
+    "@1stg/eslint-config": "^4.3.0",
     "@changesets/changelog-github": "^0.4.5",
     "@changesets/cli": "^2.23.0",
     "@graphql-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^5.29.0",
-    "eslint": "^8.18.0",
-    "eslint-config-not-an-aardvark": "^2.1.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-mdx": "^1.17.0",
     "eslint-plugin-eslint-plugin": "^4.3.0",
     "eslint-plugin-mdx": "^1.17.0",
-    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "link:.",
     "eslint-plugin-self": "^1.2.1",
     "graphql": "^16.5.0",
@@ -57,16 +62,7 @@
     "prettier": "^2.7.1",
     "vue-eslint-parser": "^8.3.0"
   },
-  "peerDependenciesMeta": {
-    "eslint-config-prettier": {
-      "optional": true
-    }
-  },
   "resolutions": {
     "@babel/traverse": "^7.18.5"
-  },
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "license": "MIT"
+  }
 }

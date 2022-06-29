@@ -148,3 +148,11 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
+
+## Changelog
+
+Detailed changes for each release are documented in [CHANGELOG.md](./CHANGELOG.md).
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)

@@ -16,9 +16,9 @@ jobs:
           - 7
           - 8
         node-version:
-          - 12
           - 14
           - 16
+          - 18
 
     steps:
       - uses: actions/checkout@v3
@@ -27,6 +27,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: yarn
 
       - name: Use ESLint ${{ matrix.eslint-version }}
         run: yarn upgrade eslint@${{ matrix.eslint-version }}
