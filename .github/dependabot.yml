@@ -5,9 +5,9 @@ updates:
     schedule:
       interval: monthly
     ignore:
-      # We're deliberatly targeting heavy backwards compatability to avoid
+      # We're deliberately targeting heavy backwards compatibility to avoid
       # making a breaking change and causing churn for the sake of it.
-      # Ignore dependencies that would result in or requre a breaking change
+      # Ignore dependencies that would result in or require a breaking change
       - dependency-name: 'eslint'
       - dependency-name: 'eslint-*'
       - dependency-name: 'prettier'

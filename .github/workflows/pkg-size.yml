@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn --frozen-lockfile
+          cache: yarn
 
       - name: Package Size Report
         uses: pkg-size/action@v1
