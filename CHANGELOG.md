@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.2.1
+
+### Patch Changes
+
+- [#485](https://github.com/prettier/eslint-plugin-prettier/pull/485) [`5736ed5`](https://github.com/prettier/eslint-plugin-prettier/commit/5736ed5224b06507374e21c626e8c462552cacf2) Thanks [@JounQin](https://github.com/JounQin)! - chore: reuse prettierRcOptions instead of resolveConfig again
+
 ## 4.2.0
 
 ### Minor Changes
