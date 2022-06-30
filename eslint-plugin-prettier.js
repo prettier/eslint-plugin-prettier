@@ -143,8 +143,10 @@ module.exports = {
             const { ignored, inferredParser } = prettier.getFileInfo.sync(
               onDiskFilepath,
               {
-                resolveConfig: true,
+                resolveConfig: false,
+                withNodeModules: false,
                 ignorePath: '.prettierignore',
+                plugins: prettierRcOptions ? prettierRcOptions.plugins : null,
                 ...eslintFileInfoOptions,
               },
             );
