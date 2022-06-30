@@ -27,7 +27,7 @@
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "patch-package && simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
     "prerelease": "yarn format && yarn test",
-    "release": "changeset release",
+    "release": "changeset publish",
     "test": "yarn lint && mocha"
   },
   "peerDependencies": {
