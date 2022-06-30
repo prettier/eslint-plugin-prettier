@@ -30,10 +30,10 @@ jobs:
           cache: yarn
 
       - name: Use ESLint ${{ matrix.eslint-version }}
-        run: yarn upgrade eslint@${{ matrix.eslint-version }}
+        run: yarn upgrade eslint@${{ matrix.eslint-version }} --ignore-engines
 
       - name: Install
-        run: yarn --frozen-lockfile
+        run: yarn --frozen-lockfile --ignore-engines
 
       - name: Test
         run: yarn mocha
