@@ -264,14 +264,14 @@ runFixture('@ota-meshi/eslint-plugin-svelte/*.svelte', [
   [
     {
       column: 5,
-      endColumn: 13,
+      endColumn: 11,
       endLine: 2,
       fix: {
-        range: [13, 21],
-        text: 'name =',
+        range: [13, 19],
+        text: 'name',
       },
       line: 2,
-      message: 'Replace `·name·=·` with `name·=`',
+      message: 'Replace `·name·` with `name`',
       messageId: 'replace',
       nodeType: null,
       ruleId: 'prettier/prettier',
@@ -279,14 +279,14 @@ runFixture('@ota-meshi/eslint-plugin-svelte/*.svelte', [
     },
     {
       column: 4,
-      endColumn: 7,
+      endColumn: 20,
       endLine: 5,
       fix: {
-        range: [45, 48],
-        text: '>',
+        range: [45, 61],
+        text: '>Hello {name',
       },
       line: 5,
-      message: 'Replace `·>·` with `>`',
+      message: 'Replace `·>·Hello·{·name·` with `>Hello·{name`',
       messageId: 'replace',
       nodeType: null,
       ruleId: 'prettier/prettier',
