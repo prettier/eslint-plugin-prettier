@@ -58,8 +58,8 @@ const eslint = new ESLint({
         },
       },
       {
-        files: '**/@ota-meshi/eslint-plugin-svelte/*.svelte',
-        extends: ['plugin:@ota-meshi/svelte/recommended'],
+        files: '**/eslint-plugin-svelte/*.svelte',
+        extends: ['plugin:svelte/recommended'],
       },
     ],
   },
@@ -260,7 +260,7 @@ runFixture('*.mdx', [
   ],
 ]);
 
-runFixture('@ota-meshi/eslint-plugin-svelte/*.svelte', [
+runFixture('eslint-plugin-svelte/*.svelte', [
   [
     {
       column: 5,
