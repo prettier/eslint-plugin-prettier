@@ -95,6 +95,10 @@ Exactly what does `plugin:prettier/recommended` do? Well, this is what it expand
 - `"prettier/prettier": "error"` turns on the rule provided by this plugin, which runs Prettier from within ESLint.
 - `"arrow-body-style": "off"` and `"prefer-arrow-callback": "off"` turns off two ESLint core rules that unfortunately are problematic with this plugin – see the next section.
 
+## `Svelte` support
+
+We recommend to use [`eslint-plugin-svelte`](https://github.com/ota-meshi/eslint-plugin-svelte) instead of [`eslint-plugin-svelte3`](https://github.com/sveltejs/eslint-plugin-svelte3) because `eslint-plugin-svelte` has a correct [`eslint-svelte-parser`](https://github.com/ota-meshi/svelte-eslint-parser) instead of hacking, when use with `eslint-plugin-svelte3`, `eslint-plugin-prettier` will just ignore the text passed by `eslint-plugin-svelte3`, because the text they has been modified.
+
 ## `arrow-body-style` and `prefer-arrow-callback` issue
 
 If you use [arrow-body-style](https://eslint.org/docs/rules/arrow-body-style) or [prefer-arrow-callback](https://eslint.org/docs/rules/prefer-arrow-callback) together with the `prettier/prettier` rule from this plugin, you can in some cases end up with invalid code due to a bug in ESLint’s autofix – see [issue #65](https://github.com/prettier/eslint-plugin-prettier/issues/65).
