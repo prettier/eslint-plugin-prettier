@@ -10,8 +10,9 @@
     "JounQin (https://github.com/JounQin) <admin@1stg.me>"
   ],
   "license": "MIT",
+  "packageManager": "yarn@1.22.19",
   "engines": {
-    "node": ">=12.0.0"
+    "node": "^14.18.0 || >=16.0.0"
   },
   "main": "eslint-plugin-prettier.js",
   "files": [
@@ -32,7 +33,7 @@
     "test": "yarn lint && mocha"
   },
   "peerDependencies": {
-    "eslint": ">=7.28.0",
+    "eslint": ">=8.0.0",
     "prettier": ">=2.0.0"
   },
   "peerDependenciesMeta": {
@@ -44,8 +45,7 @@
     "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {
-    "@1stg/common-config": "~3.0.0",
-    "@1stg/eslint-config": "~3.0.0",
+    "@1stg/common-config": "^5.0.0",
     "@changesets/changelog-github": "^0.4.5",
     "@changesets/cli": "^2.23.1",
     "@graphql-eslint/eslint-plugin": "^2.5.0",
@@ -58,46 +58,14 @@
     "eslint-plugin-svelte": "~2.1.0",
     "eslint-plugin-utils": "^0.1.0",
     "graphql": "^16.5.0",
-    "mocha": "^9.2.2",
+    "mocha": "^10.0.0",
     "patch-package": "^6.4.7",
     "svelte": "^3.49.0",
     "vue-eslint-parser": "^8.3.0"
   },
   "resolutions": {
-    "@babel/traverse": "^7.18.5",
+    "@babel/traverse": "^7.18.6",
     "eslint-plugin-prettier": "link:.",
     "prettier": "^2.7.1"
-  },
-  "donate": {
-    "recipients": [
-      {
-        "name": "unts",
-        "platform": "opencollective",
-        "address": "https://opencollective.com/unts",
-        "weight": 60
-      },
-      {
-        "name": "rxts",
-        "platform": "opencollective",
-        "address": "https://opencollective.com/rxts",
-        "weight": 20
-      },
-      {
-        "name": "1stG",
-        "email": "i@1stg.me",
-        "weight": 20,
-        "platforms": [
-          {
-            "platform": "opencollective",
-            "address": "https://opencollective.com/1stG"
-          },
-          {
-            "platform": "patreon",
-            "address": "https://www.patreon.com/1stG"
-          }
-        ]
-      }
-    ]
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }

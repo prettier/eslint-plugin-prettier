@@ -31,7 +31,7 @@ const rule = eslintPluginPrettier.rules.prettier;
 const eslint = new ESLint({
   baseConfig: {
     parserOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 'latest',
       ecmaFeatures: {
         jsx: true,
       },
@@ -184,7 +184,9 @@ atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
 // `newRuleTester({processor: require('eslint-plugin-graphql').processor['.graphql']})
 // and then pass in pure graphql into the code value.
 const eslintPluginGraphqlRuleTester = new RuleTester({
-  parserOptions: { ecmaVersion: 2015 },
+  parserOptions: {
+    ecmaVersion: 'latest',
+  },
 });
 
 eslintPluginGraphqlRuleTester.run('eslint-plugin-graphql', rule, {
