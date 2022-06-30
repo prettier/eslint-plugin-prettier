@@ -59,13 +59,13 @@
     "graphql": "^16.5.0",
     "mocha": "^9.2.2",
     "patch-package": "^6.4.7",
-    "prettier": "^2.7.1",
     "svelte": "^3.48.0",
     "vue-eslint-parser": "^8.3.0"
   },
   "resolutions": {
     "@babel/traverse": "^7.18.5",
-    "eslint-plugin-prettier": "link:."
+    "eslint-plugin-prettier": "link:.",
+    "prettier": "^2.7.1"
   },
   "packageManager": "yarn@1.22.19"
 }
