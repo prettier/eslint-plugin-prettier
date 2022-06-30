@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.2.0
+
+### Minor Changes
+
+- [#483](https://github.com/prettier/eslint-plugin-prettier/pull/483) [`7bd70b6`](https://github.com/prettier/eslint-plugin-prettier/commit/7bd70b65b680d360cd55aa9998804fc1e7188331) Thanks [@JounQin](https://github.com/JounQin)! - feat: support svelte out of box
+
+  close #472, close #482
+
+  We recommend to use [`eslint-plugin-svelte`](https://github.com/ota-meshi/eslint-plugin-svelte) instead of [`eslint-plugin-svelte3`](https://github.com/sveltejs/eslint-plugin-svelte3).
+
 ## v4.1.0 (2022-06-27)
 
 - feat: skip processing code blocks on specific languages like `stylelint-prettier` ([#415](https://github.com/prettier/eslint-plugin-prettier/issues/415)) ([52eec48](https://github.com/prettier/eslint-plugin-prettier/commit/52eec489cf5ec7a6d97c3edbb7dafc109e9156a4))
