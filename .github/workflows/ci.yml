@@ -36,4 +36,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Test
-        run: yarn test
+        run: yarn mocha
+
+      - name: Perf
+        run: TIMING=1 yarn lint
