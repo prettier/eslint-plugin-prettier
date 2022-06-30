@@ -2268,20 +2268,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@ota-meshi/eslint-plugin-svelte@^0.34.1":
-  version "0.34.1"
-  resolved "https://registry.yarnpkg.com/@ota-meshi/eslint-plugin-svelte/-/eslint-plugin-svelte-0.34.1.tgz#f342da9f41d5d1cd29991a5e1bddc09ec8e3de30"
-  integrity sha512-ZJd/vzcwtP3vnSzS6K7feOF0dziuT7ede6g9IVT3i/yHg9g0gsJbooDuoxA9hPrZJbp0kEt/DoNjVRLlQFsy7Q==
-  dependencies:
-    debug "^4.3.1"
-    eslint-utils "^3.0.0"
-    known-css-properties "^0.25.0"
-    postcss "^8.4.5"
-    postcss-load-config "^3.1.4"
-    postcss-safe-parser "^6.0.0"
-    sourcemap-codec "^1.4.8"
-    svelte-eslint-parser "^0.16.0"
-
 "@pkgr/utils@^2.0.2", "@pkgr/utils@^2.0.3", "@pkgr/utils@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@pkgr/utils/-/utils-2.2.0.tgz#ccbf06cd010684b477dde40ec833a28f0c2136c4"
@@ -4090,6 +4076,20 @@ eslint-plugin-svelte@^1.1.2:
   integrity sha512-q0itziHgVchKYuljjhbTpiizv2CQf8/Y2HZsVrXeH7jiaXDSKJBF5z/9iTpZXKVHAWZCUzHn/aCo/5t9cSG3tQ==
   dependencies:
     eslint-plugin-svelte3 "^3.1.2"
+
+eslint-plugin-svelte@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-svelte/-/eslint-plugin-svelte-2.0.0.tgz#b77a7c458b6139844acfe6a641abd268f4e98a2d"
+  integrity sha512-s7uyRqbRtQ+7q9anee4OmDJVXmNriPvk2iAxxFjlk5j1THq/6pVGn5SKtD7rXu989WkQ+fsymMHCZmOMpx+FpQ==
+  dependencies:
+    debug "^4.3.1"
+    eslint-utils "^3.0.0"
+    known-css-properties "^0.25.0"
+    postcss "^8.4.5"
+    postcss-load-config "^3.1.4"
+    postcss-safe-parser "^6.0.0"
+    sourcemap-codec "^1.4.8"
+    svelte-eslint-parser "^0.16.0"
 
 eslint-plugin-unicorn@^40.1.0:
   version "40.1.0"
