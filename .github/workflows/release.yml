@@ -25,5 +25,8 @@ jobs:
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
+        with:
+          commit: 'chore: release prettier-plugin-svelte'
+          title: 'chore: release prettier-plugin-svelte'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
