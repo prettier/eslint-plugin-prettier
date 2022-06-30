@@ -187,19 +187,33 @@ module.exports = {
               // by default.
               // Related ESLint plugins are:
               // 1. `eslint-plugin-graphql` (replacement: `@graphql-eslint/eslint-plugin`)
-              // 2. `eslint-plugin-markdown@1` (replacement: `eslint-plugin-markdown@2+`)
-              // 3. `eslint-plugin-html`
+              // 2. `eslint-plugin-html`
+              // 3. `eslint-plugin-markdown@1` (replacement: `eslint-plugin-markdown@2+`)
+              // 4. `eslint-plugin-svelte3` (replacement: `eslint-plugin-svelte@2+`)
               const parserBlocklist = [null, 'markdown', 'html'];
 
               let inferParserToBabel = parserBlocklist.includes(inferredParser);
 
-              if (
+              switch (inferredParser) {
                 // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
-                inferredParser === 'graphql' &&
-                // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
-                source.startsWith('ESLintPluginGraphQLFile`')
-              ) {
-                inferParserToBabel = true;
+                case 'graphql': {
+                  if (
+                    // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
+                    source.startsWith('ESLintPluginGraphQLFile`')
+                  ) {
+                    inferParserToBabel = true;
+                  }
+                  break;
+                }
+                // it could be processed by `@ota-meshi/eslint-plugin-svelte`, `eslint-plugin-svelte` or `eslint-plugin-svelte3`
+                case 'svelte': {
+                  // The `source` would be modified by `eslint-plugin-svelte3`
+                  if (!context.parserPath.includes('svelte-eslint-parser')) {
+                    // We do not support `eslint-plugin-svelte3`,
+                    // the users should run `prettier` on `.svelte` files manually
+                    return;
+                  }
+                }
               }
 
               if (inferParserToBabel) {
@@ -223,6 +237,7 @@ module.exports = {
                 'html',
                 'mdx',
                 'angular',
+                'svelte',
               ];
               if (parserBlocklist.includes(inferredParser)) {
                 return;

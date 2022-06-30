@@ -46,6 +46,21 @@ const eslint = new ESLint({
           'mdx/code-block': true,
         },
       },
+      {
+        files: '**/eslint-plugin-svelte3/*.svelte',
+        plugins: ['svelte3'],
+        processor: 'svelte3/svelte3',
+      },
+      {
+        files: '**/eslint-plugin-svelte3/*.named-blocks.svelte',
+        settings: {
+          'svelte3/named-blocks': true,
+        },
+      },
+      {
+        files: '**/@ota-meshi/eslint-plugin-svelte/*.svelte',
+        extends: ['plugin:@ota-meshi/svelte/recommended'],
+      },
     ],
   },
   useEslintrc: false,
@@ -158,8 +173,8 @@ atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
   ],
 });
 
-// eslint-plugin-graphql handles literal graphql files by tranforming graphql
-// code with a processor, instead of using a parser. Unfortunatly we cant
+// eslint-plugin-graphql handles literal graphql files by transforming graphql
+// code with a processor, instead of using a parser. Unfortunately we cant
 // specify custom processors in a RuleTester, so instead we have write test code
 // that is the result of eslint-plugin-graphql's processing - this is the
 // ESLintPluginGraphQLFile tagged template literal. See
@@ -210,7 +225,7 @@ mdxRuleTester.run('eslint-plugin-mdx', rule, {
   ],
 });
 
-runFixture('mdx', [
+runFixture('*.mdx', [
   [
     {
       column: 33,
@@ -244,6 +259,43 @@ runFixture('mdx', [
     },
   ],
 ]);
+
+runFixture('@ota-meshi/eslint-plugin-svelte/*.svelte', [
+  [
+    {
+      column: 5,
+      endColumn: 13,
+      endLine: 2,
+      fix: {
+        range: [13, 21],
+        text: 'name =',
+      },
+      line: 2,
+      message: 'Replace `·name·=·` with `name·=`',
+      messageId: 'replace',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+    {
+      column: 4,
+      endColumn: 7,
+      endLine: 5,
+      fix: {
+        range: [45, 48],
+        text: '>',
+      },
+      line: 5,
+      message: 'Replace `·>·` with `>`',
+      messageId: 'replace',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
+
+runFixture('eslint-plugin-svelte3/*.svelte', [[], []]);
 
 // ------------------------------------------------------------------------------
 //  Helpers
@@ -288,12 +340,18 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
 }
 
-async function runFixture(name, asserts) {
+/**
+ *
+ * @param {string} pattern
+ * @param {import('eslint').Linter.LintMessage[]} asserts
+ * @returns {Promise<void>}
+ */
+async function runFixture(pattern, asserts) {
   try {
-    const results = await eslint.lintFiles(`test/fixtures/${name}.*`);
+    const results = await eslint.lintFiles([`test/fixtures/${pattern}`]);
     return assert.deepStrictEqual(
-      asserts,
       results.map(({ messages }) => messages),
+      asserts,
     );
   } catch (err) {
     console.error(err);
