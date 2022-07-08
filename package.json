@@ -45,23 +45,24 @@
     "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {
-    "@1stg/common-config": "^5.0.0",
+    "@1stg/common-config": "^6.0.0",
     "@changesets/changelog-github": "^0.4.5",
     "@changesets/cli": "^2.23.1",
-    "@graphql-eslint/eslint-plugin": "^2.5.0",
+    "@graphql-eslint/eslint-plugin": "^3.10.4",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-mdx": "^1.17.1",
+    "eslint-mdx": "^2.0.1",
     "eslint-plugin-eslint-plugin": "^4.4.0",
-    "eslint-plugin-mdx": "^1.17.1",
+    "eslint-plugin-mdx": "^2.0.1",
     "eslint-plugin-self": "^1.2.1",
-    "eslint-plugin-svelte": "~2.1.0",
-    "eslint-plugin-utils": "^0.1.0",
+    "eslint-plugin-svelte": "^2.2.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "graphql": "^16.5.0",
     "mocha": "^10.0.0",
     "patch-package": "^6.4.7",
     "svelte": "^3.49.0",
-    "vue-eslint-parser": "^8.3.0"
+    "vue-eslint-parser": "^9.0.3",
+    "yarn-deduplicate": "^5.0.0"
   },
   "resolutions": {
     "@babel/traverse": "^7.18.6",
