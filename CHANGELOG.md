@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.2.2
+
+### Patch Changes
+
+- [`2373d0c`](https://github.com/prettier/eslint-plugin-prettier/commit/2373d0c0c9f30aee30e6059ba386fdc4435ed333) Thanks [@JounQin](https://github.com/JounQin)! - docs: add Sponsors and Backers sections
+
 ## 4.2.1
 
 ### Patch Changes
