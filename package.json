@@ -4,6 +4,7 @@
   "description": "Runs prettier as an eslint rule",
   "repository": "git+https://github.com/prettier/eslint-plugin-prettier.git",
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
+  "funding": "https://opencollective.com/prettier",
   "author": "Teddy Katz",
   "contributors": [
     "JounQin (https://github.com/JounQin) <admin@1stg.me>"
@@ -46,26 +47,57 @@
     "@1stg/common-config": "~3.0.0",
     "@1stg/eslint-config": "~3.0.0",
     "@changesets/changelog-github": "^0.4.5",
-    "@changesets/cli": "^2.23.0",
+    "@changesets/cli": "^2.23.1",
     "@graphql-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^5.29.0",
+    "@typescript-eslint/parser": "^5.30.5",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-mdx": "^1.17.0",
-    "eslint-plugin-eslint-plugin": "^4.3.0",
-    "eslint-plugin-mdx": "^1.17.0",
+    "eslint-mdx": "^1.17.1",
+    "eslint-plugin-eslint-plugin": "^4.4.0",
+    "eslint-plugin-mdx": "^1.17.1",
     "eslint-plugin-self": "^1.2.1",
-    "eslint-plugin-svelte": "^2.0.0",
+    "eslint-plugin-svelte": "^2.2.0",
     "eslint-plugin-utils": "^0.1.0",
     "graphql": "^16.5.0",
     "mocha": "^9.2.2",
     "patch-package": "^6.4.7",
-    "svelte": "^3.48.0",
+    "svelte": "^3.49.0",
     "vue-eslint-parser": "^8.3.0"
   },
   "resolutions": {
     "@babel/traverse": "^7.18.5",
     "eslint-plugin-prettier": "link:.",
     "prettier": "^2.7.1"
+  },
+  "donate": {
+    "recipients": [
+      {
+        "name": "unts",
+        "platform": "opencollective",
+        "address": "https://opencollective.com/unts",
+        "weight": 60
+      },
+      {
+        "name": "rxts",
+        "platform": "opencollective",
+        "address": "https://opencollective.com/rxts",
+        "weight": 20
+      },
+      {
+        "name": "1stG",
+        "email": "i@1stg.me",
+        "weight": 20,
+        "platforms": [
+          {
+            "platform": "opencollective",
+            "address": "https://opencollective.com/1stG"
+          },
+          {
+            "platform": "patreon",
+            "address": "https://www.patreon.com/1stG"
+          }
+        ]
+      }
+    ]
   },
   "packageManager": "yarn@1.22.19"
 }
