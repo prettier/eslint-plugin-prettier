@@ -14,9 +14,9 @@
 // Requirements
 // ------------------------------------------------------------------------------
 
-const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
+const assert = require('node:assert');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const { ESLint, RuleTester } = require('eslint');
 
@@ -311,9 +311,7 @@ runFixture('eslint-plugin-svelte3/*.svelte', [[], []]);
 function loadInvalidFixture(name) {
   const filename = path.join(__dirname, 'invalid', name + '.txt');
   const src = fs.readFileSync(filename, 'utf8');
-  const sections = src
-    .split(/^[A-Z]+:\n/m)
-    .map(x => x.replace(/(?=\n)\n$/, ''));
+  const sections = src.split(/^[A-Z]+:\n/m).map(x => x.replace(/\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
