@@ -4111,10 +4111,10 @@ eslint-plugin-svelte@^1.1.2:
   dependencies:
     eslint-plugin-svelte3 "^3.1.2"
 
-eslint-plugin-svelte@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-svelte/-/eslint-plugin-svelte-2.2.0.tgz#fe7376245af002681aad38a9ba266391acab6723"
-  integrity sha512-V7LwA2lEzGqQ1/Cor3uZS/dL3ff6kdHX44TNYViXyHifIEsFiN2TJWdnH+n6NewjCQ93KVI4cWeZI0Pl7ET/hA==
+eslint-plugin-svelte@~2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-svelte/-/eslint-plugin-svelte-2.1.1.tgz#04c039051376f29cafa0d9128c9e99f6685c4164"
+  integrity sha512-yEKGlyNIYwueT+SygQ3iHmr/+zsQvGXO8/kTKHnEOE+H+cBqtDSfMzyRDyejK4NzlUsLe5pLS0LI/fcquNvPTg==
   dependencies:
     debug "^4.3.1"
     eslint-utils "^3.0.0"
