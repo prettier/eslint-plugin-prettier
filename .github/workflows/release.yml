@@ -26,7 +26,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: 'chore: release prettier-plugin-svelte'
-          title: 'chore: release prettier-plugin-svelte'
+          commit: 'chore: release eslint-plugin-prettier'
+          title: 'chore: release eslint-plugin-prettier'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
