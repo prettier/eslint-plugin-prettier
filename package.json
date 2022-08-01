@@ -48,7 +48,7 @@
     "@1stg/eslint-config": "~3.0.0",
     "@changesets/changelog-github": "^0.4.5",
     "@changesets/cli": "^2.23.1",
-    "@graphql-eslint/eslint-plugin": "^2.5.0",
+    "@graphql-eslint/eslint-plugin": "^3.10.7",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint-config-prettier": "^8.5.0",
     "eslint-mdx": "^1.17.1",
