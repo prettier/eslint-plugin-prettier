@@ -55,6 +55,7 @@
     "eslint-plugin-mdx": "^1.17.1",
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-self": "^1.2.1",
+    "eslint-plugin-sonar": "^0.8.0",
     "eslint-plugin-svelte": "~2.1.0",
     "eslint-plugin-utils": "^0.1.0",
     "graphql": "^16.5.0",
