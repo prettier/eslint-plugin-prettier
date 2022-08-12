@@ -56,6 +56,7 @@
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-self": "^1.2.1",
     "eslint-plugin-sonar": "^0.8.0",
+    "eslint-plugin-sonarjs": "^0.15.0",
     "eslint-plugin-svelte": "~2.1.0",
     "eslint-plugin-svelte3": "^4.0.0",
     "eslint-plugin-utils": "^0.1.0",
