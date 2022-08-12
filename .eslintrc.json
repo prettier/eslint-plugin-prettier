@@ -4,32 +4,15 @@
     "mocha": true
   },
   "extends": [
-    "@1stg",
-    "plugin:eslint-plugin/recommended"
+    "plugin:n/recommended",
+    "plugin:sonar/recommended",
+    "plugin:sonarjs/recommended",
+    "plugin:eslint-plugin/recommended",
+    "prettier"
   ],
+  "plugins": ["self"],
   "rules": {
-    "eslint-plugin/report-message-format": [
-      "error",
-      "^[^a-z].*\\.$"
-    ]
-  },
-  "overrides": [
-    {
-      "files": "*.js",
-      "plugins": [
-        "self"
-      ],
-      "rules": {
-        "self/prettier": [
-          "error"
-        ]
-      }
-    },
-    {
-      "files": "test/*.js",
-      "rules": {
-        "no-magic-numbers": "off"
-      }
-    }
-  ]
+    "self/prettier": ["error"],
+    "eslint-plugin/report-message-format": ["error", "^[^a-z].*\\.$"]
+  }
 }

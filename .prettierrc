@@ -1,1 +1,4 @@
-"@1stg/prettier-config/semi"
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
