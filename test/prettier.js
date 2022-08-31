@@ -201,7 +201,10 @@ eslintPluginGraphqlRuleTester.run('eslint-plugin-graphql', rule, {
 
 const mdxRuleTester = new RuleTester({
   parser: require.resolve('eslint-mdx'),
-  parserOptions: require('eslint-mdx').DEFAULT_PARSER_OPTIONS,
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 'latest',
+  },
 });
 
 mdxRuleTester.run('eslint-plugin-mdx', rule, {
