@@ -50,8 +50,7 @@
   },
   "dependencies": {
     "eslint-plugin-prettier": "link:.",
-    "prettier-linter-helpers": "^1.0.0",
-    "synckit": "^0.8.4"
+    "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {
     "@1stg/common-config": "^7.1.1",
