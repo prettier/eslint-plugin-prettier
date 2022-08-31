@@ -28,7 +28,8 @@
     {
       "files": "test/*.js",
       "rules": {
-        "no-magic-numbers": "off"
+        "no-magic-numbers": "off",
+        "unicorn/prefer-top-level-await": "off"
       }
     }
   ]

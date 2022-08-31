@@ -8,17 +8,14 @@ on:
 
 jobs:
   ci:
-    name: 'Test: Node ${{ matrix.node-version }} - ESLint ${{ matrix.eslint-version }}'
+    name: Lint and Test on Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        eslint-version:
-          - 7
-          - 8
         node-version:
-          - 12
           - 14
           - 16
+          - 18
 
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: yarn
 
-      - name: Use ESLint ${{ matrix.eslint-version }}
-        run: yarn upgrade eslint@${{ matrix.eslint-version }} --ignore-engines
-
       - name: Install
-        run: yarn --frozen-lockfile --ignore-engines
+        run: yarn --frozen-lockfile
 
       - name: Test
         run: yarn mocha
