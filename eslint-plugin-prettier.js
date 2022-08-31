@@ -3,6 +3,14 @@
  * @author Andres Suarez
  */
 
+// @ts-check
+
+/**
+ * @typedef {import('eslint').AST.Range} Range
+ * @typedef {import('eslint').AST.SourceLocation} SourceLocation
+ * @typedef {import('eslint').ESLint.Plugin} Plugin
+ */
+
 'use strict';
 
 // ------------------------------------------------------------------------------
@@ -26,7 +34,7 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 
 // Lazily-loaded Prettier.
 /**
- * @type {import('prettier')}
+ * @type {typeof import('prettier')}
  */
 let prettier;
 
@@ -43,7 +51,7 @@ let prettier;
  */
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
-  const range = [offset, offset + deleteText.length];
+  const range = /** @type {Range} */ ([offset, offset + deleteText.length]);
   const [start, end] = range.map(index =>
     context.getSourceCode().getLocFromIndex(index),
   );
@@ -63,7 +71,10 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-module.exports = {
+/**
+ * @type {Plugin}
+ */
+const eslintPluginPrettier = {
   configs: {
     recommended: {
       extends: ['prettier'],
@@ -241,7 +252,9 @@ module.exports = {
                 'angular',
                 'svelte',
               ];
-              if (parserBlocklist.includes(inferredParser)) {
+              if (
+                parserBlocklist.includes(/** @type {string} */ (inferredParser))
+              ) {
                 return;
               }
             }
@@ -261,6 +274,9 @@ module.exports = {
             // files throw an error if they contain unclosed elements, such as
             // `<template><div></template>. In this case report an error at the
             // point at which parsing failed.
+            /**
+             * @type {string}
+             */
             let prettierSource;
             try {
               prettierSource = prettier.format(source, prettierOptions);
@@ -271,18 +287,23 @@ module.exports = {
 
               let message = 'Parsing error: ' + err.message;
 
+              const error =
+                /** @type {SyntaxError & {codeFrame: string; loc: SourceLocation}} */ (
+                  err
+                );
+
               // Prettier's message contains a codeframe style preview of the
               // invalid code and the line/column at which the error occurred.
               // ESLint shows those pieces of information elsewhere already so
               // remove them from the message
-              if (err.codeFrame) {
-                message = message.replace(`\n${err.codeFrame}`, '');
+              if (error.codeFrame) {
+                message = message.replace(`\n${error.codeFrame}`, '');
               }
-              if (err.loc) {
+              if (error.loc) {
                 message = message.replace(/ \(\d+:\d+\)$/, '');
               }
 
-              context.report({ message, loc: err.loc });
+              context.report({ message, loc: error.loc });
 
               return;
             }
@@ -300,3 +321,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = eslintPluginPrettier;

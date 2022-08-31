@@ -15,7 +15,9 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "main": "eslint-plugin-prettier.js",
+  "types": "eslint-plugin-prettier.d.ts",
   "files": [
+    "eslint-plugin-prettier.d.ts",
     "eslint-plugin-prettier.js"
   ],
   "keywords": [
@@ -25,6 +27,7 @@
     "prettier"
   ],
   "scripts": {
+    "build": "tsc -b",
     "format": "yarn prettier '**/*.{js,json,md,yml}' --write && yarn lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
@@ -33,23 +36,31 @@
     "test": "yarn lint && mocha"
   },
   "peerDependencies": {
+    "@types/eslint": ">=8.0.0",
     "eslint": ">=8.0.0",
     "prettier": ">=2.0.0"
   },
   "peerDependenciesMeta": {
+    "@types/eslint": {
+      "optional": true
+    },
     "eslint-config-prettier": {
       "optional": true
     }
   },
   "dependencies": {
     "eslint-plugin-prettier": "link:.",
-    "prettier-linter-helpers": "^1.0.0"
+    "prettier-linter-helpers": "^1.0.0",
+    "synckit": "^0.8.4"
   },
   "devDependencies": {
     "@1stg/common-config": "^7.1.1",
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
     "@graphql-eslint/eslint-plugin": "^3.10.7",
+    "@types/eslint": "^8.4.6",
+    "@types/prettier": "^2.7.0",
+    "@types/prettier-linter-helpers": "^1.0.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-mdx": "^2.0.2",
@@ -66,6 +77,6 @@
   },
   "resolutions": {
     "eslint-plugin-prettier": "link:.",
-    "prettier": "^2.7.1"
+    "prettier": "^2.0.0"
   }
 }
