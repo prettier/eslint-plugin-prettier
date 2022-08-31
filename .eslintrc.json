@@ -7,6 +7,9 @@
     "@1stg",
     "plugin:eslint-plugin/recommended"
   ],
+  "parserOptions": {
+    "project": null
+  },
   "rules": {
     "eslint-plugin/report-message-format": [
       "error",
