@@ -44,7 +44,7 @@
     "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {
-    "@1stg/common-config": "~3.0.0",
+    "@1stg/common-config": "~7.1.1",
     "@1stg/eslint-config": "~3.0.0",
     "@changesets/changelog-github": "^0.4.5",
     "@changesets/cli": "^2.23.1",
