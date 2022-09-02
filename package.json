@@ -27,7 +27,6 @@
     "prettier"
   ],
   "scripts": {
-    "build": "tsc -b",
     "format": "yarn prettier '**/*.{js,json,md,yml}' --write && yarn lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
@@ -38,7 +37,7 @@
   "peerDependencies": {
     "@types/eslint": ">=8.0.0",
     "eslint": ">=8.0.0",
-    "prettier": ">=2.0.0"
+    "prettier": ">=3.0.0"
   },
   "peerDependenciesMeta": {
     "@types/eslint": {
@@ -49,7 +48,6 @@
     }
   },
   "dependencies": {
-    "eslint-plugin-prettier": "link:.",
     "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {
@@ -76,6 +74,6 @@
   },
   "resolutions": {
     "eslint-plugin-prettier": "link:.",
-    "prettier": "^2.0.0"
+    "prettier": "^3.0.0-alpha.0"
   }
 }
