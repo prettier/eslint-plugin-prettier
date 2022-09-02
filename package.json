@@ -18,7 +18,8 @@
   "types": "eslint-plugin-prettier.d.ts",
   "files": [
     "eslint-plugin-prettier.d.ts",
-    "eslint-plugin-prettier.js"
+    "eslint-plugin-prettier.js",
+    "worker.js"
   ],
   "keywords": [
     "eslint",
