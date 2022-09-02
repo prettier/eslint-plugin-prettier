@@ -48,7 +48,6 @@
     }
   },
   "dependencies": {
-    "eslint-plugin-prettier": "link:.",
     "prettier-linter-helpers": "^1.0.0"
   },
   "devDependencies": {

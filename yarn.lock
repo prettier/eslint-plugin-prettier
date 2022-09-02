@@ -7329,7 +7329,7 @@ prettier-plugin-toml@^0.3.1:
     "@toml-tools/parser" "^0.3.1"
     prettier "^1.16.0"
 
-prettier@>=2.3, prettier@>=2.3.0, prettier@>=2.4.0, prettier@^1.16.0, prettier@^2.6.2, prettier@^2.7.1, prettier@^3.0.0:
+prettier@>=2.3, prettier@>=2.3.0, prettier@>=2.4.0, prettier@^1.16.0, prettier@^2.6.2, prettier@^2.7.1, prettier@^3.0.0-alpha.0:
   version "3.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.0-alpha.0.tgz#d4489d1c83e400ba63b9c64d593133e390ffec40"
   integrity sha512-S1pm0PyEOc0KWtO4YRf0Hz5+Wh8vj/p7iFpdxcJd7Vhdu9jo/fBE8JZdOVx4WRN4oK4cpqtrsaESNIBQ21vGKA==

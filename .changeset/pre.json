@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "eslint-plugin-prettier": "4.2.2"
+  },
+  "changesets": []
+}
