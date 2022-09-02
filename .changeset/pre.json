@@ -4,5 +4,9 @@
   "initialVersions": {
     "eslint-plugin-prettier": "4.2.2"
   },
-  "changesets": []
+  "changesets": [
+    "old-plants-exist",
+    "orange-eyes-brush",
+    "quiet-cups-pull"
+  ]
 }
