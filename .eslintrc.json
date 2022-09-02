@@ -7,6 +7,9 @@
     "@1stg",
     "plugin:eslint-plugin/recommended"
   ],
+  "parserOptions": {
+    "project": null
+  },
   "rules": {
     "eslint-plugin/report-message-format": [
       "error",
@@ -28,7 +31,8 @@
     {
       "files": "test/*.js",
       "rules": {
-        "no-magic-numbers": "off"
+        "no-magic-numbers": "off",
+        "unicorn/prefer-top-level-await": "off"
       }
     }
   ]

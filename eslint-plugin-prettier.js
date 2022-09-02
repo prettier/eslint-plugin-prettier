@@ -3,6 +3,16 @@
  * @author Andres Suarez
  */
 
+// @ts-check
+
+/**
+ * @typedef {import('eslint').AST.Range} Range
+ * @typedef {import('eslint').AST.SourceLocation} SourceLocation
+ * @typedef {import('eslint').ESLint.Plugin} Plugin
+ * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean }} Options
+ */
+
 'use strict';
 
 // ------------------------------------------------------------------------------
@@ -26,9 +36,9 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 
 // Lazily-loaded Prettier.
 /**
- * @type {import('prettier')}
+ * @type {(source: string, options: Options, fileInfoOptions: FileInfoOptions) => string}
  */
-let prettier;
+let prettierFormat;
 
 // ------------------------------------------------------------------------------
 //  Rule Definition
@@ -43,7 +53,7 @@ let prettier;
  */
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
-  const range = [offset, offset + deleteText.length];
+  const range = /** @type {Range} */ ([offset, offset + deleteText.length]);
   const [start, end] = range.map(index =>
     context.getSourceCode().getLocFromIndex(index),
   );
@@ -63,7 +73,10 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-module.exports = {
+/**
+ * @type {Plugin}
+ */
+const eslintPluginPrettier = {
   configs: {
     recommended: {
       extends: ['prettier'],
@@ -112,7 +125,10 @@ module.exports = {
       create(context) {
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
-        const eslintFileInfoOptions =
+        /**
+         * @type {FileInfoOptions}
+         */
+        const fileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
         const sourceCode = context.getSourceCode();
         const filepath = context.getFilename();
@@ -125,133 +141,18 @@ module.exports = {
         const source = sourceCode.text;
 
         return {
-          // eslint-disable-next-line sonarjs/cognitive-complexity
           Program() {
-            if (!prettier) {
+            if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
-              prettier = require('prettier');
+              prettierFormat = require('synckit').createSyncFn(
+                require.resolve('./worker'),
+              );
             }
 
+            /**
+             * @type {{}}
+             */
             const eslintPrettierOptions = context.options[0] || {};
-
-            const prettierRcOptions = usePrettierrc
-              ? prettier.resolveConfig.sync(onDiskFilepath, {
-                  editorconfig: true,
-                })
-              : null;
-
-            const { ignored, inferredParser } = prettier.getFileInfo.sync(
-              onDiskFilepath,
-              {
-                resolveConfig: false,
-                withNodeModules: false,
-                ignorePath: '.prettierignore',
-                plugins: prettierRcOptions ? prettierRcOptions.plugins : null,
-                ...eslintFileInfoOptions,
-              },
-            );
-
-            // Skip if file is ignored using a .prettierignore file
-            if (ignored) {
-              return;
-            }
-
-            const initialOptions = {};
-
-            // ESLint supports processors that let you extract and lint JS
-            // fragments within a non-JS language. In the cases where prettier
-            // supports the same language as a processor, we want to process
-            // the provided source code as javascript (as ESLint provides the
-            // rules with fragments of JS) instead of guessing the parser
-            // based off the filename. Otherwise, for instance, on a .md file we
-            // end up trying to run prettier over a fragment of JS using the
-            // markdown parser, which throws an error.
-            // Processors may set virtual filenames for these extracted blocks.
-            // If they do so then we want to trust the file extension they
-            // provide, and no override is needed.
-            // If the processor does not set any virtual filename (signified by
-            // `filepath` and `onDiskFilepath` being equal) AND we can't
-            // infer the parser from the filename, either because no filename
-            // was provided or because there is no parser found for the
-            // filename, use javascript.
-            // This is added to the options first, so that
-            // prettierRcOptions and eslintPrettierOptions can still override
-            // the parser.
-            //
-            // `parserBlocklist` should contain the list of prettier parser
-            // names for file types where:
-            // * Prettier supports parsing the file type
-            // * There is an ESLint processor that extracts JavaScript snippets
-            //   from the file type.
-            if (filepath === onDiskFilepath) {
-              // The following list means the plugin process source into js content
-              // but with same filename, so we need to change the parser to `babel`
-              // by default.
-              // Related ESLint plugins are:
-              // 1. `eslint-plugin-graphql` (replacement: `@graphql-eslint/eslint-plugin`)
-              // 2. `eslint-plugin-html`
-              // 3. `eslint-plugin-markdown@1` (replacement: `eslint-plugin-markdown@2+`)
-              // 4. `eslint-plugin-svelte3` (replacement: `eslint-plugin-svelte@2+`)
-              const parserBlocklist = [null, 'markdown', 'html'];
-
-              let inferParserToBabel = parserBlocklist.includes(inferredParser);
-
-              switch (inferredParser) {
-                // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
-                case 'graphql': {
-                  if (
-                    // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
-                    source.startsWith('ESLintPluginGraphQLFile`')
-                  ) {
-                    inferParserToBabel = true;
-                  }
-                  break;
-                }
-                // it could be processed by `@ota-meshi/eslint-plugin-svelte`, `eslint-plugin-svelte` or `eslint-plugin-svelte3`
-                case 'svelte': {
-                  // The `source` would be modified by `eslint-plugin-svelte3`
-                  if (!context.parserPath.includes('svelte-eslint-parser')) {
-                    // We do not support `eslint-plugin-svelte3`,
-                    // the users should run `prettier` on `.svelte` files manually
-                    return;
-                  }
-                }
-              }
-
-              if (inferParserToBabel) {
-                initialOptions.parser = 'babel';
-              }
-            } else {
-              // Similar to https://github.com/prettier/stylelint-prettier/pull/22
-              // In all of the following cases ESLint extracts a part of a file to
-              // be formatted and there exists a prettier parser for the whole file.
-              // If you're interested in prettier you'll want a fully formatted file so
-              // you're about to run prettier over the whole file anyway.
-              // Therefore running prettier over just the style section is wasteful, so
-              // skip it.
-              const parserBlocklist = [
-                'babel',
-                'babylon',
-                'flow',
-                'typescript',
-                'vue',
-                'markdown',
-                'html',
-                'mdx',
-                'angular',
-                'svelte',
-              ];
-              if (parserBlocklist.includes(inferredParser)) {
-                return;
-              }
-            }
-
-            const prettierOptions = {
-              ...initialOptions,
-              ...prettierRcOptions,
-              ...eslintPrettierOptions,
-              filepath,
-            };
 
             // prettier.format() may throw a SyntaxError if it cannot parse the
             // source code it is given. Usually for JS files this isn't a
@@ -261,9 +162,22 @@ module.exports = {
             // files throw an error if they contain unclosed elements, such as
             // `<template><div></template>. In this case report an error at the
             // point at which parsing failed.
+            /**
+             * @type {string}
+             */
             let prettierSource;
             try {
-              prettierSource = prettier.format(source, prettierOptions);
+              prettierSource = prettierFormat(
+                source,
+                {
+                  ...eslintPrettierOptions,
+                  filepath,
+                  onDiskFilepath,
+                  parserPath: context.parserPath,
+                  usePrettierrc,
+                },
+                fileInfoOptions,
+              );
             } catch (err) {
               if (!(err instanceof SyntaxError)) {
                 throw err;
@@ -271,19 +185,28 @@ module.exports = {
 
               let message = 'Parsing error: ' + err.message;
 
+              const error =
+                /** @type {SyntaxError & {codeFrame: string; loc: SourceLocation}} */ (
+                  err
+                );
+
               // Prettier's message contains a codeframe style preview of the
               // invalid code and the line/column at which the error occurred.
               // ESLint shows those pieces of information elsewhere already so
               // remove them from the message
-              if (err.codeFrame) {
-                message = message.replace(`\n${err.codeFrame}`, '');
+              if (error.codeFrame) {
+                message = message.replace(`\n${error.codeFrame}`, '');
               }
-              if (err.loc) {
+              if (error.loc) {
                 message = message.replace(/ \(\d+:\d+\)$/, '');
               }
 
-              context.report({ message, loc: err.loc });
+              context.report({ message, loc: error.loc });
 
+              return;
+            }
+
+            if (prettierSource == null) {
               return;
             }
 
@@ -300,3 +223,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = eslintPluginPrettier;
