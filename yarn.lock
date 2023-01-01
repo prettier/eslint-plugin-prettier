@@ -2445,9 +2445,9 @@
   integrity sha512-3O6c5261s6dNZDSZ2jQM57Mw7tGIREc3IjN7WJjWYqPKzzIYW9ujri2O1gRGVhFlfLTJl/cU/Ju26S0Otm5cog==
 
 "@types/prettier@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.0.tgz#ea03e9f0376a4446f44797ca19d9c46c36e352dc"
-  integrity sha512-RI1L7N4JnW5gQw2spvL7Sllfuf1SaHdrZpCHiBlCXjIlufi1SMNnbu2teze3/QE67Fg2tBlH7W+mi4hVNk4p0A==
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.2.tgz#6c2324641cc4ba050a8c710b2b251b377581fbf0"
+  integrity sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==
 
 "@types/semver@^6.0.0":
   version "6.2.3"
@@ -4181,11 +4181,9 @@ eslint-plugin-n@^15.2.5:
 
 eslint-plugin-prettier@^4.2.1:
   version "0.0.0"
-  uid ""
 
 "eslint-plugin-prettier@link:.":
   version "0.0.0"
-  uid ""
 
 eslint-plugin-promise@^6.0.1:
   version "6.0.1"
