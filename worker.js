@@ -2,7 +2,7 @@
 
 /**
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean, forceFormatExtracted?: boolean }} Options
  */
 
 const { runAsWorker } = require('synckit');
@@ -26,6 +26,7 @@ runAsWorker(
       onDiskFilepath,
       parserPath,
       usePrettierrc,
+      forceFormatExtracted,
       ...eslintPrettierOptions
     },
     eslintFileInfoOptions,
@@ -124,7 +125,7 @@ runAsWorker(
       if (inferParserToBabel) {
         initialOptions.parser = 'babel';
       }
-    } else {
+    } else if (!forceFormatExtracted) {
       // Similar to https://github.com/prettier/stylelint-prettier/pull/22
       // In all of the following cases ESLint extracts a part of a file to
       // be formatted and there exists a prettier parser for the whole file.

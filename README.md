@@ -153,6 +153,22 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
       }
       ```
 
+    - `forceFormatExtracted`: Enables formatting of extracted fragements, (default: `false`).
+      ESLint supports processors that let you extract and lint JS fragments within a non-JS language, for example using `eslint-plugin-markdown` to extract and lint a code block inside a Markdown file. Usually, you don't want to have the fragement itself formatted by Prettier as the whole file
+      might already be formatted anyway. This is why `eslint-plugin-prettier` ignores such fragements by default. However, for cases you want to have such extracted fragements formatted by Prettier you can use this option to force it.
+
+      ```json
+      {
+        "prettier/prettier": [
+          "error",
+          {},
+          {
+            "forceFormatExtracted": true
+          }
+        ]
+      }
+      ```
+
     - `fileInfoOptions`: Options that are passed to [prettier.getFileInfo](https://prettier.io/docs/en/api.html#prettiergetfileinfofilepath--options) to decide whether a file needs to be formatted. Can be used for example to opt-out from ignoring files located in `node_modules` directories.
 
       ```json

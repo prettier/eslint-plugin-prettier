@@ -46,6 +46,21 @@ const eslint = new ESLint({
           'mdx/code-block': true,
         },
       },
+      // To test 'forceFormatExtracted' option
+      {
+        files: '**/*.md',
+        plugins: ['markdown'],
+        processor: 'markdown/markdown',
+        rules: {
+          'prettier/prettier': 'off',
+        },
+      },
+      {
+        files: '**/*.md/*.js',
+        rules: {
+          'prettier/prettier': ['error', {}, { forceFormatExtracted: true }],
+        },
+      },
       {
         files: '**/eslint-plugin-svelte3/*.svelte',
         plugins: ['svelte3'],
@@ -254,6 +269,28 @@ runFixture('*.mdx', [
       line: 6,
       message: 'Insert `;`',
       messageId: 'insert',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
+
+// Testing 'forceFormatExtracted' option
+// (should only format code block, not the whole file)
+runFixture('*.md', [
+  [
+    {
+      column: 17,
+      endColumn: 26,
+      endLine: 3,
+      fix: {
+        range: [32, 41],
+        text: "'example';",
+      },
+      line: 3,
+      message: 'Replace `"example"` with `\'example\';`',
+      messageId: 'replace',
       nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,

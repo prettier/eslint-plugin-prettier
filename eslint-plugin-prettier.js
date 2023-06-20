@@ -10,7 +10,7 @@
  * @typedef {import('eslint').AST.SourceLocation} SourceLocation
  * @typedef {import('eslint').ESLint.Plugin} Plugin
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean, forceFormatExtracted?: boolean  }} Options
  */
 
 'use strict';
@@ -107,6 +107,7 @@ const eslintPluginPrettier = {
             type: 'object',
             properties: {
               usePrettierrc: { type: 'boolean' },
+              forceFormatExtracted: { type: 'boolean' },
               fileInfoOptions: {
                 type: 'object',
                 properties: {},
@@ -125,6 +126,7 @@ const eslintPluginPrettier = {
       create(context) {
         const usePrettierrc =
           !context.options[1] || context.options[1].usePrettierrc !== false;
+        const forceFormatExtracted = !!context.options[1]?.forceFormatExtracted;
         /**
          * @type {FileInfoOptions}
          */
@@ -175,6 +177,7 @@ const eslintPluginPrettier = {
                   onDiskFilepath,
                   parserPath: context.parserPath,
                   usePrettierrc,
+                  forceFormatExtracted,
                 },
                 fileInfoOptions,
               );
