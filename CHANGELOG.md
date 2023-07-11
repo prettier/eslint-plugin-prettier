@@ -1,5 +1,23 @@
 # Changelog
 
+## 5.0.0
+
+### Major Changes
+
+- [#508](https://github.com/prettier/eslint-plugin-prettier/pull/508) [`910aeb6`](https://github.com/prettier/eslint-plugin-prettier/commit/910aeb60a7456beb6193c634bb8dec1b7181312d) Thanks [@JounQin](https://github.com/JounQin)! - feat!: bump peer eslint to ">=8.0.0" and node to "^14.18.0 || >=16.0.0"
+
+- [#508](https://github.com/prettier/eslint-plugin-prettier/pull/508) [`910aeb6`](https://github.com/prettier/eslint-plugin-prettier/commit/910aeb60a7456beb6193c634bb8dec1b7181312d) Thanks [@JounQin](https://github.com/JounQin)! - feat!: upgrade to prettier v3
+
+### Minor Changes
+
+- [#508](https://github.com/prettier/eslint-plugin-prettier/pull/508) [`910aeb6`](https://github.com/prettier/eslint-plugin-prettier/commit/910aeb60a7456beb6193c634bb8dec1b7181312d) Thanks [@JounQin](https://github.com/JounQin)! - feat: add typings support
+
+### Patch Changes
+
+- [#548](https://github.com/prettier/eslint-plugin-prettier/pull/548) [`82a3db8`](https://github.com/prettier/eslint-plugin-prettier/commit/82a3db878baf1a8f8ef53393069fe23c3a80ce15) Thanks [@fisker](https://github.com/fisker)! - fix: add missing dependency `synckit`
+
+- [#564](https://github.com/prettier/eslint-plugin-prettier/pull/564) [`ae7a73c`](https://github.com/prettier/eslint-plugin-prettier/commit/ae7a73c6c4b306c617c5dd9baaaa2ae7c0f9f44b) Thanks [@auvred](https://github.com/auvred)! - fix: compatibility with prettier@3 without plugins
+
 ## 4.2.2
 
 ### Patch Changes
