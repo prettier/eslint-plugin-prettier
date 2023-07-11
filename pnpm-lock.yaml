@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@graphql-eslint/eslint-plugin@3.20.0':
+    hash: e3c7i33vtfs4mivhjwqctijsoe
+    path: patches/@graphql-eslint__eslint-plugin@3.20.0.patch
+
 dependencies:
   prettier-linter-helpers:
     specifier: ^1.0.0
@@ -30,7 +35,7 @@ devDependencies:
     version: 3.2.1(eslint@8.44.0)
   '@graphql-eslint/eslint-plugin':
     specifier: ^3.20.0
-    version: 3.20.0(graphql@16.7.1)
+    version: 3.20.0(patch_hash=e3c7i33vtfs4mivhjwqctijsoe)(graphql@16.7.1)
   '@types/eslint':
     specifier: ^8.44.0
     version: 8.44.0
@@ -698,7 +703,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@graphql-eslint/eslint-plugin@3.20.0(graphql@16.7.1):
+  /@graphql-eslint/eslint-plugin@3.20.0(patch_hash=e3c7i33vtfs4mivhjwqctijsoe)(graphql@16.7.1):
     resolution: {integrity: sha512-zvGJf7sNkh4QTRGHogwS/A9Ob5ZFC2A7U9ASIJ1RWkSex3wd5P0Fcwt98eagICnDguMWBIzsSko4vWoRgovbvg==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -725,6 +730,7 @@ packages:
       - supports-color
       - utf-8-validate
     dev: true
+    patched: true
 
   /@graphql-tools/batch-execute@8.5.22(graphql@16.7.1):
     resolution: {integrity: sha512-hcV1JaY6NJQFQEwCKrYhpfLK8frSXDbtNMoTur98u10Cmecy1zrqNKSqhEyGetpgHxaJRqszGzKeI3RuroDN6A==}

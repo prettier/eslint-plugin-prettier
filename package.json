@@ -80,5 +80,10 @@
     "simple-git-hooks": "^2.8.1",
     "svelte": "^4.0.5",
     "vue-eslint-parser": "^9.3.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@graphql-eslint/eslint-plugin@3.20.0": "patches/@graphql-eslint__eslint-plugin@3.20.0.patch"
+    }
   }
 }

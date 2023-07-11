@@ -1,0 +1,74 @@
+diff --git a/cjs/documents.js b/cjs/documents.js
+index f418f624fec59761e9537d7e0acc43a0bebb843e..0cda9fb8be4888d5a8d8c38a0b82f84b5745edb8 100644
+--- a/cjs/documents.js
++++ b/cjs/documents.js
+@@ -44,7 +44,7 @@ const handleVirtualPath = (documents) => {
+     if ([".gql", ".graphql"].some((extension) => location.endsWith(extension))) {
+       return source;
+     }
+-    filepathMap[location] ??= -1;
++    filepathMap[location] = filepathMap[location] != null ? filepathMap[location] : -1;
+     const index = filepathMap[location] += 1;
+     return {
+       ...source,
+diff --git a/cjs/parser.js b/cjs/parser.js
+index 269ecb5e2107d08ac185af6175d921de38fac476..4b9d5a698b515feaf6107f73dbdc14186d507354 100644
+--- a/cjs/parser.js
++++ b/cjs/parser.js
+@@ -44,7 +44,7 @@ debug("cwd %o", import_utils2.CWD);
+ function parseForESLint(code, options) {
+   try {
+     const { filePath } = options;
+-    options.documents ||= options.operations;
++    options.documents = options.documents || options.operations;
+     const { document } = (0, import_utils.parseGraphQLSDL)(filePath, code, {
+       ...options.graphQLParserOptions,
+       noLocation: false
+diff --git a/cjs/rules/graphql-js-validation.js b/cjs/rules/graphql-js-validation.js
+index 9130aae0f12847ce0d9cd69c7dae673d80f75de4..168cdf270ba1dfc39e8f5002b76b5242b154f1c5 100644
+--- a/cjs/rules/graphql-js-validation.js
++++ b/cjs/rules/graphql-js-validation.js
+@@ -49,7 +49,7 @@ function validateDocument({
+       };
+       if (token) {
+         loc = // if cursor on `@` symbol than use next node
+-        token.type === "@" ? sourceCode.getNodeByRangeIndex(token.range[1] + 1).loc : token.loc;
++          token.type === "@" ? sourceCode.getNodeByRangeIndex(token.range[1] + 1).loc : token.loc;
+       }
+       const didYouMeanContent = error.message.match(/Did you mean (?<content>.*)\?$/)?.groups.content;
+       const matches = didYouMeanContent ? [...didYouMeanContent.matchAll(/"(?<name>[^"]*)"/g)] : [];
+@@ -407,7 +407,7 @@ const GRAPHQL_JS_VALIDATIONS = Object.assign(
+           ...siblings.getOperations(),
+           ...siblings.getFragments()
+         ].reduce((map, { filePath, document }) => {
+-          map[filePath] ??= [];
++          map[filePath] = map[filePath] != null ? map[filePath] : [];
+           map[filePath].push(document);
+           return map;
+         }, /* @__PURE__ */ Object.create(null));
+diff --git a/cjs/rules/no-one-place-fragments.js b/cjs/rules/no-one-place-fragments.js
+index 0f4e2c34a00d4267eef2cf0f6e6e2d5369e4a11f..adbee674fbda8710acad8690dc7c637d8e6f1956 100644
+--- a/cjs/rules/no-one-place-fragments.js
++++ b/cjs/rules/no-one-place-fragments.js
+@@ -87,7 +87,7 @@ const rule = {
+       (0, import_graphql.visit)(document, {
+         FragmentSpread({ name }) {
+           const spreadName = name.value;
+-          usedFragmentsMap[spreadName] ||= [];
++          usedFragmentsMap[spreadName] = usedFragmentsMap[spreadName] || [];
+           usedFragmentsMap[spreadName].push(relativeFilePath);
+         }
+       });
+diff --git a/cjs/rules/no-unused-fields.js b/cjs/rules/no-unused-fields.js
+index dab854e13820dcf4037cc51729354e67fbb3bf90..1f1b1ddd52119bea302e4998bff6a5a316ca0a3d 100644
+--- a/cjs/rules/no-unused-fields.js
++++ b/cjs/rules/no-unused-fields.js
+@@ -39,7 +39,7 @@ function getUsedFields(schema, operations) {
+       }
+       const parentTypeName = typeInfo.getParentType().name;
+       const fieldName = node.name.value;
+-      usedFields[parentTypeName] ??= /* @__PURE__ */ new Set();
++      usedFields[parentTypeName] = usedFields[parentTypeName] != null ? usedFields[parentTypeName] : /* @__PURE__ */ new Set();
+       usedFields[parentTypeName].add(fieldName);
+     }
+   });
