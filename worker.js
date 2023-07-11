@@ -29,7 +29,6 @@ runAsWorker(
       ...eslintPrettierOptions
     },
     eslintFileInfoOptions,
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
     if (!prettier) {
       prettier = await import('prettier');

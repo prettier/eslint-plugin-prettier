@@ -16,21 +16,24 @@ jobs:
           - 14
           - 16
           - 18
+          - 20
 
     steps:
       - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: yarn
+          cache: pnpm
 
       - name: Install
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Test
-        run: yarn mocha
+        run: pnpm mocha
 
       - name: Perf
-        run: TIMING=1 yarn lint
+        run: TIMING=1 pnpm lint

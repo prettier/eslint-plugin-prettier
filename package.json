@@ -10,7 +10,7 @@
   ],
   "funding": "https://opencollective.com/prettier",
   "license": "MIT",
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "pnpm@8.6.7",
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
@@ -28,12 +28,12 @@
     "prettier"
   ],
   "scripts": {
-    "format": "yarn prettier '**/*.{js,json,md,yml}' --write && yarn lint --fix",
+    "format": "prettier --write . && pnpm lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
-    "prepare": "simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
-    "prerelease": "yarn format && yarn test",
+    "prepare": "simple-git-hooks",
+    "prerelease": "pnpm format && pnpm test",
     "release": "changeset publish",
-    "test": "yarn lint && mocha"
+    "test": "pnpm lint && mocha"
   },
   "peerDependencies": {
     "@types/eslint": ">=8.0.0",
@@ -53,29 +53,32 @@
     "synckit": "^0.8.5"
   },
   "devDependencies": {
-    "@1stg/common-config": "^7.1.1",
-    "@changesets/changelog-github": "^0.4.6",
-    "@changesets/cli": "^2.24.4",
-    "@graphql-eslint/eslint-plugin": "^3.10.7",
-    "@types/eslint": "^8.4.6",
-    "@types/prettier": "^2.7.0",
+    "@1stg/remark-preset": "^2.0.0",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@commitlint/config-conventional": "^17.6.6",
+    "@eslint-community/eslint-plugin-eslint-comments": "^3.2.1",
+    "@graphql-eslint/eslint-plugin": "^3.20.0",
+    "@types/eslint": "^8.44.0",
     "@types/prettier-linter-helpers": "^1.0.1",
-    "@typescript-eslint/parser": "^5.36.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-mdx": "^2.0.2",
-    "eslint-plugin-eslint-plugin": "^5.0.6",
-    "eslint-plugin-mdx": "^2.0.2",
-    "eslint-plugin-self": "^1.2.1",
-    "eslint-plugin-svelte": "^2.7.0",
-    "eslint-plugin-svelte3": "^4.0.0",
-    "graphql": "^16.6.0",
-    "mocha": "^10.0.0",
-    "svelte": "^3.49.0",
-    "vue-eslint-parser": "^9.0.3",
-    "yarn-deduplicate": "^6.0.0"
-  },
-  "resolutions": {
+    "commitlint": "^17.6.6",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-formatter-friendly": "^7.0.0",
+    "eslint-mdx": "^2.1.0",
+    "eslint-plugin-eslint-plugin": "^5.1.0",
+    "eslint-plugin-mdx": "^2.1.0",
+    "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-prettier": "link:.",
-    "prettier": "^3.0.0-alpha.0"
+    "eslint-plugin-svelte": "^2.32.2",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "graphql": "^16.7.1",
+    "lint-staged": "^13.2.3",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-pkg": "^0.18.0",
+    "simple-git-hooks": "^2.8.1",
+    "svelte": "^4.0.5",
+    "vue-eslint-parser": "^9.3.1"
   }
 }
