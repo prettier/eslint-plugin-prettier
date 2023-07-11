@@ -1,3 +1,6 @@
 node_modules
 *.log
 .*cache
+.yarn/*
+!.yarn/plugins
+!.yarn/releases
