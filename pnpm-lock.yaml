@@ -29,7 +29,7 @@ devDependencies:
     version: 2.26.2
   '@commitlint/config-conventional':
     specifier: ^17.6.6
-    version: 17.6.6
+    version: 17.6.7
   '@eslint-community/eslint-plugin-eslint-comments':
     specifier: ^3.2.1
     version: 3.2.1(eslint@8.44.0)
@@ -500,8 +500,8 @@ packages:
       - '@swc/wasm'
     dev: true
 
-  /@commitlint/config-conventional@17.6.6:
-    resolution: {integrity: sha512-phqPz3BDhfj49FUYuuZIuDiw+7T6gNAEy7Yew1IBHqSohVUCWOK2FXMSAExzS2/9X+ET93g0Uz83KjiHDOOFag==}
+  /@commitlint/config-conventional@17.6.7:
+    resolution: {integrity: sha512-4oTpEUC0HRM54QRHBPMOJW1pETp7usxXn9RuNYNWHcmu8wi1mpws95hvS20u2n6HtIkTn0jfn7vHioCm4AGUTw==}
     engines: {node: '>=v14'}
     dependencies:
       conventional-changelog-conventionalcommits: 5.0.0
