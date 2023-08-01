@@ -71,10 +71,10 @@ devDependencies:
     version: 'link:'
   eslint-plugin-svelte:
     specifier: ^2.32.2
-    version: 2.32.2(eslint@8.44.0)(svelte@4.0.5)
+    version: 2.32.2(eslint@8.44.0)(svelte@4.1.2)
   eslint-plugin-svelte3:
     specifier: ^4.0.0
-    version: 4.0.0(eslint@8.44.0)(svelte@4.0.5)
+    version: 4.0.0(eslint@8.44.0)(svelte@4.1.2)
   graphql:
     specifier: ^16.7.1
     version: 16.7.1
@@ -95,7 +95,7 @@ devDependencies:
     version: 2.8.1
   svelte:
     specifier: ^4.0.5
-    version: 4.0.5
+    version: 4.1.2
   vue-eslint-parser:
     specifier: ^9.3.1
     version: 9.3.1(eslint@8.44.0)
@@ -2329,17 +2329,17 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /eslint-plugin-svelte3@4.0.0(eslint@8.44.0)(svelte@4.0.5):
+  /eslint-plugin-svelte3@4.0.0(eslint@8.44.0)(svelte@4.1.2):
     resolution: {integrity: sha512-OIx9lgaNzD02+MDFNLw0GEUbuovNcglg+wnd/UY0fbZmlQSz7GlQiQ1f+yX0XvC07XPcDOnFcichqI3xCwp71g==}
     peerDependencies:
       eslint: '>=8.0.0'
       svelte: ^3.2.0
     dependencies:
       eslint: 8.44.0
-      svelte: 4.0.5
+      svelte: 4.1.2
     dev: true
 
-  /eslint-plugin-svelte@2.32.2(eslint@8.44.0)(svelte@4.0.5):
+  /eslint-plugin-svelte@2.32.2(eslint@8.44.0)(svelte@4.1.2):
     resolution: {integrity: sha512-Jgbop2fNZsoxxkklZAIbDNhwAPynvnCtUXLsEC6O2qax7N/pfe2cNqT0ZoBbubXKJitQQDEyVDQ1rZs4ZWcrTA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2360,8 +2360,8 @@ packages:
       postcss-safe-parser: 6.0.0(postcss@8.4.25)
       postcss-selector-parser: 6.0.13
       semver: 7.5.4
-      svelte: 4.0.5
-      svelte-eslint-parser: 0.32.1(svelte@4.0.5)
+      svelte: 4.1.2
+      svelte-eslint-parser: 0.32.1(svelte@4.1.2)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -6123,7 +6123,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-eslint-parser@0.32.1(svelte@4.0.5):
+  /svelte-eslint-parser@0.32.1(svelte@4.1.2):
     resolution: {integrity: sha512-GCSfeIzdgk53CaOzK+s/+l2igfTno3mWGkwoDYAwPes/rD9Al2fc7ksfopjx5UL87S7dw1eL73F6wNYiiuhzIA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -6137,11 +6137,11 @@ packages:
       espree: 9.6.0
       postcss: 8.4.25
       postcss-scss: 4.0.6(postcss@8.4.25)
-      svelte: 4.0.5
+      svelte: 4.1.2
     dev: true
 
-  /svelte@4.0.5:
-    resolution: {integrity: sha512-PHKPWP1wiWHBtsE57nCb8xiWB3Ht7/3Kvi3jac0XIxUM2rep8alO7YoAtgWeGD7++tFy46krilOrPW0mG3Dx+A==}
+  /svelte@4.1.2:
+    resolution: {integrity: sha512-/evA8U6CgOHe5ZD1C1W3va9iJG7mWflcCdghBORJaAhD2JzrVERJty/2gl0pIPrJYBGZwZycH6onYf+64XXF9g==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
