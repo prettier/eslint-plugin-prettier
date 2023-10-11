@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.1
+
+### Patch Changes
+
+- [#588](https://github.com/prettier/eslint-plugin-prettier/pull/588) [`21a7146`](https://github.com/prettier/eslint-plugin-prettier/commit/21a7146d78161307dcc7eaa96f41dac51f7ce89f) Thanks [@krist7599555](https://github.com/krist7599555)! - fix: `parserPath` type might be `undefined` on Eslint Falt Config
+
 ## 5.0.0
 
 ### Major Changes
