@@ -2,7 +2,7 @@
 
 /**
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath?: string, usePrettierrc?: boolean }} Options
  */
 
 const { runAsWorker } = require('synckit');
@@ -112,7 +112,10 @@ runAsWorker(
         // it could be processed by `@ota-meshi/eslint-plugin-svelte`, `eslint-plugin-svelte` or `eslint-plugin-svelte3`
         case 'svelte': {
           // The `source` would be modified by `eslint-plugin-svelte3`
-          if (!parserPath.includes('svelte-eslint-parser')) {
+          if (
+            typeof parserPath === 'string' &&
+            !parserPath.includes('svelte-eslint-parser')
+          ) {
             // We do not support `eslint-plugin-svelte3`,
             // the users should run `prettier` on `.svelte` files manually
             return;
