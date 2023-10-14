@@ -57,7 +57,7 @@
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.2",
     "@commitlint/config-conventional": "^17.6.6",
-    "@eslint-community/eslint-plugin-eslint-comments": "^3.2.1",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.1.0",
     "@graphql-eslint/eslint-plugin": "^3.20.0",
     "@types/eslint": "^8.44.0",
     "@types/prettier-linter-helpers": "^1.0.1",
