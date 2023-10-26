@@ -54,9 +54,10 @@ let prettierFormat;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = /** @type {Range} */ ([offset, offset + deleteText.length]);
-  const [start, end] = range.map(index =>
-    context.getSourceCode().getLocFromIndex(index),
-  );
+  const [start, end] = range.map(index => {
+    const sourceCode = context.sourceCode ?? context.getSourceCode(); // `context.sourceCode` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
+    return sourceCode.getLocFromIndex(index);
+  });
 
   context.report({
     messageId: operation,
@@ -130,14 +131,15 @@ const eslintPluginPrettier = {
          */
         const fileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
-        const sourceCode = context.getSourceCode();
-        const filepath = context.getFilename();
+        const sourceCode = context.sourceCode ?? context.getSourceCode(); // `context.sourceCode` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
+        const filepath = context.filename ?? context.getFilename(); // `context.filename` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
         // Processors that extract content from a file, such as the markdown
         // plugin extracting fenced code blocks may choose to specify virtual
         // file paths. If this is the case then we need to resolve prettier
         // config and file info using the on-disk path instead of the virtual
         // path.
-        const onDiskFilepath = context.getPhysicalFilename();
+        const onDiskFilepath =
+          context.physicalFilename ?? context.getPhysicalFilename(); // `context.physicalFilename` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
         const source = sourceCode.text;
 
         return {
