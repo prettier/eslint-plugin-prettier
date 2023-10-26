@@ -1,7 +1,6 @@
 'use strict';
 
 const prettier = require('./eslint-plugin-prettier');
-const prettierConfig = require('eslint-config-prettier');
 
 const plugin = {
   configs: {},
@@ -16,7 +15,6 @@ Object.assign(plugin.configs, {
       prettier: plugin,
     },
     rules: {
-      ...prettierConfig.rules,
       ...prettier.configs.recommended.rules,
     },
   },
