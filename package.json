@@ -10,7 +10,7 @@
   ],
   "funding": "https://opencollective.com/prettier",
   "license": "MIT",
-  "packageManager": "pnpm@7.33.3",
+  "packageManager": "pnpm@7.33.6",
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
