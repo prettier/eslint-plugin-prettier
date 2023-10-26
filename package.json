@@ -19,7 +19,7 @@
   "files": [
     "eslint-plugin-prettier.d.ts",
     "eslint-plugin-prettier.js",
-    "recommended.js",
+    "flat.js",
     "worker.js"
   ],
   "keywords": [
