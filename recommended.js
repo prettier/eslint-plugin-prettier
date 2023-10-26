@@ -3,21 +3,25 @@
 const prettier = require('./eslint-plugin-prettier');
 
 const plugin = {
-  configs: {},
+  meta: {
+    name: 'eslint-plugin-prettier',
+    version: '5.0.1',
+  },
+  configs: {
+    recommended: {
+      plugins: {
+        prettier,
+      },
+      rules: {
+        'prettier/prettier': 'error',
+        'arrow-body-style': 'off',
+        'prefer-arrow-callback': 'off',
+      },
+    },
+  },
   rules: {
     ...prettier.rules,
   },
 };
-
-Object.assign(plugin.configs, {
-  recommended: {
-    plugins: {
-      prettier: plugin,
-    },
-    rules: {
-      ...prettier.configs.recommended.rules,
-    },
-  },
-});
 
 module.exports = plugin;
