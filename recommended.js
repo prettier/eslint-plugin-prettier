@@ -1,7 +1,15 @@
+// @ts-check
 'use strict';
+
+/**
+ * @typedef {import('eslint').ESLint.Plugin} Plugin
+ */
 
 const prettier = require('./eslint-plugin-prettier');
 
+/**
+ * @type {Plugin}
+ */
 const plugin = {
   meta: {
     name: 'eslint-plugin-prettier',
