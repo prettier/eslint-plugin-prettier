@@ -11,10 +11,7 @@ const prettier = require('./eslint-plugin-prettier');
  * @type {Plugin}
  */
 const plugin = {
-  meta: {
-    name: 'eslint-plugin-prettier',
-    version: '5.0.1',
-  },
+  meta: prettier.meta,
   configs: {
     recommended: {
       plugins: {
@@ -27,9 +24,7 @@ const plugin = {
       },
     },
   },
-  rules: {
-    ...prettier.rules,
-  },
+  rules: prettier.rules,
 };
 
 module.exports = plugin;
