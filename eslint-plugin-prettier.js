@@ -244,4 +244,24 @@ const eslintPluginPrettier = {
   },
 };
 
-module.exports = eslintPluginPrettier;
+/**
+ * @type {Plugin}
+ */
+const eslintPluginPrettierWithFlatConfig = {
+  ...eslintPluginPrettier,
+  configs: {
+    ...eslintPluginPrettier.configs,
+    'recommended-flat': {
+      plugins: {
+        prettier: eslintPluginPrettier,
+      },
+      rules: {
+        'prettier/prettier': 'error',
+        'arrow-body-style': 'off',
+        'prefer-arrow-callback': 'off',
+      },
+    },
+  },
+};
+
+module.exports = eslintPluginPrettierWithFlatConfig;
