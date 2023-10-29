@@ -54,10 +54,12 @@ let prettierFormat;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
   const range = /** @type {Range} */ ([offset, offset + deleteText.length]);
-  const [start, end] = range.map(index => {
-    const sourceCode = context.sourceCode ?? context.getSourceCode(); // `context.sourceCode` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
-    return sourceCode.getLocFromIndex(index);
-  });
+  // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
+  // with the `sourceCode` property.
+  // TODO: Only use property when our eslint peerDependency is >=8.40.0.
+  const [start, end] = range.map(index =>
+    (context.sourceCode ?? context.getSourceCode()).getLocFromIndex(index),
+  );
 
   context.report({
     messageId: operation,
@@ -131,15 +133,26 @@ const eslintPluginPrettier = {
          */
         const fileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
-        const sourceCode = context.sourceCode ?? context.getSourceCode(); // `context.sourceCode` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
-        const filepath = context.filename ?? context.getFilename(); // `context.filename` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
+
+        // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
+        // with the `sourceCode` property.
+        // TODO: Only use property when our eslint peerDependency is >=8.40.0.
+        const sourceCode = context.sourceCode ?? context.getSourceCode();
+        // `context.getFilename()` was deprecated in ESLint v8.40.0 and replaced
+        // with the `filename` property.
+        // TODO: Only use property when our eslint peerDependency is >=8.40.0.
+        const filepath = context.filename ?? context.getFilename();
+
         // Processors that extract content from a file, such as the markdown
         // plugin extracting fenced code blocks may choose to specify virtual
         // file paths. If this is the case then we need to resolve prettier
         // config and file info using the on-disk path instead of the virtual
         // path.
+        // `context.getPhysicalFilename()` was deprecated in ESLint v8.40.0 and replaced
+        // with the `physicalFilename` property.
+        // TODO: Only use property when our eslint peerDependency is >=8.40.0.
         const onDiskFilepath =
-          context.physicalFilename ?? context.getPhysicalFilename(); // `context.physicalFilename` was added in ESLint v8.40.0. By checking both the property and the method, breaking change is avoided. TODO: Only use property when requiring a minimum version of v8.40.0 or higher of ESLint.
+          context.physicalFilename ?? context.getPhysicalFilename();
         const source = sourceCode.text;
 
         return {
