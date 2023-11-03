@@ -77,9 +77,12 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-// Type hint configs key as non-nullable to avoid type-checking errors in when
-// assigning to eslintPluginPrettier.config below
-/** @type {Plugin & {configs: NonNullable<Plugin['configs']>}} */
+/**
+ * Type hint `configs` key as non-nullable to avoid type-checking errors in when
+ * assigning to `eslintPluginPrettier.configs` below
+ *
+ * @type {Plugin & {configs: NonNullable<Plugin['configs']>}}
+ */
 const eslintPluginPrettier = {
   meta: { name, version },
   configs: {},
