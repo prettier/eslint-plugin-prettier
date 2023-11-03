@@ -77,25 +77,12 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-/**
- * @type {Plugin}
- */
+// Type hint configs key as non-nullable to avoid type-checking errors in when
+// assigning to eslintPluginPrettier.config below
+/** @type {Plugin & {configs: NonNullable<Plugin['configs']>}} */
 const eslintPluginPrettier = {
-  meta: {
-    name,
-    version,
-  },
-  configs: {
-    recommended: {
-      extends: ['prettier'],
-      plugins: ['prettier'],
-      rules: {
-        'prettier/prettier': 'error',
-        'arrow-body-style': 'off',
-        'prefer-arrow-callback': 'off',
-      },
-    },
-  },
+  meta: { name, version },
+  configs: {},
   rules: {
     prettier: {
       meta: {
@@ -244,24 +231,30 @@ const eslintPluginPrettier = {
   },
 };
 
-/**
- * @type {Plugin}
- */
-const eslintPluginPrettierWithFlatConfig = {
-  ...eslintPluginPrettier,
-  configs: {
-    ...eslintPluginPrettier.configs,
-    'recommended-flat': {
-      plugins: {
-        prettier: eslintPluginPrettier,
-      },
-      rules: {
-        'prettier/prettier': 'error',
-        'arrow-body-style': 'off',
-        'prefer-arrow-callback': 'off',
-      },
+// Assign configs after initial plugin configuration, as flat configs
+// require referencing the original plugin that contains the rules.
+eslintPluginPrettier.configs = {
+  recommended: {
+    extends: 'prettier',
+    plugins: ['prettier'],
+    rules: {
+      'prettier/prettier': 'error',
+      'arrow-body-style': 'off',
+      'prefer-arrow-callback': 'off',
+    },
+  },
+  ['recommended-flat']: {
+    // In the flat config, don't extend from the eslint-config-prettier ruleset.
+    // The consumer should deal with extending from eslint-config-prettier themselves.
+    plugins: {
+      prettier: eslintPluginPrettier,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+      'arrow-body-style': 'off',
+      'prefer-arrow-callback': 'off',
     },
   },
 };
 
-module.exports = eslintPluginPrettierWithFlatConfig;
+module.exports = eslintPluginPrettier;
