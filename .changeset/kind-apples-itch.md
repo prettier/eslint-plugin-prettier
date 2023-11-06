@@ -17,5 +17,5 @@ Or with ESM:
 ```js
 import prettier from 'eslint-plugin-prettier';
 
-export default [prettier.configs["recommended-flat"];
+export default [prettier.configs['recommended-flat']];
 ```
