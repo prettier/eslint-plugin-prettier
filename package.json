@@ -59,7 +59,7 @@
     "@commitlint/config-conventional": "^17.6.6",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.1.0",
     "@graphql-eslint/eslint-plugin": "^3.20.0",
-    "@types/eslint": "^8.44.0",
+    "@types/eslint": "^8.44.7",
     "@types/prettier-linter-helpers": "^1.0.1",
     "commitlint": "^17.6.6",
     "eslint": "^8.44.0",
