@@ -61,7 +61,7 @@
     "@graphql-eslint/eslint-plugin": "^3.20.0",
     "@types/eslint": "^8.44.7",
     "@types/prettier-linter-helpers": "^1.0.1",
-    "commitlint": "^17.6.6",
+    "commitlint": "^18.2.0",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-formatter-friendly": "^7.0.0",
