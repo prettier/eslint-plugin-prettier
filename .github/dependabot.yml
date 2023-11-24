@@ -11,10 +11,20 @@ updates:
       - dependency-name: 'eslint'
       - dependency-name: 'eslint-*'
       - dependency-name: 'prettier'
+      - dependency-name: '@types/eslint'
       - dependency-name: 'vue-eslint-parser'
       - dependency-name: 'mocha'
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        patterns:
+          - '*'
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    groups:
+      actions:
+        patterns:
+          - '*'
