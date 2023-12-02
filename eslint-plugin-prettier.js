@@ -36,7 +36,7 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 
 // Lazily-loaded Prettier.
 /**
- * @type {(source: string, options: Options, fileInfoOptions: FileInfoOptions) => string}
+ * @type {(source: string, options: Options, fileInfoOptions: FileInfoOptions, fullControl: boolean) => string}
  */
 let prettierFormat;
 
@@ -115,6 +115,7 @@ const eslintPluginPrettier = {
                 properties: {},
                 additionalProperties: true,
               },
+              fullControl: { type: 'boolean' },
             },
             additionalProperties: true,
           },
@@ -133,6 +134,8 @@ const eslintPluginPrettier = {
          */
         const fileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const fullControl =
+          (context.options[1] && context.options[1].fullControl) || false;
 
         // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
         // with the `sourceCode` property.
@@ -192,6 +195,7 @@ const eslintPluginPrettier = {
                   usePrettierrc,
                 },
                 fileInfoOptions,
+                fullControl,
               );
             } catch (err) {
               if (!(err instanceof SyntaxError)) {
