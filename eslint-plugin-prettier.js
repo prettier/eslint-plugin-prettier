@@ -23,6 +23,7 @@ const {
   showInvisibles,
   generateDifferences,
 } = require('prettier-linter-helpers');
+const { name, version } = require('./package.json');
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -80,6 +81,7 @@ function reportDifference(context, difference) {
  * @type {Plugin}
  */
 const eslintPluginPrettier = {
+  meta: { name, version },
   configs: {
     recommended: {
       extends: ['prettier'],
