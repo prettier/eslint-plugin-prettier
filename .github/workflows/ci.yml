@@ -36,4 +36,7 @@ jobs:
         run: pnpm mocha
 
       - name: Perf
+        # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
+        # with node 14
+        if: ${{ matrix.node-version != 14 }}
         run: TIMING=1 pnpm lint
