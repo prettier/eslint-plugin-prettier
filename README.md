@@ -43,7 +43,7 @@ npm install --save-dev --save-exact prettier
 
 **_`eslint-plugin-prettier` does not install Prettier or ESLint for you._** _You must install these yourself._
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect potential bugs. If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors. You should use [`eslint-config-prettier``](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect potential bugs. If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors. Our recommended configuration automatically enables [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
 
 ## Configuration (legacy: `.eslintrc*`)
 
@@ -65,18 +65,16 @@ This will:
 
 ## Configuration (new: `eslint.config.js`)
 
-For [flat configuration](https://eslint.org/docs/latest/use/configure/configuration-files-new), this plugin ships with an `eslint-plugin-prettier/recommended` config that sets up `eslint-plugin-prettier`. Note that unlike the legacy recommended configuration, the flat config does not configure [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) for you, and you should import and configure that within your own config.
+For [flat configuration](https://eslint.org/docs/latest/use/configure/configuration-files-new), this plugin ships with an `eslint-plugin-prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
 
-Import `eslint-plugin-prettier/recommended` and `eslint-config-prettier` and add them as the _last_ items in the configuration array in your `eslint.config.js` file so that `eslint-config-prettier` has the opportunity to override other configs:
+Import `eslint-plugin-prettier/recommended` and add it as the _last_ item in the configuration array in your `eslint.config.js` file so that `eslint-config-prettier` has the opportunity to override other configs:
 
 ```js
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
-const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = [
   // Any other config imports go at the top
   eslintPluginPrettierRecommended,
-  eslintConfigPrettier,
 ];
 ```
 
