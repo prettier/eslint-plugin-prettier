@@ -1,5 +1,31 @@
 # Changelog
 
+## 5.1.0
+
+### Minor Changes
+
+- [#616](https://github.com/prettier/eslint-plugin-prettier/pull/616) [`3856413`](https://github.com/prettier/eslint-plugin-prettier/commit/3856413420d3d026e5ae84f29c4bd0d558697135) Thanks [@BPScott](https://github.com/BPScott)! - Add recommended config for the flat config format.
+
+  If you are using flat config, import the recommended config from `eslint-plugin-prettier/recommended`. Like the legacy format recommended config, this automatically includes the contents of `eslint-config-prettier`.
+
+  ```js
+  // eslint.config.js
+  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+
+  module.exports = [
+    // Any other config imports go at the top
+    eslintPluginPrettierRecommended,
+  ];
+  ```
+
+### Patch Changes
+
+- [#614](https://github.com/prettier/eslint-plugin-prettier/pull/614) [`5270877`](https://github.com/prettier/eslint-plugin-prettier/commit/5270877d169bec05449861c8ad7e6338b0ad47c0) Thanks [@BPScott](https://github.com/BPScott)! - Add meta block to plugin. This improves debugging and cachebusting when using the new flat config
+
+- [#603](https://github.com/prettier/eslint-plugin-prettier/pull/603) [`a63a570`](https://github.com/prettier/eslint-plugin-prettier/commit/a63a570f8f3e3d53b90b1cf35e06fd7e3c387a5a) Thanks [@filiptammergard](https://github.com/filiptammergard)! - fix: specify `eslint-config-prettier` as peer dependency
+
+  It's already added to `peerDependenciesMeta` as optional, which means it should also be specified in `peerDependencies`.
+
 ## 5.0.1
 
 ### Patch Changes
