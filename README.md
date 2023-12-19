@@ -37,63 +37,52 @@ error: Delete `;` (prettier/prettier) at pkg/commons-atom/ActiveEditorRegistry.j
 ## Installation
 
 ```sh
-npm install --save-dev eslint-plugin-prettier
+npm install --save-dev eslint-plugin-prettier eslint-config-prettier
 npm install --save-dev --save-exact prettier
 ```
 
 **_`eslint-plugin-prettier` does not install Prettier or ESLint for you._** _You must install these yourself._
 
-Then, in your `.eslintrc.json`:
+This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect potential bugs. If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors. Our recommended configuration automatically enables [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
+
+## Configuration (legacy: `.eslintrc*`)
+
+For [legacy configuration](https://eslint.org/docs/latest/use/configure/configuration-files), this plugin ships with a `plugin:prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
+
+Add `plugin:prettier/recommended` as the _last_ item in the extends array in your `.eslintrc*` config file, so that `eslint-config-prettier` has the opportunity to override other configs:
 
 ```json
 {
-  "plugins": ["prettier"],
-  "rules": {
-    "prettier/prettier": "error"
-  }
+  "extends": ["plugin:prettier/recommended"]
 }
 ```
 
-## Recommended Configuration
+This will:
 
-This plugin works best if you disable all other ESLint rules relating to code formatting, and only enable rules that detect potential bugs. (If another active ESLint rule disagrees with `prettier` about how code should be formatted, it will be impossible to avoid lint errors.) You can use [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) to disable all formatting-related ESLint rules.
+- Enable the `prettier/prettier` rule.
+- Disable the `arrow-body-style` and `prefer-arrow-callback` rules which are problematic with this plugin - see the below for why.
+- Enable the `eslint-config-prettier` config which will turn off ESLint rules that conflict with Prettier.
 
-This plugin ships with a `plugin:prettier/recommended` config that sets up both the plugin and `eslint-config-prettier` in one go.
+## Configuration (new: `eslint.config.js`)
 
-1. In addition to the above installation instructions, install `eslint-config-prettier`:
+For [flat configuration](https://eslint.org/docs/latest/use/configure/configuration-files-new), this plugin ships with an `eslint-plugin-prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
 
-   ```sh
-   npm install --save-dev eslint-config-prettier
-   ```
+Import `eslint-plugin-prettier/recommended` and add it as the _last_ item in the configuration array in your `eslint.config.js` file so that `eslint-config-prettier` has the opportunity to override other configs:
 
-2. Then you need to add `plugin:prettier/recommended` as the _last_ extension in your `.eslintrc.json`:
+```js
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
-   ```json
-   {
-     "extends": ["plugin:prettier/recommended"]
-   }
-   ```
-
-   You can then set Prettier's own options inside a `.prettierrc` file.
-
-Exactly what does `plugin:prettier/recommended` do? Well, this is what it expands to:
-
-```json
-{
-  "extends": ["prettier"],
-  "plugins": ["prettier"],
-  "rules": {
-    "prettier/prettier": "error",
-    "arrow-body-style": "off",
-    "prefer-arrow-callback": "off"
-  }
-}
+module.exports = [
+  // Any other config imports go at the top
+  eslintPluginPrettierRecommended,
+];
 ```
 
-- `"extends": ["prettier"]` enables the config from `eslint-config-prettier`, which turns off some ESLint rules that conflict with Prettier.
-- `"plugins": ["prettier"]` registers this plugin.
-- `"prettier/prettier": "error"` turns on the rule provided by this plugin, which runs Prettier from within ESLint.
-- `"arrow-body-style": "off"` and `"prefer-arrow-callback": "off"` turns off two ESLint core rules that unfortunately are problematic with this plugin – see the next section.
+This will:
+
+- Enable the `prettier/prettier` rule.
+- Disable the `arrow-body-style` and `prefer-arrow-callback` rules which are problematic with this plugin - see the below for why.
+- Enable the `eslint-config-prettier` config which will turn off ESLint rules that conflict with Prettier.
 
 ## `Svelte` support
 

@@ -3,8 +3,7 @@ const eslintPluginN = require('eslint-plugin-n');
 const eslintPluginEslintComments = require('@eslint-community/eslint-plugin-eslint-comments');
 const eslintPluginEslintPluginRecommended = require('eslint-plugin-eslint-plugin/configs/recommended');
 const eslintPluginMdx = require('eslint-plugin-mdx');
-const eslintConfigPrettier = require('eslint-config-prettier');
-const eslintPluginPrettier = require('./eslint-plugin-prettier');
+const eslintPluginPrettierRecommended = require('./recommended');
 
 module.exports = [
   eslintConfigs.recommended,
@@ -20,12 +19,7 @@ module.exports = [
   eslintPluginEslintPluginRecommended,
   eslintPluginMdx.flat,
   eslintPluginMdx.flatCodeBlocks,
-  eslintConfigPrettier,
-  // No built-in flat recommended config yet
-  {
-    plugins: { prettier: eslintPluginPrettier },
-    rules: eslintPluginPrettier.configs.recommended.rules,
-  },
+  eslintPluginPrettierRecommended,
   {
     rules: {
       'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
