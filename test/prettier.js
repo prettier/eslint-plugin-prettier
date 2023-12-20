@@ -59,6 +59,10 @@ const eslint = new ESLint({
         files: '**/eslint-plugin-svelte/*.svelte',
         extends: ['plugin:svelte/recommended'],
       },
+      {
+        files: '*.pug',
+        plugins: ['pug'],
+      },
     ],
   },
   useEslintrc: false,
@@ -305,6 +309,12 @@ runFixture(
   // FIXME: https://github.com/sveltejs/prettier-plugin-svelte/issues/317
   true,
 );
+
+/**
+ * The `script` code style actually does not match `prettier`'s,
+ * but we are skipping scripts in pug files
+ */
+runFixture('*.pug', [[]]);
 
 // ------------------------------------------------------------------------------
 //  Helpers
