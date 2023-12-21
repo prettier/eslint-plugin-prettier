@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.1
+
+### Patch Changes
+
+- [#619](https://github.com/prettier/eslint-plugin-prettier/pull/619) [`b5c0dc5`](https://github.com/prettier/eslint-plugin-prettier/commit/b5c0dc5715616a0f2a0da8b8c077434efc618a3e) Thanks [@JounQin](https://github.com/JounQin)! - chore: skip formatting inline scripts in pug files
+
 ## 5.1.0
 
 ### Minor Changes
