@@ -1,5 +1,5 @@
 {
   "arrowParens": "avoid",
   "singleQuote": true,
-  "plugins": ["prettier-plugin-pkg"]
+  "plugins": ["@prettier/plugin-pug", "prettier-plugin-pkg"]
 }

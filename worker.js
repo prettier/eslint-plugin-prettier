@@ -145,6 +145,7 @@ runAsWorker(
         'mdx',
         'angular',
         'svelte',
+        'pug',
       ];
       if (parserBlocklist.includes(/** @type {string} */ (inferredParser))) {
         return;
