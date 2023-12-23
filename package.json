@@ -99,7 +99,8 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "@graphql-eslint/eslint-plugin@3.20.0": "patches/@graphql-eslint__eslint-plugin@3.20.0.patch"
+      "@graphql-eslint/eslint-plugin@3.20.0": "patches/@graphql-eslint__eslint-plugin@3.20.0.patch",
+      "@types/eslint@8.44.7": "patches/@types__eslint@8.44.7.patch"
     }
   }
 }

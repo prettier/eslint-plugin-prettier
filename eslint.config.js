@@ -25,14 +25,6 @@ module.exports = [
       'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
     },
   },
-  {
-    files: ['**/*.md'],
-    rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
-  },
-  {
-    files: ['**/*.mdx'],
-    rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
-  },
   // Global ignores
   // If a config block only contains an `ignores` key, then the globs are
   // ignored globally

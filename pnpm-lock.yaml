@@ -8,6 +8,9 @@ patchedDependencies:
   '@graphql-eslint/eslint-plugin@3.20.0':
     hash: e3c7i33vtfs4mivhjwqctijsoe
     path: patches/@graphql-eslint__eslint-plugin@3.20.0.patch
+  '@types/eslint@8.44.7':
+    hash: r7mjcwcmok5lsw2nb63qlph4sa
+    path: patches/@types__eslint@8.44.7.patch
 
 dependencies:
   prettier-linter-helpers:
@@ -44,7 +47,7 @@ devDependencies:
     version: 3.0.0(prettier@3.0.0)
   '@types/eslint':
     specifier: ^8.44.7
-    version: 8.44.7
+    version: 8.44.7(patch_hash=r7mjcwcmok5lsw2nb63qlph4sa)
   '@types/prettier-linter-helpers':
     specifier: ^1.0.1
     version: 1.0.4
@@ -1216,12 +1219,13 @@ packages:
       '@types/ms': 0.7.31
     dev: true
 
-  /@types/eslint@8.44.7:
+  /@types/eslint@8.44.7(patch_hash=r7mjcwcmok5lsw2nb63qlph4sa):
     resolution: {integrity: sha512-f5ORu2hcBbKei97U73mf+l9t4zTGl74IqZ0GQk4oVea/VS8tQZYkUveSYojk+frraAVYId0V2WC9O4PTNru2FQ==}
     dependencies:
       '@types/estree': 1.0.1
       '@types/json-schema': 7.0.12
     dev: true
+    patched: true
 
   /@types/estree-jsx@1.0.0:
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
