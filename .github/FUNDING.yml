@@ -4,7 +4,7 @@ github:
   - rx-ts
   - un-ts
 patreon: 1stG
-open_collective: prettier
+open_collective: eslint-plugin-prettier
 custom:
   - https://opencollective.com/1stG
   - https://opencollective.com/rxts

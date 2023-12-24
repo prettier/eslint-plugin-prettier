@@ -6,6 +6,21 @@ If your desired formatting does not match Prettier’s output, you should use a 
 
 Please read [Integrating with linters](https://prettier.io/docs/en/integrating-with-linters.html) before installing.
 
+## TOC <!-- omit in toc -->
+
+- [Sample](#sample)
+- [Installation](#installation)
+- [Configuration (legacy: `.eslintrc*`)](#configuration-legacy-eslintrc)
+- [Configuration (new: `eslint.config.js`)](#configuration-new-eslintconfigjs)
+- [`Svelte` support](#svelte-support)
+- [`arrow-body-style` and `prefer-arrow-callback` issue](#arrow-body-style-and-prefer-arrow-callback-issue)
+- [Options](#options)
+- [Sponsors](#sponsors)
+- [Backers](#backers)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [License](#license)
+
 ## Sample
 
 ```js
@@ -161,6 +176,18 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 - The rule is auto fixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
 ---
+
+## Sponsors
+
+| @prettier/plugin-eslint                                                                                                                                                        | eslint-config-prettier                                                                                                                                                       | eslint-plugin-prettier                                                                                                                                     | prettier-eslint                                                                                                                                          | prettier-eslint-cli                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![@prettier/plugin-eslint Open Collective sponsors](https://opencollective.com/prettier-plugin-eslint/tiers/sponsors.svg)](https://opencollective.com/prettier-plugin-eslint) | [![eslint-config-prettier Open Collective backers](https://opencollective.com/eslint-config-prettier/tiers/sponsors.svg)](https://opencollective.com/eslint-config-prettier) | [![eslint-plugin-prettier Open Collective backers](https://opencollective.com/eslint-plugin-prettier/tiers/sponsors.svg)](https://opencollective.com/rxts) | [![prettier-eslint Open Collective sponsors](https://opencollective.com/prettier-eslint/tiers/sponsors.svg)](https://opencollective.com/prettier-eslint) | [![prettier-eslint-cli Open Collective backers](https://opencollective.com/prettier-eslint-cli/tiers/sponsors.svg)](https://opencollective.com/prettier-eslint-cli) |
+
+## Backers
+
+| @prettier/plugin-eslint                                                                                                                                                      | eslint-config-prettier                                                                                                                                                      | eslint-plugin-prettier                                                                                                                                    | prettier-eslint                                                                                                                                        | prettier-eslint-cli                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [![@prettier/plugin-eslint Open Collective backers](https://opencollective.com/prettier-plugin-eslint/tiers/backers.svg)](https://opencollective.com/prettier-plugin-eslint) | [![eslint-config-prettier Open Collective backers](https://opencollective.com/eslint-config-prettier/tiers/backers.svg)](https://opencollective.com/eslint-config-prettier) | [![eslint-plugin-prettier Open Collective backers](https://opencollective.com/eslint-plugin-prettier/tiers/backers.svg)](https://opencollective.com/rxts) | [![prettier-eslint Open Collective backers](https://opencollective.com/prettier-eslint/tiers/backers.svg)](https://opencollective.com/prettier-eslint) | [![prettier-eslint-cli Open Collective backers](https://opencollective.com/prettier-eslint-cli/tiers/backers.svg)](https://opencollective.com/prettier-eslint-cli) |
 
 ## Contributing
 

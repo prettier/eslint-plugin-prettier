@@ -8,7 +8,7 @@
   "contributors": [
     "JounQin (https://github.com/JounQin) <admin@1stg.me>"
   ],
-  "funding": "https://opencollective.com/prettier",
+  "funding": "https://opencollective.com/eslint-plugin-prettier",
   "license": "MIT",
   "packageManager": "pnpm@7.33.3",
   "engines": {
