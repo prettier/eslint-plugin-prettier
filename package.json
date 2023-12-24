@@ -43,8 +43,7 @@
     "format": "prettier --write . && pnpm lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "simple-git-hooks",
-    "prerelease": "pnpm format && pnpm test",
-    "release": "changeset publish",
+    "release": "pnpm format && pnpm test && changeset publish",
     "test": "pnpm lint && mocha"
   },
   "peerDependencies": {

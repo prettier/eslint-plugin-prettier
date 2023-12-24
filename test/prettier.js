@@ -43,6 +43,22 @@ const eslint = new ESLint({
         settings: {
           'mdx/code-block': true,
         },
+        rules: {
+          /**
+           * Workaround for @see https://github.com/mdx-js/eslint-mdx/blob/8707ca6c5a33ceb9adb200d1ccf5aee5d6154a66/packages/eslint-plugin-mdx/src/configs/recommended.ts#L21-L48
+           * Those lines should be deleted after @see https://github.com/prettier/eslint-plugin-prettier/pull/621 been released, but it also could be a breaking change for `eslint-plugin-mdx`.
+           * I'll try to get `eslint-plugin-prettier`'s version to check whether to enable those rules accordingly later.
+           */
+          'prettier/prettier': [
+            'error',
+            {},
+            {
+              fileInfoOptions: {
+                ignorePath: '.eslintignore',
+              },
+            },
+          ],
+        },
       },
       {
         files: '**/eslint-plugin-svelte3/*.svelte',
