@@ -283,20 +283,25 @@ runFixture('*.mdx', [
   ],
 ]);
 
+/**
+ * @see https://github.com/sveltejs/svelte/blob/226bf419f9b9b5f1a6da33bd6403dd70afe58b52/packages/svelte/package.json#L73
+ */
+const svelteUnsupported = +process.versions.node.split('.')[0] < 16;
+
 runFixture(
   'eslint-plugin-svelte/*.svelte',
   [
     [
       {
-        column: 5,
+        column: 1,
         endColumn: 11,
         endLine: 2,
         fix: {
-          range: [13, 19],
-          text: 'name',
+          range: [9, 19],
+          text: '  let name',
         },
         line: 2,
-        message: 'Replace `·name·` with `name`',
+        message: 'Replace `let··name·` with `··let·name`',
         messageId: 'replace',
         nodeType: null,
         ruleId: 'prettier/prettier',
@@ -319,16 +324,10 @@ runFixture(
       },
     ],
   ],
-  // FIXME: https://github.com/sveltejs/prettier-plugin-svelte/issues/317
-  true,
+  svelteUnsupported,
 );
 
-runFixture(
-  'eslint-plugin-svelte3/*.svelte',
-  [[], []],
-  // FIXME: https://github.com/sveltejs/prettier-plugin-svelte/issues/317
-  true,
-);
+runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
 
 /**
  * The `script` code style actually does not match `prettier`'s,
