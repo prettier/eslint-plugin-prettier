@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.1.2
+
+### Patch Changes
+
+- [#623](https://github.com/prettier/eslint-plugin-prettier/pull/623) [`8210e44`](https://github.com/prettier/eslint-plugin-prettier/commit/8210e44309b168c7c06185eae8249b2d0eb65815) Thanks [@BPScott](https://github.com/BPScott)! - Add exports mapping to package.json, to allow `import eslintPluginRecommended from 'eslint-plugin-prettier/recommended'` to work as expected.
+
+  Strictly speaking this is a breaking change as it removes the ability for people to import from "eslint-plugin-prettier/eslint-plugin-prettier.js" and "eslint-plugin-prettier/recommended.js" but the former was never recommended in the first place and the latter has only been available for a few days.
+
+- [#621](https://github.com/prettier/eslint-plugin-prettier/pull/621) [`2b09e7f`](https://github.com/prettier/eslint-plugin-prettier/commit/2b09e7fc64f38297c8ca39d087dba1f122ef999c) Thanks [@JounQin](https://github.com/JounQin)! - feat: support parsing `markdown` via `eslint-mdx` natively
+
 ## 5.1.1
 
 ### Patch Changes
@@ -16,7 +26,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
   module.exports = [
     // Any other config imports go at the top
