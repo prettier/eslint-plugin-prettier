@@ -38,17 +38,9 @@ const eslint = new ESLint({
     extends: 'plugin:prettier/recommended',
     overrides: [
       {
-        files: ['*.{md,mdx}'],
-        extends: 'plugin:mdx/recommended',
-        settings: {
-          'mdx/code-block': true,
-        },
+        // `.prettierignore` will be used by default which is unexpected for there test fixtures
+        files: 'test/fixtures/**/*',
         rules: {
-          /**
-           * Workaround for @see https://github.com/mdx-js/eslint-mdx/blob/8707ca6c5a33ceb9adb200d1ccf5aee5d6154a66/packages/eslint-plugin-mdx/src/configs/recommended.ts#L21-L48
-           * Those lines should be deleted after @see https://github.com/prettier/eslint-plugin-prettier/pull/621 been released, but it also could be a breaking change for `eslint-plugin-mdx`.
-           * I'll try to get `eslint-plugin-prettier`'s version to check whether to enable those rules accordingly later.
-           */
           'prettier/prettier': [
             'error',
             {},
@@ -58,6 +50,13 @@ const eslint = new ESLint({
               },
             },
           ],
+        },
+      },
+      {
+        files: ['*.{md,mdx}'],
+        extends: 'plugin:mdx/recommended',
+        settings: {
+          'mdx/code-block': true,
         },
       },
       {
