@@ -283,42 +283,51 @@ runFixture('*.mdx', [
   ],
 ]);
 
-runFixture('eslint-plugin-svelte/*.svelte', [
-  [
-    {
-      column: 1,
-      endColumn: 11,
-      endLine: 2,
-      fix: {
-        range: [9, 19],
-        text: '  let name',
-      },
-      line: 2,
-      message: 'Replace `let··name·` with `··let·name`',
-      messageId: 'replace',
-      nodeType: null,
-      ruleId: 'prettier/prettier',
-      severity: 2,
-    },
-    {
-      column: 4,
-      endColumn: 20,
-      endLine: 5,
-      fix: {
-        range: [45, 61],
-        text: '>Hello {name',
-      },
-      line: 5,
-      message: 'Replace `·>·Hello·{·name·` with `>Hello·{name`',
-      messageId: 'replace',
-      nodeType: null,
-      ruleId: 'prettier/prettier',
-      severity: 2,
-    },
-  ],
-]);
+/**
+ * @see https://github.com/sveltejs/svelte/blob/226bf419f9b9b5f1a6da33bd6403dd70afe58b52/packages/svelte/package.json#L73
+ */
+const svelteUnsupported = +process.versions.node.split('.')[0] < 16;
 
-runFixture('eslint-plugin-svelte3/*.svelte', [[], []]);
+runFixture(
+  'eslint-plugin-svelte/*.svelte',
+  [
+    [
+      {
+        column: 1,
+        endColumn: 11,
+        endLine: 2,
+        fix: {
+          range: [9, 19],
+          text: '  let name',
+        },
+        line: 2,
+        message: 'Replace `let··name·` with `··let·name`',
+        messageId: 'replace',
+        nodeType: null,
+        ruleId: 'prettier/prettier',
+        severity: 2,
+      },
+      {
+        column: 4,
+        endColumn: 20,
+        endLine: 5,
+        fix: {
+          range: [45, 61],
+          text: '>Hello {name',
+        },
+        line: 5,
+        message: 'Replace `·>·Hello·{·name·` with `>Hello·{name`',
+        messageId: 'replace',
+        nodeType: null,
+        ruleId: 'prettier/prettier',
+        severity: 2,
+      },
+    ],
+  ],
+  svelteUnsupported,
+);
+
+runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
 
 /**
  * The `script` code style actually does not match `prettier`'s,
@@ -371,9 +380,13 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
  *
  * @param {string} pattern
  * @param {import('eslint').Linter.LintMessage[][]} asserts
+ * @param {boolean} [skip]
  * @returns {Promise<void>}
  */
-async function runFixture(pattern, asserts) {
+async function runFixture(pattern, asserts, skip) {
+  if (skip) {
+    return;
+  }
   try {
     const results = await eslint.lintFiles([`test/fixtures/${pattern}`]);
     return assert.deepStrictEqual(
