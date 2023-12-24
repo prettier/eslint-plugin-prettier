@@ -38,7 +38,7 @@ const eslint = new ESLint({
     extends: 'plugin:prettier/recommended',
     overrides: [
       {
-        // `.prettierignore` will be used by default which is unexpected for there test fixtures
+        // `.prettierignore` will be used by default which is unexpected for these test fixtures
         files: 'test/fixtures/**/*',
         rules: {
           'prettier/prettier': [
