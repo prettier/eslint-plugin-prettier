@@ -40,10 +40,11 @@
     "prettier"
   ],
   "scripts": {
+    "check": "prettier --check . && pnpm lint",
     "format": "prettier --write . && pnpm lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "simple-git-hooks",
-    "release": "pnpm format && pnpm test && changeset publish",
+    "release": "pnpm check && pnpm test && changeset publish",
     "test": "pnpm lint && mocha"
   },
   "peerDependencies": {
