@@ -10,6 +10,21 @@
 
 - [#621](https://github.com/prettier/eslint-plugin-prettier/pull/621) [`2b09e7f`](https://github.com/prettier/eslint-plugin-prettier/commit/2b09e7fc64f38297c8ca39d087dba1f122ef999c) Thanks [@JounQin](https://github.com/JounQin)! - feat: support parsing `markdown` via `eslint-mdx` natively
 
+  What means the following is unnecessary anymore when using with `eslint-mdx`/`eslint-plugin-mdx`!
+
+  ```json5
+  [
+    {
+      files: ['**/*.md'],
+      rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
+    },
+    {
+      files: ['**/*.mdx'],
+      rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
+    },
+  ]
+  ```
+
 ## 5.1.1
 
 ### Patch Changes
@@ -26,7 +41,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
   module.exports = [
     // Any other config imports go at the top
