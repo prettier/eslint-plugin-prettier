@@ -38,7 +38,7 @@ const eslint = new ESLint({
     extends: 'plugin:prettier/recommended',
     overrides: [
       {
-        files: '*.mdx',
+        files: ['*.{md,mdx}'],
         extends: 'plugin:mdx/recommended',
         settings: {
           'mdx/code-block': true,
@@ -227,6 +227,26 @@ mdxRuleTester.run('eslint-plugin-mdx', rule, {
     }),
   ],
 });
+
+runFixture('*.md', [
+  [
+    {
+      column: 27,
+      endColumn: 27,
+      endLine: 4,
+      fix: {
+        range: [43, 43],
+        text: ';',
+      },
+      line: 4,
+      message: 'Insert `;`',
+      messageId: 'insert',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
 
 runFixture('*.mdx', [
   [

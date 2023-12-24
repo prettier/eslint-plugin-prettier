@@ -1,5 +1,13 @@
 {
   "arrowParens": "avoid",
   "singleQuote": true,
-  "plugins": ["@prettier/plugin-pug", "prettier-plugin-pkg"]
+  "plugins": ["@prettier/plugin-pug", "prettier-plugin-pkg"],
+  "overrides": [
+    {
+      "files": ".changeset/**/*",
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
 }

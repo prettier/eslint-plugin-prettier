@@ -9,8 +9,10 @@
  * @typedef {import('eslint').AST.Range} Range
  * @typedef {import('eslint').AST.SourceLocation} SourceLocation
  * @typedef {import('eslint').ESLint.Plugin} Plugin
+ * @typedef {import('eslint').ESLint.ObjectMetaProperties} ObjectMetaProperties
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('prettier').Options} PrettierOptions
+ * @typedef {PrettierOptions & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
  */
 
 'use strict';
@@ -167,9 +169,11 @@ const eslintPluginPrettier = {
             }
 
             /**
-             * @type {{}}
+             * @type {PrettierOptions}
              */
             const eslintPrettierOptions = context.options[0] || {};
+
+            const parser = context.languageOptions?.parser;
 
             // prettier.format() may throw a SyntaxError if it cannot parse the
             // source code it is given. Usually for JS files this isn't a
@@ -190,6 +194,12 @@ const eslintPluginPrettier = {
                   ...eslintPrettierOptions,
                   filepath,
                   onDiskFilepath,
+                  parserMeta:
+                    parser &&
+                    (parser.meta ?? {
+                      name: parser.name,
+                      version: parser.version,
+                    }),
                   parserPath: context.parserPath,
                   usePrettierrc,
                 },

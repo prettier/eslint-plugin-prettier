@@ -1,5 +1,5 @@
 ---
-'eslint-plugin-prettier': patch
+"eslint-plugin-prettier": patch
 ---
 
 Add exports mapping to package.json, to allow `import eslintPluginRecommended from 'eslint-plugin-prettier/recommended'` to work as expected.

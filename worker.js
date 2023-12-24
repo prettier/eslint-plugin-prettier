@@ -2,7 +2,8 @@
 
 /**
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserPath?: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('eslint').ESLint.ObjectMetaProperties} ObjectMetaProperties
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
  */
 
 const { runAsWorker } = require('synckit');
@@ -24,6 +25,7 @@ runAsWorker(
     {
       filepath,
       onDiskFilepath,
+      parserMeta,
       parserPath,
       usePrettierrc,
       ...eslintPrettierOptions
@@ -58,7 +60,7 @@ runAsWorker(
       return;
     }
 
-    const initialOptions = {};
+    const initialOptions = { parser: inferredParser ?? 'babel' };
 
     // ESLint supports processors that let you extract and lint JS
     // fragments within a non-JS language. In the cases where prettier
@@ -94,9 +96,9 @@ runAsWorker(
       // 2. `eslint-plugin-html`
       // 3. `eslint-plugin-markdown@1` (replacement: `eslint-plugin-markdown@2+`)
       // 4. `eslint-plugin-svelte3` (replacement: `eslint-plugin-svelte@2+`)
-      const parserBlocklist = [null, 'markdown', 'html'];
+      const parserBlocklist = ['html'];
 
-      let inferParserToBabel = parserBlocklist.includes(inferredParser);
+      let inferParserToBabel = parserBlocklist.includes(initialOptions.parser);
 
       switch (inferredParser) {
         // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
@@ -109,12 +111,24 @@ runAsWorker(
           }
           break;
         }
+        case 'markdown': {
+          // it could be processed by `eslint-plugin-markdown@1` or correctly parsed by `eslint-mdx`
+          if (
+            (typeof parserMeta !== 'undefined' &&
+              parserMeta.name !== 'eslint-mdx') ||
+            (typeof parserPath === 'string' &&
+              !/([\\/])eslint-mdx\1/.test(parserPath))
+          ) {
+            inferParserToBabel = true;
+          }
+          break;
+        }
         // it could be processed by `@ota-meshi/eslint-plugin-svelte`, `eslint-plugin-svelte` or `eslint-plugin-svelte3`
         case 'svelte': {
           // The `source` would be modified by `eslint-plugin-svelte3`
           if (
             typeof parserPath === 'string' &&
-            !parserPath.includes('svelte-eslint-parser')
+            !/([\\/])svelte-eslint-parser\1/.test(parserPath)
           ) {
             // We do not support `eslint-plugin-svelte3`,
             // the users should run `prettier` on `.svelte` files manually
@@ -152,6 +166,9 @@ runAsWorker(
       }
     }
 
+    /**
+     * @type {import('prettier').Options}
+     */
     const prettierOptions = {
       ...initialOptions,
       ...prettierRcOptions,

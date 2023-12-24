@@ -1,0 +1,14 @@
+diff --git a/index.d.ts b/index.d.ts
+index 75ae420e38148c632230763f26382ef0d9024427..6b8b08da2e25b54dedf41f1db0f2ba6e2c718b30 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -753,6 +753,9 @@ export namespace Rule {
+         id: string;
+         options: any[];
+         settings: { [name: string]: any };
++        languageOptions: {
++            parser: Linter.ParserModule;
++        } & Linter.ParserOptions;
+         parserPath: string;
+         parserOptions: Linter.ParserOptions;
+         parserServices: SourceCode.ParserServices;
