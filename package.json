@@ -40,11 +40,11 @@
     "prettier"
   ],
   "scripts": {
+    "check": "prettier --check . && pnpm lint",
     "format": "prettier --write . && pnpm lint --fix",
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "simple-git-hooks",
-    "prerelease": "pnpm format && pnpm test",
-    "release": "changeset publish",
+    "release": "pnpm check && pnpm test && changeset publish",
     "test": "pnpm lint && mocha"
   },
   "peerDependencies": {
@@ -80,9 +80,9 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-formatter-friendly": "^7.0.0",
-    "eslint-mdx": "^2.2.1",
+    "eslint-mdx": "^2.3.0",
     "eslint-plugin-eslint-plugin": "^5.2.1",
-    "eslint-plugin-mdx": "^2.2.1",
+    "eslint-plugin-mdx": "^2.3.0",
     "eslint-plugin-n": "^16.5.0",
     "eslint-plugin-prettier": "link:.",
     "eslint-plugin-pug": "^1.2.5",
