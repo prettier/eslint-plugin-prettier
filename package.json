@@ -23,7 +23,8 @@
     "./recommended": {
       "types": "./recommended.d.ts",
       "default": "./recommended.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "types": "eslint-plugin-prettier.d.ts",
   "files": [
