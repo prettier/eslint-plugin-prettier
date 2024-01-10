@@ -20,6 +20,7 @@
       "types": "./eslint-plugin-prettier.d.ts",
       "default": "./eslint-plugin-prettier.js"
     },
+    "./package.json": "./package.json",
     "./recommended": {
       "types": "./recommended.d.ts",
       "default": "./recommended.js"
