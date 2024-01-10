@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.3
+
+### Patch Changes
+
+- [#629](https://github.com/prettier/eslint-plugin-prettier/pull/629) [`985b33c`](https://github.com/prettier/eslint-plugin-prettier/commit/985b33c56f146b2e65ae391a3af57f63b07ecbdf) Thanks [@JounQin](https://github.com/JounQin)! - chore: add `package.json` into `exports` map
+
 ## 5.1.2
 
 ### Patch Changes
