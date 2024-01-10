@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.3
+
+### Patch Changes
+
+- [#629](https://github.com/prettier/eslint-plugin-prettier/pull/629) [`985b33c`](https://github.com/prettier/eslint-plugin-prettier/commit/985b33c56f146b2e65ae391a3af57f63b07ecbdf) Thanks [@JounQin](https://github.com/JounQin)! - chore: add `package.json` into `exports` map
+
 ## 5.1.2
 
 ### Patch Changes
@@ -15,12 +21,12 @@
   ```json5
   [
     {
-      files: ['**/*.md'],
-      rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
+      files: ["**/*.md"],
+      rules: { "prettier/prettier": ["error", { parser: "markdown" }] },
     },
     {
-      files: ['**/*.mdx'],
-      rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
+      files: ["**/*.mdx"],
+      rules: { "prettier/prettier": ["error", { parser: "mdx" }] },
     },
   ]
   ```
@@ -41,7 +47,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
   module.exports = [
     // Any other config imports go at the top
