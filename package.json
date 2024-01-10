@@ -102,6 +102,9 @@
   "pnpm": {
     "patchedDependencies": {
       "@types/eslint@8.56.0": "patches/@types__eslint@8.56.0.patch"
+    },
+    "overrides": {
+      "prettier": "^3.1.1"
     }
   }
 }

@@ -21,12 +21,12 @@
   ```json5
   [
     {
-      files: ["**/*.md"],
-      rules: { "prettier/prettier": ["error", { parser: "markdown" }] },
+      files: ['**/*.md'],
+      rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
     },
     {
-      files: ["**/*.mdx"],
-      rules: { "prettier/prettier": ["error", { parser: "mdx" }] },
+      files: ['**/*.mdx'],
+      rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
     },
   ]
   ```
@@ -47,7 +47,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
   module.exports = [
     // Any other config imports go at the top
