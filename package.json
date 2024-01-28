@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "prettier-linter-helpers": "^1.0.0",
-    "synckit": "^0.8.6"
+    "synckit": "^0.9.0"
   },
   "devDependencies": {
     "@1stg/remark-preset": "^2.0.0",
