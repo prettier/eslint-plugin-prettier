@@ -42,6 +42,12 @@ devDependencies:
   '@graphql-eslint/eslint-plugin':
     specifier: ^3.20.1
     version: 3.20.1(graphql@16.8.1)
+  '@html-eslint/eslint-plugin':
+    specifier: ^0.24.0
+    version: 0.24.0
+  '@html-eslint/parser':
+    specifier: ^0.24.0
+    version: 0.24.0
   '@prettier/plugin-pug':
     specifier: ^3.0.0
     version: 3.0.0(prettier@3.1.1)
@@ -985,6 +991,18 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.8.1
+    dev: true
+
+  /@html-eslint/eslint-plugin@0.24.0:
+    resolution: {integrity: sha512-lkvHTv4dsQLU1wKhWXM30qmtKCsm1V/pF1a7xVClhTAimbJUC9p1DyjIHCNpUrx6lRg5AUNyzb1fcKmQ8tWw6A==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@html-eslint/parser@0.24.0:
+    resolution: {integrity: sha512-Q9mGP+g3ZmNMFMqXroIY/nhlWt5q3usfcaMlud7YRSgFnHr3EK/rzWFObHNpMmB4btDLc9FkzxsSHUgRd+qd0w==}
+    engines: {node: '>=8.10.0'}
+    dependencies:
+      es-html-parser: 0.0.9
     dev: true
 
   /@humanwhocodes/config-array@0.11.13:
@@ -2171,6 +2189,10 @@ packages:
       typed-array-length: 1.0.4
       unbox-primitive: 1.0.2
       which-typed-array: 1.1.13
+    dev: true
+
+  /es-html-parser@0.0.9:
+    resolution: {integrity: sha512-oniQMi+466VFsDzcdron9Ry/sqUJpDJg1bbDn0jFJKDdxXhwIOYDr4DgBnO5/yPLGj2xv+n5yy4L1Q0vAC5TYQ==}
     dev: true
 
   /es-set-tostringtag@2.0.2:
