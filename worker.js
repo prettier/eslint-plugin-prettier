@@ -115,7 +115,7 @@ runAsWorker(
             (typeof parserMeta !== 'undefined' &&
               parserMeta.name !== '@html-eslint/parser') ||
             (typeof parserPath === 'string' &&
-              !/([\\/])@html-eslint\/parser\1/.test(parserPath))
+              !/([\\/])@html-eslint\1parser\1/.test(parserPath))
           ) {
             inferParserToBabel = true;
           }
