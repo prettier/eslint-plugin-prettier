@@ -42,12 +42,9 @@ devDependencies:
   '@graphql-eslint/eslint-plugin':
     specifier: ^3.20.1
     version: 3.20.1(graphql@16.8.1)
-  '@html-eslint/eslint-plugin':
-    specifier: ^0.24.0
-    version: 0.24.0
   '@html-eslint/parser':
-    specifier: ^0.24.0
-    version: 0.24.0
+    specifier: ^0.24.1
+    version: 0.24.1
   '@prettier/plugin-pug':
     specifier: ^3.0.0
     version: 3.0.0(prettier@3.1.1)
@@ -993,13 +990,8 @@ packages:
       graphql: 16.8.1
     dev: true
 
-  /@html-eslint/eslint-plugin@0.24.0:
-    resolution: {integrity: sha512-lkvHTv4dsQLU1wKhWXM30qmtKCsm1V/pF1a7xVClhTAimbJUC9p1DyjIHCNpUrx6lRg5AUNyzb1fcKmQ8tWw6A==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dev: true
-
-  /@html-eslint/parser@0.24.0:
-    resolution: {integrity: sha512-Q9mGP+g3ZmNMFMqXroIY/nhlWt5q3usfcaMlud7YRSgFnHr3EK/rzWFObHNpMmB4btDLc9FkzxsSHUgRd+qd0w==}
+  /@html-eslint/parser@0.24.1:
+    resolution: {integrity: sha512-O13xX/+Ldh0P7VZMpDDYc3XtWiE1cYm5QhVJ0VB5i7D8Q69HrrGN+5BjS17vkCoLTz+3zWWIiJv4oFmyS5LReA==}
     engines: {node: '>=8.10.0'}
     dependencies:
       es-html-parser: 0.0.9
