@@ -53,6 +53,10 @@ const eslint = new ESLint({
         },
       },
       {
+        files: ['*.html'],
+        parser: '@html-eslint/parser',
+      },
+      {
         files: ['*.{md,mdx}'],
         extends: 'plugin:mdx/recommended',
         settings: {
@@ -215,6 +219,41 @@ eslintPluginGraphqlRuleTester.run('eslint-plugin-graphql', rule, {
   ],
   invalid: [],
 });
+
+runFixture('*.html', [
+  [
+    {
+      column: 1,
+      endColumn: 1,
+      endLine: 5,
+      fix: {
+        range: [23, 31],
+        text: '  <head> ',
+      },
+      line: 3,
+      message: 'Replace `<head>⏎⏎` with `··<head>·`',
+      messageId: 'replace',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+    {
+      column: 1,
+      endColumn: 1,
+      endLine: 8,
+      fix: {
+        range: [39, 47],
+        text: '  <body>',
+      },
+      line: 6,
+      message: 'Replace `<body>⏎⏎` with `··<body>`',
+      messageId: 'replace',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
 
 const mdxRuleTester = new RuleTester({
   parser: require.resolve('eslint-mdx'),

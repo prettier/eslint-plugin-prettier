@@ -96,9 +96,7 @@ runAsWorker(
       // 2. `eslint-plugin-html`
       // 3. `eslint-plugin-markdown@1` (replacement: `eslint-plugin-markdown@2+`)
       // 4. `eslint-plugin-svelte3` (replacement: `eslint-plugin-svelte@2+`)
-      const parserBlocklist = ['html'];
-
-      let inferParserToBabel = parserBlocklist.includes(initialOptions.parser);
+      let inferParserToBabel = false;
 
       switch (inferredParser) {
         // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
@@ -106,6 +104,18 @@ runAsWorker(
           if (
             // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
             source.startsWith('ESLintPluginGraphQLFile`')
+          ) {
+            inferParserToBabel = true;
+          }
+          break;
+        }
+        case 'html': {
+          // it could be processed by `eslint-plugin-html` or correctly parsed by `@html-eslint/parser`
+          if (
+            (typeof parserMeta !== 'undefined' &&
+              parserMeta.name !== '@html-eslint/parser') ||
+            (typeof parserPath === 'string' &&
+              !/([\\/])@html-eslint\1parser\1/.test(parserPath))
           ) {
             inferParserToBabel = true;
           }
