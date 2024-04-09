@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.0
+
+### Minor Changes
+
+- [#652](https://github.com/prettier/eslint-plugin-prettier/pull/652) [`f170011`](https://github.com/prettier/eslint-plugin-prettier/commit/f1700110b4c50f43bbda8dba51ce9e22248939fa) Thanks [@Logicer16](https://github.com/Logicer16)! - feat: support parsing `html` via `@html-eslint/parser` natively
+
 ## 5.1.3
 
 ### Patch Changes
@@ -21,12 +27,12 @@
   ```json5
   [
     {
-      files: ['**/*.md'],
-      rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
+      files: ["**/*.md"],
+      rules: { "prettier/prettier": ["error", { parser: "markdown" }] },
     },
     {
-      files: ['**/*.mdx'],
-      rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
+      files: ["**/*.mdx"],
+      rules: { "prettier/prettier": ["error", { parser: "mdx" }] },
     },
   ]
   ```
@@ -47,7 +53,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
   module.exports = [
     // Any other config imports go at the top
