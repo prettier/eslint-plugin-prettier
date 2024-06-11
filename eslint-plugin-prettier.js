@@ -21,11 +21,8 @@
 //  Requirements
 // ------------------------------------------------------------------------------
 
-const {
-  showInvisibles,
-  generateDifferences,
-} = require('prettier-linter-helpers');
-const { name, version } = require('./package.json');
+import { showInvisibles, generateDifferences } from 'prettier-linter-helpers';
+import { name, version } from './package.json';
 
 // ------------------------------------------------------------------------------
 //  Constants
@@ -251,4 +248,4 @@ const eslintPluginPrettier = {
   },
 };
 
-module.exports = eslintPluginPrettier;
+export default eslintPluginPrettier;
