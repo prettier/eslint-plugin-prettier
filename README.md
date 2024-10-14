@@ -62,7 +62,7 @@ This plugin works best if you disable all other ESLint rules relating to code fo
 
 ## Configuration (legacy: `.eslintrc*`)
 
-For [legacy configuration](https://eslint.org/docs/latest/use/configure/configuration-files), this plugin ships with a `plugin:prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
+For [legacy configuration](https://eslint.org/docs/latest/use/configure/configuration-files-deprecated), this plugin ships with a `plugin:prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
 
 Add `plugin:prettier/recommended` as the _last_ item in the extends array in your `.eslintrc*` config file, so that `eslint-config-prettier` has the opportunity to override other configs:
 
