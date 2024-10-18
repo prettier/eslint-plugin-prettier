@@ -114,6 +114,7 @@ const eslintPluginPrettier = {
             type: 'object',
             properties: {
               usePrettierrc: { type: 'boolean' },
+              config: { type: 'string' },
               fileInfoOptions: {
                 type: 'object',
                 properties: {},
@@ -137,6 +138,7 @@ const eslintPluginPrettier = {
          */
         const fileInfoOptions =
           (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const config = context.options?.[1]?.config;
 
         // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
         // with the `sourceCode` property.
@@ -202,6 +204,7 @@ const eslintPluginPrettier = {
                     }),
                   parserPath: context.parserPath,
                   usePrettierrc,
+                  config,
                 },
                 fileInfoOptions,
               );

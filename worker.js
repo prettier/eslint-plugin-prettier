@@ -3,7 +3,7 @@
 /**
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
  * @typedef {import('eslint').ESLint.ObjectMetaProperties} ObjectMetaProperties
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
+ * @typedef {import('prettier').Options & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean, config?: string }} Options
  */
 
 const { runAsWorker } = require('synckit');
@@ -28,6 +28,7 @@ runAsWorker(
       parserMeta,
       parserPath,
       usePrettierrc,
+      config,
       ...eslintPrettierOptions
     },
     eslintFileInfoOptions,
@@ -39,6 +40,7 @@ runAsWorker(
     const prettierRcOptions = usePrettierrc
       ? await prettier.resolveConfig(onDiskFilepath, {
           editorconfig: true,
+          config,
         })
       : null;
 
