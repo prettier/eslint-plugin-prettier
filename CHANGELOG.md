@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.0
+
+### Minor Changes
+
+- [#689](https://github.com/prettier/eslint-plugin-prettier/pull/689) [`acbcc76`](https://github.com/prettier/eslint-plugin-prettier/commit/acbcc76) From [@colinta](https://github.com/colinta)! - fix: support 'config' Option
+
 ## 5.2.1
 
 ### Patch Changes
