@@ -11,6 +11,7 @@ module.exports = [
   // eslint-community/eslint-comments does not expose a reusable flat config,
   // so create one from its legacy config
   {
+    name: '@eslint-community/eslint-comments',
     plugins: {
       '@eslint-community/eslint-comments': eslintPluginEslintComments,
     },
@@ -21,6 +22,7 @@ module.exports = [
   eslintPluginMdx.flatCodeBlocks,
   eslintPluginPrettierRecommended,
   {
+    name: 'eslint-plugin overrides',
     rules: {
       'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],
     },
@@ -29,6 +31,7 @@ module.exports = [
   // If a config block only contains an `ignores` key, then the globs are
   // ignored globally
   {
+    name: 'global ignores',
     ignores: [
       'CHANGELOG.md',
       '.github/ISSUE_TEMPLATE.md',
