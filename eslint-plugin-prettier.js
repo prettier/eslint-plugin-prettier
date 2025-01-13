@@ -13,6 +13,7 @@
  * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
  * @typedef {import('prettier').Options} PrettierOptions
  * @typedef {PrettierOptions & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
+ * @typedef {(source: string, options: Options, fileInfoOptions: FileInfoOptions) => string} PrettierFormat
  */
 
 'use strict';
@@ -39,7 +40,7 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 
 // Lazily-loaded Prettier.
 /**
- * @type {(source: string, options: Options, fileInfoOptions: FileInfoOptions) => string}
+ * @type {PrettierFormat}
  */
 let prettierFormat;
 
@@ -160,11 +161,11 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          Program() {
+          Program(node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
-              prettierFormat = require('synckit').createSyncFn(
-                require.resolve('./worker'),
+              prettierFormat = /** @type {PrettierFormat} */ (
+                require('synckit').createSyncFn(require.resolve('./worker'))
               );
             }
 
@@ -226,9 +227,13 @@ const eslintPluginPrettier = {
               }
               if (error.loc) {
                 message = message.replace(/ \(\d+:\d+\)$/, '');
+
+                context.report({ message, loc: error.loc });
+
+                return;
               }
 
-              context.report({ message, loc: error.loc });
+              context.report({ message, node });
 
               return;
             }
