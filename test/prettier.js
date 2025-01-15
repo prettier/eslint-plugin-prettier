@@ -389,6 +389,8 @@ runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
  */
 runFixture('*.pug', [[]]);
 
+runFixture('invalid-prettierrc/*', []);
+
 // ------------------------------------------------------------------------------
 //  Helpers
 // ------------------------------------------------------------------------------

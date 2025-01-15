@@ -161,7 +161,7 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          Program(node) {
+          Program() {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
               prettierFormat = /** @type {PrettierFormat} */ (
@@ -227,13 +227,9 @@ const eslintPluginPrettier = {
               }
               if (error.loc) {
                 message = message.replace(/ \(\d+:\d+\)$/, '');
-
-                context.report({ message, loc: error.loc });
-
-                return;
               }
 
-              context.report({ message, node });
+              context.report({ message, loc: error.loc });
 
               return;
             }
