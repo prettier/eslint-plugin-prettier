@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.2
+
+### Patch Changes
+
+- [#700](https://github.com/prettier/eslint-plugin-prettier/pull/700) [`aa5b59f`](https://github.com/prettier/eslint-plugin-prettier/commit/aa5b59f7d98431bdb9559d079619065f812a2420) Thanks [@ntnyq](https://github.com/ntnyq)! - fix: report node when loc not found
+
 ## 5.2.1
 
 ### Patch Changes
