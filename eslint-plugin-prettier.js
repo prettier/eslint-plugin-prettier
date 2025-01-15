@@ -161,7 +161,7 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          Program() {
+          Program(node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
               prettierFormat = /** @type {PrettierFormat} */ (
@@ -214,7 +214,7 @@ const eslintPluginPrettier = {
               let message = 'Parsing error: ' + err.message;
 
               const error =
-                /** @type {SyntaxError & {codeFrame: string; loc: SourceLocation}} */ (
+                /** @type {SyntaxError & {codeFrame: string; loc?: SourceLocation}} */ (
                   err
                 );
 
@@ -227,9 +227,10 @@ const eslintPluginPrettier = {
               }
               if (error.loc) {
                 message = message.replace(/ \(\d+:\d+\)$/, '');
+                context.report({ message, loc: error.loc });
+              } else {
+                context.report({ message, node });
               }
-
-              context.report({ message, loc: error.loc });
 
               return;
             }

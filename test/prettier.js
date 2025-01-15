@@ -389,7 +389,20 @@ runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
  */
 runFixture('*.pug', [[]]);
 
-runFixture('invalid-prettierrc/*', []);
+runFixture('invalid-prettierrc/*', [
+  [
+    {
+      column: 1,
+      endColumn: 20,
+      endLine: 1,
+      line: 1,
+      message: 'Parsing error: Cannot use import statement outside a module',
+      nodeType: 'Program',
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
 
 // ------------------------------------------------------------------------------
 //  Helpers
