@@ -1,6 +1,6 @@
 const { configs: eslintConfigs } = require('@eslint/js');
 const eslintPluginN = require('eslint-plugin-n');
-const eslintPluginEslintComments = require('@eslint-community/eslint-plugin-eslint-comments');
+const eslintPluginEslintCommentsConfigs = require('@eslint-community/eslint-plugin-eslint-comments/configs');
 const eslintPluginEslintPluginRecommended = require('eslint-plugin-eslint-plugin/configs/recommended');
 const eslintPluginMdx = require('eslint-plugin-mdx');
 const eslintPluginPrettierRecommended = require('./recommended');
@@ -8,14 +8,7 @@ const eslintPluginPrettierRecommended = require('./recommended');
 module.exports = [
   eslintConfigs.recommended,
   eslintPluginN.configs['flat/recommended'],
-  // eslint-community/eslint-comments does not expose a reusable flat config,
-  // so create one from its legacy config
-  {
-    plugins: {
-      '@eslint-community/eslint-comments': eslintPluginEslintComments,
-    },
-    rules: eslintPluginEslintComments.configs.recommended.rules,
-  },
+  eslintPluginEslintCommentsConfigs.recommended,
   eslintPluginEslintPluginRecommended,
   eslintPluginMdx.flat,
   eslintPluginMdx.flatCodeBlocks,
