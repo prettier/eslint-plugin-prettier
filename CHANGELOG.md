@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.3
+
+### Patch Changes
+
+- [#703](https://github.com/prettier/eslint-plugin-prettier/pull/703) [`9c6141f`](https://github.com/prettier/eslint-plugin-prettier/commit/9c6141f2436de0bf379bef91b30fe1b0bc737cf2) Thanks [@BPScott](https://github.com/BPScott)! - Add name field to recommended flat config
+
 ## 5.2.2
 
 ### Patch Changes
