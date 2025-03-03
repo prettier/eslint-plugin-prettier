@@ -11,12 +11,14 @@ jobs:
     name: Lint and Test on Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version:
-          - 14
-          - 16
-          - 18
+          - 22
           - 20
+          - 18
+          - 16
+          - 14
 
     steps:
       - uses: actions/checkout@v4
