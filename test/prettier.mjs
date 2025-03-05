@@ -19,7 +19,6 @@ import eslintPluginPrettier from '../eslint-plugin-prettier.js';
 import recommendedConfig from '../recommended.js';
 import htmlEslintParser from '@html-eslint/parser';
 import eslintPluginMdx from 'eslint-plugin-mdx';
-import eslintPluginSvelte3 from 'eslint-plugin-svelte3';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 import eslintPluginPug from 'eslint-plugin-pug';
 import vueEslintParser from 'vue-eslint-parser';
@@ -72,11 +71,6 @@ const eslint = new ESLint({
       settings: {
         'mdx/code-block': true,
       },
-    },
-    {
-      files: ['**/eslint-plugin-svelte3/*.svelte'],
-      plugins: { svelte3: eslintPluginSvelte3 },
-      processor: 'svelte3/svelte3',
     },
     {
       files: ['**/eslint-plugin-svelte3/*.named-blocks.svelte'],
@@ -397,13 +391,25 @@ runFixture(
   svelteUnsupported,
 );
 
-// runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
-
-/**
- * The `script` code style actually does not match `prettier`'s,
- * but we are skipping scripts in pug files
- */
-// runFixture('*.pug', [[]]);
+runFixture('*.pug', [
+  [
+    {
+      column: 7,
+      endColumn: 12,
+      endLine: 2,
+      fix: {
+        range: [14, 19],
+        text: '',
+      },
+      line: 2,
+      message: 'Delete `;;;;;`',
+      messageId: 'delete',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
 
 runFixture('invalid-prettierrc/*', [
   [

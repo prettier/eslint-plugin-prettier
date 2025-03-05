@@ -89,7 +89,6 @@
     "eslint-plugin-prettier": "link:.",
     "eslint-plugin-pug": "^1.2.5",
     "eslint-plugin-svelte": "^3.0.2",
-    "eslint-plugin-svelte3": "^4.0.0",
     "graphql": "^16.8.1",
     "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
