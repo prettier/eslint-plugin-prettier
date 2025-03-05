@@ -3,8 +3,6 @@
  * @author Andres Suarez
  */
 
-'use strict';
-
 // This test is optimized for debuggability.
 // Please do not attempt to DRY this file or dynamically load the fixtures.
 
@@ -12,14 +10,21 @@
 // Requirements
 // ------------------------------------------------------------------------------
 
-const assert = require('node:assert');
-const fs = require('node:fs');
-const path = require('node:path');
+import assert from 'node:assert';
+import url from 'node:url';
+import fs from 'node:fs';
+import { ESLint, RuleTester } from 'eslint';
 
-const { ESLint, RuleTester } = require('eslint');
-
-const eslintPluginPrettier = require('..');
-const recommendedConfig = require('../recommended.js');
+import eslintPluginPrettier from '../eslint-plugin-prettier.js';
+import recommendedConfig from '../recommended.js';
+import htmlEslintParser from '@html-eslint/parser';
+import eslintPluginMdx from 'eslint-plugin-mdx';
+import eslintPluginSvelte3 from 'eslint-plugin-svelte3';
+import eslintPluginSvelte from 'eslint-plugin-svelte';
+import eslintPluginPug from 'eslint-plugin-pug';
+import vueEslintParser from 'vue-eslint-parser';
+import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
+import eslintMdx from 'eslint-mdx';
 
 const rule = eslintPluginPrettier.rules.prettier;
 
@@ -59,9 +64,9 @@ const eslint = new ESLint({
     },
     {
       files: ['**/*.html'],
-      languageOptions: { parser: require('@html-eslint/parser') },
+      languageOptions: { parser: htmlEslintParser },
     },
-    require('eslint-plugin-mdx').flat,
+    eslintPluginMdx.flat,
     {
       files: ['*.{md,mdx}'],
       settings: {
@@ -70,7 +75,7 @@ const eslint = new ESLint({
     },
     {
       files: ['**/eslint-plugin-svelte3/*.svelte'],
-      plugins: { svelte3: require('eslint-plugin-svelte3') },
+      plugins: { svelte3: eslintPluginSvelte3 },
       processor: 'svelte3/svelte3',
     },
     {
@@ -79,14 +84,14 @@ const eslint = new ESLint({
         'svelte3/named-blocks': true,
       },
     },
-    ...require('eslint-plugin-svelte').configs.recommended.map(config => ({
+    ...eslintPluginSvelte.configs.recommended.map(config => ({
       ...config,
       files: ['**/eslint-plugin-svelte/*.svelte'],
     })),
     {
       files: ['**/*.pug'],
       plugins: {
-        pug: require('eslint-plugin-pug'),
+        pug: eslintPluginPug,
       },
     },
   ],
@@ -163,7 +168,7 @@ ruleTester.run('prettier', rule, {
 });
 
 const vueRuleTester = new RuleTester({
-  languageOptions: { parser: require('vue-eslint-parser') },
+  languageOptions: { parser: vueEslintParser },
 });
 
 vueRuleTester.run('vue', rule, {
@@ -184,7 +189,7 @@ vueRuleTester.run('vue', rule, {
 });
 
 const atGraphqlEslintRuleTester = new RuleTester({
-  languageOptions: { parser: require('@graphql-eslint/eslint-plugin') },
+  languageOptions: { parser: eslintPluginGraphql },
 });
 
 atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
@@ -266,7 +271,7 @@ runFixture('*.html', [
 
 const mdxRuleTester = new RuleTester({
   languageOptions: {
-    parser: require('eslint-mdx'),
+    parser: eslintMdx,
     parserOptions: {
       sourceType: 'module',
       ecmaVersion: 'latest',
@@ -441,14 +446,16 @@ runFixture('invalid-prettierrc/*', [
  * @returns {object} A {code, output, options, errors} test object.
  */
 function loadInvalidFixture(name) {
-  const filename = path.join(__dirname, 'invalid', name + '.txt');
+  const filename = url.fileURLToPath(
+    new URL(`./invalid/${name}.txt`, import.meta.url),
+  );
   const src = fs.readFileSync(filename, 'utf8');
   const sections = src.split(/^[A-Z]+:\n/m).map(x => x.replace(/\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
-    options: eval(sections[3]), // eslint-disable-line no-eval
-    errors: eval(sections[4]), // eslint-disable-line no-eval
+    options: eval(sections[3]),
+    errors: eval(sections[4]),
     filename: getPrettierRcJsFilename('double-quote', name + '.txt'),
   };
 
@@ -471,7 +478,9 @@ function loadInvalidFixture(name) {
  * @returns {string} A javascript filename relative to the .prettierrc config.
  */
 function getPrettierRcJsFilename(dir, file = 'dummy.js') {
-  return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
+  return url.fileURLToPath(
+    new URL(`./prettierrc/${dir}/${file}`, import.meta.url),
+  );
 }
 
 /**
