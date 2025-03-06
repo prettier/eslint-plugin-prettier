@@ -1,4 +1,4 @@
-# eslint-plugin-prettier [![Build Status](https://github.com/prettier/eslint-plugin-prettier/workflows/CI/badge.svg?branch=master)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amaster)
+# eslint-plugin-prettier [![Build Status](https://github.com/prettier/eslint-plugin-prettier/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amain)
 
 Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](https://eslint.org) rule and reports differences as individual ESLint issues.
 
@@ -191,7 +191,7 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/main/CONTRIBUTING.md)
 
 ## Changelog
 
