@@ -43,7 +43,7 @@ jobs:
 
       - name: Install ESLint 8
         if: ${{ matrix.eslint != 9 }}
-        run: pnpm install eslint@${{ matrix.eslint }}
+        run: pnpm install eslint@${{ matrix.eslint }} --save-dev
 
       - name: Test
         run: pnpm mocha
