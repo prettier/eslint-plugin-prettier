@@ -21,13 +21,18 @@ jobs:
           - 22
           - 20
           - 18
+          - 16
+          - 14
+        eslint:
+          - 9
+          - 8
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }} (ESLint @${{ matrix.eslint }})
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -36,8 +41,15 @@ jobs:
       - name: Install
         run: pnpm install
 
+      - name: Install ESLint 8
+        if: ${{ matrix.eslint != 9 }}
+        run: pnpm install eslint@${{ matrix.eslint }}
+
       - name: Test
         run: pnpm mocha
 
       - name: Perf
+        # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
+        # with node 14
+        if: ${{ matrix.node-version != 14 }}
         run: TIMING=1 pnpm lint
