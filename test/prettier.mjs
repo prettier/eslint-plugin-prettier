@@ -13,7 +13,8 @@
 import assert from 'node:assert';
 import url from 'node:url';
 import fs from 'node:fs';
-import { ESLint, RuleTester } from 'eslint';
+import eslintPackage from 'eslint';
+import eslintUnsupportedApi from 'eslint/use-at-your-own-risk';
 
 import eslintPluginPrettier from '../eslint-plugin-prettier.js';
 import recommendedConfig from '../recommended.js';
@@ -26,71 +27,12 @@ import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
 import eslintMdx from 'eslint-mdx';
 
 const rule = eslintPluginPrettier.rules.prettier;
+const RuleTester =
+  eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
 
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
-
-const eslint = new ESLint({
-  overrideConfigFile: true,
-  overrideConfig: [
-    {
-      languageOptions: {
-        parserOptions: {
-          ecmaVersion: 'latest',
-          ecmaFeatures: {
-            jsx: true,
-          },
-          sourceType: 'module',
-        },
-      },
-    },
-    recommendedConfig,
-    // `.prettierignore` will be used by default which is unexpected for these test fixtures
-    {
-      files: ['test/fixtures/**/*'],
-      rules: {
-        'prettier/prettier': [
-          'error',
-          {},
-          {
-            fileInfoOptions: {
-              ignorePath: '.eslintignore',
-            },
-          },
-        ],
-      },
-    },
-    {
-      files: ['**/*.html'],
-      languageOptions: { parser: htmlEslintParser },
-    },
-    eslintPluginMdx.flat,
-    {
-      files: ['*.{md,mdx}'],
-      settings: {
-        'mdx/code-block': true,
-      },
-    },
-    {
-      files: ['**/eslint-plugin-svelte3/*.named-blocks.svelte'],
-      settings: {
-        'svelte3/named-blocks': true,
-      },
-    },
-    ...eslintPluginSvelte.configs.recommended.map(config => ({
-      ...config,
-      files: ['**/eslint-plugin-svelte/*.svelte'],
-    })),
-    {
-      files: ['**/*.pug'],
-      plugins: {
-        pug: eslintPluginPug,
-      },
-    },
-  ],
-  ignore: false,
-});
 
 const ruleTester = new RuleTester();
 
@@ -489,6 +431,8 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   );
 }
 
+let eslint;
+
 /**
  *
  * @param {string} pattern
@@ -497,6 +441,71 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
  * @returns {Promise<void>}
  */
 async function runFixture(pattern, asserts, skip) {
+  if (!eslint) {
+    const ESLint = await eslintPackage.loadESLint();
+
+    eslint = new ESLint({
+      overrideConfigFile: true,
+      overrideConfig: [
+        {
+          languageOptions: {
+            parserOptions: {
+              ecmaVersion: 'latest',
+              ecmaFeatures: {
+                jsx: true,
+              },
+              sourceType: 'module',
+            },
+          },
+        },
+        recommendedConfig,
+        // `.prettierignore` will be used by default which is unexpected for these test fixtures
+        {
+          files: ['test/fixtures/**/*'],
+          rules: {
+            'prettier/prettier': [
+              'error',
+              {},
+              {
+                fileInfoOptions: {
+                  ignorePath: '.eslintignore',
+                },
+              },
+            ],
+          },
+        },
+        {
+          files: ['**/*.html'],
+          languageOptions: { parser: htmlEslintParser },
+        },
+        eslintPluginMdx.flat,
+        {
+          files: ['*.{md,mdx}'],
+          settings: {
+            'mdx/code-block': true,
+          },
+        },
+        {
+          files: ['**/eslint-plugin-svelte3/*.named-blocks.svelte'],
+          settings: {
+            'svelte3/named-blocks': true,
+          },
+        },
+        ...eslintPluginSvelte.configs.recommended.map(config => ({
+          ...config,
+          files: ['**/eslint-plugin-svelte/*.svelte'],
+        })),
+        {
+          files: ['**/*.pug'],
+          plugins: {
+            pug: eslintPluginPug,
+          },
+        },
+      ],
+      ignore: false,
+    });
+  }
+
   if (skip) {
     return;
   }
