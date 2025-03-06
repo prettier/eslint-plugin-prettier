@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ci:
-    name: Lint and Test on Node ${{ matrix.node-version }}
+    name: Lint and Test on Node ${{ matrix.node-version }} (ESLint @${{ matrix.eslint }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -32,7 +32,7 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }} (ESLint @${{ matrix.eslint }})
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
