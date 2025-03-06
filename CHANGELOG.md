@@ -1,5 +1,17 @@
 # Changelog
 
+## 5.2.3
+
+### Patch Changes
+
+- [#703](https://github.com/prettier/eslint-plugin-prettier/pull/703) [`9c6141f`](https://github.com/prettier/eslint-plugin-prettier/commit/9c6141f2436de0bf379bef91b30fe1b0bc737cf2) Thanks [@BPScott](https://github.com/BPScott)! - Add name field to recommended flat config
+
+## 5.2.2
+
+### Patch Changes
+
+- [#700](https://github.com/prettier/eslint-plugin-prettier/pull/700) [`aa5b59f`](https://github.com/prettier/eslint-plugin-prettier/commit/aa5b59f7d98431bdb9559d079619065f812a2420) Thanks [@ntnyq](https://github.com/ntnyq)! - fix: report node when loc not found
+
 ## 5.2.1
 
 ### Patch Changes
@@ -33,12 +45,12 @@
   ```json5
   [
     {
-      files: ['**/*.md'],
-      rules: { 'prettier/prettier': ['error', { parser: 'markdown' }] },
+      files: ["**/*.md"],
+      rules: { "prettier/prettier": ["error", { parser: "markdown" }] },
     },
     {
-      files: ['**/*.mdx'],
-      rules: { 'prettier/prettier': ['error', { parser: 'mdx' }] },
+      files: ["**/*.mdx"],
+      rules: { "prettier/prettier": ["error", { parser: "mdx" }] },
     },
   ]
   ```
@@ -59,7 +71,7 @@
 
   ```js
   // eslint.config.js
-  const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+  const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
   module.exports = [
     // Any other config imports go at the top

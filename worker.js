@@ -102,7 +102,7 @@ runAsWorker(
         // it could be processed by `@graphql-eslint/eslint-plugin` or `eslint-plugin-graphql`
         case 'graphql': {
           if (
-            // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/master/src/index.js#L416
+            // for `eslint-plugin-graphql`, see https://github.com/apollographql/eslint-plugin-graphql/blob/64c524cd6607358803d5fcb7cead0a383a125ccb/src/index.js#L416
             source.startsWith('ESLintPluginGraphQLFile`')
           ) {
             inferParserToBabel = true;

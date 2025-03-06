@@ -8,7 +8,7 @@
   ],
   "overrides": [
     {
-      "files": ".changeset/**/*",
+      "files": [".changeset/**/*", "CHANGELOG.md"],
       "options": {
         "singleQuote": false
       }

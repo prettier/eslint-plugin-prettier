@@ -1,4 +1,4 @@
-# eslint-plugin-prettier [![Build Status](https://github.com/prettier/eslint-plugin-prettier/workflows/CI/badge.svg?branch=master)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amaster)
+# eslint-plugin-prettier [![Build Status](https://github.com/prettier/eslint-plugin-prettier/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/prettier/eslint-plugin-prettier/actions?query=workflow%3ACI+branch%3Amain)
 
 Runs [Prettier](https://github.com/prettier/prettier) as an [ESLint](https://eslint.org) rule and reports differences as individual ESLint issues.
 
@@ -62,7 +62,7 @@ This plugin works best if you disable all other ESLint rules relating to code fo
 
 ## Configuration (legacy: `.eslintrc*`)
 
-For [legacy configuration](https://eslint.org/docs/latest/use/configure/configuration-files), this plugin ships with a `plugin:prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
+For [legacy configuration](https://eslint.org/docs/latest/use/configure/configuration-files-deprecated), this plugin ships with a `plugin:prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
 
 Add `plugin:prettier/recommended` as the _last_ item in the extends array in your `.eslintrc*` config file, so that `eslint-config-prettier` has the opportunity to override other configs:
 
@@ -191,7 +191,7 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/prettier/eslint-plugin-prettier/blob/main/CONTRIBUTING.md)
 
 ## Changelog
 
