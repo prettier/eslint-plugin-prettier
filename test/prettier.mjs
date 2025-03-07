@@ -34,7 +34,10 @@ const RuleTester =
 // Tests
 // ------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  // https://github.com/eslint/eslint/issues/19471
+  ignores: ["!**/node_modules/"]
+});
 
 ruleTester.run('prettier', rule, {
   valid: [
@@ -72,12 +75,11 @@ ruleTester.run('prettier', rule, {
       code: `('');\n`,
       filename: getPrettierRcJsFilename('single-quote', 'dummy.md'),
     },
-    // TODO: enable this one https://github.com/eslint/eslint/issues/19471 get fixed
-    // // Should ignore files from node_modules
-    // {
-    //   code: 'a();;;;;;\n',
-    //   filename: 'node_modules/dummy.js',
-    // },
+    // Should ignore files from node_modules
+    {
+      code: 'a();;;;;;\n',
+      filename: 'node_modules/dummy.js',
+    },
   ],
   invalid: [
     '01',
@@ -98,8 +100,7 @@ ruleTester.run('prettier', rule, {
     '15',
     '16',
     '17',
-    // TODO: enable this one https://github.com/eslint/eslint/issues/19471 get fixed
-    // '18',
+    '18',
   ].map(name => loadInvalidFixture(name)),
 });
 
