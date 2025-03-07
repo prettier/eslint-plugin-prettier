@@ -36,7 +36,7 @@ const RuleTester =
 
 const ruleTester = new RuleTester({
   // https://github.com/eslint/eslint/issues/19471
-  ignores: ["!**/node_modules/"]
+  ignores: ['!**/node_modules/'],
 });
 
 ruleTester.run('prettier', rule, {
