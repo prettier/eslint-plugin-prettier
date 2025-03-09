@@ -13,6 +13,7 @@ module.exports = [
   eslintPluginMdx.flat,
   eslintPluginMdx.flatCodeBlocks,
   eslintPluginPrettierRecommended,
+  { files: ['**/*.mjs'], languageOptions: { sourceType: 'module' } },
   {
     rules: {
       'eslint-plugin/report-message-format': ['error', '^[^a-z].*\\.$'],

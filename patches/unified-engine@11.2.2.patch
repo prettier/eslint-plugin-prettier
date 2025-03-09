@@ -1,0 +1,52 @@
+diff --git a/lib/configuration.js b/lib/configuration.js
+index 77f3969c1c583c5869f636076c15892d7f2da18f..48b3df03392ab1aafb5e714f39c015e2633ee0e2 100644
+--- a/lib/configuration.js
++++ b/lib/configuration.js
+@@ -78,7 +78,7 @@
+  *   Shared settings for parsers and compilers (optional).
+  */
+ 
+-import assert from 'node:assert/strict'
++import assert from 'node:assert'
+ import path from 'node:path'
+ import {fileURLToPath, pathToFileURL} from 'node:url'
+ import extend from 'extend'
+diff --git a/lib/file-pipeline/stringify.js b/lib/file-pipeline/stringify.js
+index d5e4e0d6d59ba76d72dc394b42e6e890a5d5e48e..01f0cf74a806ba17047b5e7f1587671cce38bbe5 100644
+--- a/lib/file-pipeline/stringify.js
++++ b/lib/file-pipeline/stringify.js
+@@ -3,7 +3,7 @@
+  * @import {Context} from './index.js'
+  */
+ 
+-import assert from 'node:assert/strict'
++import assert from 'node:assert'
+ import createDebug from 'debug'
+ import {inspectColor, inspectNoColor} from 'unist-util-inspect'
+ import {statistics} from 'vfile-statistics'
+diff --git a/lib/file-pipeline/transform.js b/lib/file-pipeline/transform.js
+index a80702c25b5c6f6ffff52829a7bf98fe5f87cb3d..d6489b46bc5a113a14cfa4ab12c9a7aca1a777ea 100644
+--- a/lib/file-pipeline/transform.js
++++ b/lib/file-pipeline/transform.js
+@@ -4,7 +4,7 @@
+  * @import {Context} from './index.js'
+  */
+ 
+-import assert from 'node:assert/strict'
++import assert from 'node:assert'
+ import createDebug from 'debug'
+ import {statistics} from 'vfile-statistics'
+ 
+diff --git a/lib/find-up.js b/lib/find-up.js
+index 81623700c8b53572ca7b0dd3e6d7c239b027d50c..9ff6176124f26f028c20d9142184e16cd8a5357d 100644
+--- a/lib/find-up.js
++++ b/lib/find-up.js
+@@ -48,7 +48,7 @@
+  *   Turn a found file into a value.
+  */
+ 
+-import assert from 'node:assert/strict'
++import assert from 'node:assert'
+ import fs from 'node:fs'
+ import path from 'node:path'
+ import {fileURLToPath} from 'node:url'

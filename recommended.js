@@ -1,18 +1,18 @@
-const eslintConfigPrettier = require('eslint-config-prettier');
+const { rules: configPrettierRules } = require('eslint-config-prettier');
+const {
+  rules: configPrettierOverridesRules,
+} = require('eslint-config-prettier/prettier');
 const eslintPluginPrettier = require('./eslint-plugin-prettier');
 
 // Merge the contents of eslint-config-prettier into config
 module.exports = {
-  ...eslintConfigPrettier,
   name: 'eslint-plugin-prettier/recommended',
   plugins: {
-    ...eslintConfigPrettier.plugins,
     prettier: eslintPluginPrettier,
   },
   rules: {
-    ...eslintConfigPrettier.rules,
+    ...configPrettierRules,
+    ...configPrettierOverridesRules,
     'prettier/prettier': 'error',
-    'arrow-body-style': 'off',
-    'prefer-arrow-callback': 'off',
   },
 };

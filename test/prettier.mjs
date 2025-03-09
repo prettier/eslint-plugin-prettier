@@ -3,8 +3,6 @@
  * @author Andres Suarez
  */
 
-'use strict';
-
 // This test is optimized for debuggability.
 // Please do not attempt to DRY this file or dynamically load the fixtures.
 
@@ -12,83 +10,34 @@
 // Requirements
 // ------------------------------------------------------------------------------
 
-const assert = require('node:assert');
-const fs = require('node:fs');
-const path = require('node:path');
+import assert from 'node:assert';
+import url from 'node:url';
+import fs from 'node:fs';
+import eslintPackage from 'eslint';
+import eslintUnsupportedApi from 'eslint/use-at-your-own-risk';
 
-const { ESLint, RuleTester } = require('eslint');
-
-const eslintPluginPrettier = require('..');
+import eslintPluginPrettier from '../eslint-plugin-prettier.js';
+import recommendedConfig from '../recommended.js';
+import htmlEslintParser from '@html-eslint/parser';
+import eslintPluginMdx from 'eslint-plugin-mdx';
+import eslintPluginSvelte from 'eslint-plugin-svelte';
+import eslintPluginPug from 'eslint-plugin-pug';
+import vueEslintParser from 'vue-eslint-parser';
+import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
+import eslintMdx from 'eslint-mdx';
 
 const rule = eslintPluginPrettier.rules.prettier;
+const RuleTester =
+  eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
 
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
 
-const eslint = new ESLint({
-  baseConfig: {
-    parserOptions: {
-      ecmaVersion: 'latest',
-      ecmaFeatures: {
-        jsx: true,
-      },
-      sourceType: 'module',
-    },
-    extends: 'plugin:prettier/recommended',
-    overrides: [
-      {
-        // `.prettierignore` will be used by default which is unexpected for these test fixtures
-        files: 'test/fixtures/**/*',
-        rules: {
-          'prettier/prettier': [
-            'error',
-            {},
-            {
-              fileInfoOptions: {
-                ignorePath: '.eslintignore',
-              },
-            },
-          ],
-        },
-      },
-      {
-        files: ['*.html'],
-        parser: '@html-eslint/parser',
-      },
-      {
-        files: ['*.{md,mdx}'],
-        extends: 'plugin:mdx/recommended',
-        settings: {
-          'mdx/code-block': true,
-        },
-      },
-      {
-        files: '**/eslint-plugin-svelte3/*.svelte',
-        plugins: ['svelte3'],
-        processor: 'svelte3/svelte3',
-      },
-      {
-        files: '**/eslint-plugin-svelte3/*.named-blocks.svelte',
-        settings: {
-          'svelte3/named-blocks': true,
-        },
-      },
-      {
-        files: '**/eslint-plugin-svelte/*.svelte',
-        extends: ['plugin:svelte/recommended'],
-      },
-      {
-        files: '*.pug',
-        plugins: ['pug'],
-      },
-    ],
-  },
-  useEslintrc: false,
-  ignore: false,
+const ruleTester = new RuleTester({
+  // https://github.com/eslint/eslint/issues/19471
+  ignores: ['!**/node_modules/'],
 });
-
-const ruleTester = new RuleTester();
 
 ruleTester.run('prettier', rule, {
   valid: [
@@ -156,7 +105,7 @@ ruleTester.run('prettier', rule, {
 });
 
 const vueRuleTester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
+  languageOptions: { parser: vueEslintParser },
 });
 
 vueRuleTester.run('vue', rule, {
@@ -177,7 +126,7 @@ vueRuleTester.run('vue', rule, {
 });
 
 const atGraphqlEslintRuleTester = new RuleTester({
-  parser: require.resolve('@graphql-eslint/eslint-plugin'),
+  languageOptions: { parser: eslintPluginGraphql },
 });
 
 atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
@@ -205,8 +154,10 @@ atGraphqlEslintRuleTester.run('@graphql-eslint/eslint-plugin', rule, {
 // `newRuleTester({processor: require('eslint-plugin-graphql').processor['.graphql']})
 // and then pass in pure graphql into the code value.
 const eslintPluginGraphqlRuleTester = new RuleTester({
-  parserOptions: {
-    ecmaVersion: 'latest',
+  languageOptions: {
+    parserOptions: {
+      ecmaVersion: 'latest',
+    },
   },
 });
 
@@ -256,10 +207,12 @@ runFixture('*.html', [
 ]);
 
 const mdxRuleTester = new RuleTester({
-  parser: require.resolve('eslint-mdx'),
-  parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 'latest',
+  languageOptions: {
+    parser: eslintMdx,
+    parserOptions: {
+      sourceType: 'module',
+      ecmaVersion: 'latest',
+    },
   },
 });
 
@@ -381,15 +334,39 @@ runFixture(
   svelteUnsupported,
 );
 
-runFixture('eslint-plugin-svelte3/*.svelte', [[], []], svelteUnsupported);
-
-/**
- * The `script` code style actually does not match `prettier`'s,
- * but we are skipping scripts in pug files
- */
-runFixture('*.pug', [[]]);
+runFixture('*.pug', [
+  [
+    {
+      column: 7,
+      endColumn: 12,
+      endLine: 2,
+      fix: {
+        range: [14, 19],
+        text: '',
+      },
+      line: 2,
+      message: 'Delete `;;;;;`',
+      messageId: 'delete',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
 
 runFixture('invalid-prettierrc/*', [
+  [
+    {
+      column: 1,
+      fatal: true,
+      line: 1,
+      message:
+        "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
+      nodeType: null,
+      ruleId: null,
+      severity: 2,
+    },
+  ],
   [
     {
       column: 1,
@@ -418,19 +395,27 @@ runFixture('invalid-prettierrc/*', [
  * @returns {object} A {code, output, options, errors} test object.
  */
 function loadInvalidFixture(name) {
-  const filename = path.join(__dirname, 'invalid', name + '.txt');
+  const filename = url.fileURLToPath(
+    new URL(`./invalid/${name}.txt`, import.meta.url),
+  );
   const src = fs.readFileSync(filename, 'utf8');
   const sections = src.split(/^[A-Z]+:\n/m).map(x => x.replace(/\n$/, ''));
   const item = {
     code: sections[1],
     output: sections[2],
-    options: eval(sections[3]), // eslint-disable-line no-eval
-    errors: eval(sections[4]), // eslint-disable-line no-eval
+    options: eval(sections[3]),
+    errors: eval(sections[4]),
     filename: getPrettierRcJsFilename('double-quote', name + '.txt'),
   };
+
   if (sections.length >= 6) {
     item.filename = sections[5];
   }
+
+  if (item.code === item.output) {
+    item.output = null;
+  }
+
   return item;
 }
 
@@ -442,8 +427,12 @@ function loadInvalidFixture(name) {
  * @returns {string} A javascript filename relative to the .prettierrc config.
  */
 function getPrettierRcJsFilename(dir, file = 'dummy.js') {
-  return path.resolve(__dirname, `./prettierrc/${dir}/${file}`);
+  return url.fileURLToPath(
+    new URL(`./prettierrc/${dir}/${file}`, import.meta.url),
+  );
 }
+
+let eslint;
 
 /**
  *
@@ -453,6 +442,71 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
  * @returns {Promise<void>}
  */
 async function runFixture(pattern, asserts, skip) {
+  if (!eslint) {
+    const ESLint = await eslintPackage.loadESLint();
+
+    eslint = new ESLint({
+      overrideConfigFile: true,
+      overrideConfig: [
+        {
+          languageOptions: {
+            parserOptions: {
+              ecmaVersion: 'latest',
+              ecmaFeatures: {
+                jsx: true,
+              },
+              sourceType: 'module',
+            },
+          },
+        },
+        recommendedConfig,
+        // `.prettierignore` will be used by default which is unexpected for these test fixtures
+        {
+          files: ['test/fixtures/**/*'],
+          rules: {
+            'prettier/prettier': [
+              'error',
+              {},
+              {
+                fileInfoOptions: {
+                  ignorePath: '.eslintignore',
+                },
+              },
+            ],
+          },
+        },
+        {
+          files: ['**/*.html'],
+          languageOptions: { parser: htmlEslintParser },
+        },
+        eslintPluginMdx.flat,
+        {
+          files: ['*.{md,mdx}'],
+          settings: {
+            'mdx/code-block': true,
+          },
+        },
+        {
+          files: ['**/eslint-plugin-svelte3/*.named-blocks.svelte'],
+          settings: {
+            'svelte3/named-blocks': true,
+          },
+        },
+        ...eslintPluginSvelte.configs.recommended.map(config => ({
+          ...config,
+          files: ['**/eslint-plugin-svelte/*.svelte'],
+        })),
+        {
+          files: ['**/*.pug'],
+          plugins: {
+            pug: eslintPluginPug,
+          },
+        },
+      ],
+      ignore: false,
+    });
+  }
+
   if (skip) {
     return;
   }
@@ -461,6 +515,7 @@ async function runFixture(pattern, asserts, skip) {
     return assert.deepStrictEqual(
       results.map(({ messages }) => messages),
       asserts,
+      pattern,
     );
   } catch (err) {
     console.error(err);

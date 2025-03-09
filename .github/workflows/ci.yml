@@ -6,17 +6,29 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
-    name: Lint and Test on Node ${{ matrix.node-version }}
+    name: Lint and Test on Node ${{ matrix.node-version }} (ESLint ${{ matrix.eslint-version }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version:
-          - 14
-          - 16
-          - 18
+          - 22
           - 20
+          - 18
+        eslint-version:
+          - 9
+          - 8
+        include:
+          - node-version: 16
+            eslint-version: 8
+          - node-version: 14
+            eslint-version: 8
 
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +43,10 @@ jobs:
 
       - name: Install
         run: pnpm install
+
+      - name: Install ESLint ${{ matrix.node-version }}
+        if: ${{ matrix.eslint-version != 9 }}
+        run: pnpm install -D eslint@${{ matrix.eslint-version }} eslint-plugin-svelte@2 svelte@3
 
       - name: Test
         run: pnpm mocha
