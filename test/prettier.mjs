@@ -29,6 +29,7 @@ import eslintMdx from 'eslint-mdx';
 const rule = eslintPluginPrettier.rules.prettier;
 const RuleTester =
   eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
+const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -443,8 +444,6 @@ let eslint;
  */
 async function runFixture(pattern, asserts, skip) {
   if (!eslint) {
-    const ESLint = await eslintPackage.loadESLint();
-
     eslint = new ESLint({
       overrideConfigFile: true,
       overrideConfig: [
