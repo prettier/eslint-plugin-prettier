@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   ci:
-    name: Lint and Test on Node ${{ matrix.node-version }} (ESLint ${{ matrix.eslint }})
+    name: Lint and Test on Node ${{ matrix.node-version }} (ESLint ${{ matrix.eslint-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -21,14 +21,14 @@ jobs:
           - 22
           - 20
           - 18
-        eslint:
+        eslint-version:
           - 9
           - 8
         include:
           - node-version: 16
-            eslint: 8
+            eslint-version: 8
           - node-version: 14
-            eslint: 8
+            eslint-version: 8
 
     steps:
       - uses: actions/checkout@v4
@@ -45,8 +45,8 @@ jobs:
         run: pnpm install
 
       - name: Install ESLint ${{ matrix.node-version }}
-        if: ${{ matrix.eslint != 9 }}
-        run: pnpm install eslint@${{ matrix.eslint }} eslint-plugin-svelte@2 svelte@3 eslint-mdx@2 eslint-plugin-mdx@2 --save-dev
+        if: ${{ matrix.eslint-version != 9 }}
+        run: pnpm install -D eslint@${{ matrix.eslint-version }} eslint-plugin-svelte@2 svelte@3
 
       - name: Test
         run: pnpm mocha

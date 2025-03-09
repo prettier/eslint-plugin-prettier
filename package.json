@@ -67,6 +67,7 @@
     "synckit": "^0.9.1"
   },
   "devDependencies": {
+    "@1stg/remark-preset": "^3.0.0",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@commitlint/config-conventional": "^18.4.3",
@@ -75,15 +76,14 @@
     "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@html-eslint/parser": "^0.24.1",
     "@prettier/plugin-pug": "^3.0.0",
-    "@types/eslint": "^8.56.0",
     "@types/prettier-linter-helpers": "^1.0.4",
     "commitlint": "^18.4.3",
     "eslint": "^9.21.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.1",
     "eslint-formatter-friendly": "^7.0.0",
     "eslint-mdx": "^3.1.5",
     "eslint-plugin-eslint-plugin": "^5.2.1",
-    "eslint-plugin-mdx": "^3.1.5",
+    "eslint-plugin-mdx": "^3.2.0",
     "eslint-plugin-n": "^16.5.0",
     "eslint-plugin-prettier": "link:.",
     "eslint-plugin-pug": "^1.2.5",
@@ -91,7 +91,7 @@
     "graphql": "^16.8.1",
     "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.5.3",
     "prettier-plugin-pkg": "^0.18.0",
     "prettier-plugin-svelte": "^3.1.2",
     "simple-git-hooks": "^2.9.0",
@@ -100,10 +100,10 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "@types/eslint@8.56.0": "patches/@types__eslint@8.56.0.patch"
+      "unified-engine@11.2.2": "patches/unified-engine@11.2.2.patch"
     },
     "overrides": {
-      "prettier": "^3.1.1"
+      "prettier": "^3.5.3"
     }
   }
 }
