@@ -35,10 +35,7 @@ const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
 // Tests
 // ------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester({
-  // https://github.com/eslint/eslint/issues/19471
-  ignores: ['!**/node_modules/'],
-});
+const ruleTester = new RuleTester();
 
 ruleTester.run('prettier', rule, {
   valid: [
