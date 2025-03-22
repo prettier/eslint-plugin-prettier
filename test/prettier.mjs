@@ -35,7 +35,6 @@ const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
-console.log({isEslint8})
 const ruleTester = isEslint8
   ? // https://github.com/eslint/eslint/issues/19471
     // Fixed in ESLint 9, but still needed for ESLint 8 unfortunately
