@@ -27,6 +27,7 @@ import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
 import eslintMdx from 'eslint-mdx';
 
 const rule = eslintPluginPrettier.rules.prettier;
+const isEslint8 = Boolean(eslintUnsupportedApi.FlatRuleTester);
 const RuleTester =
   eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
 const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
@@ -34,8 +35,12 @@ const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
 // ------------------------------------------------------------------------------
 // Tests
 // ------------------------------------------------------------------------------
-
-const ruleTester = new RuleTester();
+console.log({isEslint8})
+const ruleTester = isEslint8
+  ? // https://github.com/eslint/eslint/issues/19471
+    // Fixed in ESLint 9, but still needed for ESLint 8 unfortunately
+    new RuleTester({ ignores: ['!**/node_modules/'] })
+  : new RuleTester();
 
 ruleTester.run('prettier', rule, {
   valid: [
