@@ -20,7 +20,7 @@ jobs:
           cache: pnpm
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --prefer-frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
