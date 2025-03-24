@@ -12,41 +12,41 @@ concurrency:
 
 jobs:
   ci:
-    name: Lint and Test on Node ${{ matrix.node-version }} (ESLint ${{ matrix.eslint-version }})
+    name: Lint and Test on Node ${{ matrix.node }} (ESLint ${{ matrix.eslint }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        node-version:
+        node:
           - 22
           - 20
           - 18
-        eslint-version:
+        eslint:
           - 9
           - 8
         include:
-          - node-version: 16
-            eslint-version: 8
-          - node-version: 14
-            eslint-version: 8
+          - node: 16
+            eslint: 8
+          - node: 14
+            eslint: 8
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
           cache: pnpm
 
       - name: Install
         run: pnpm install
 
-      - name: Install ESLint ${{ matrix.node-version }}
-        if: ${{ matrix.eslint-version != 9 }}
-        run: pnpm install -D eslint@${{ matrix.eslint-version }} eslint-plugin-svelte@2 svelte@3
+      - name: Install ESLint ${{ matrix.node }}
+        if: ${{ matrix.eslint != 9 }}
+        run: pnpm install -D eslint@${{ matrix.eslint }} eslint-plugin-svelte@2 svelte@3
 
       - name: Test
         run: pnpm mocha
@@ -54,5 +54,5 @@ jobs:
       - name: Perf
         # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
         # with node 14
-        if: ${{ matrix.node-version != 14 }}
+        if: ${{ matrix.node != 14 }}
         run: TIMING=1 pnpm lint
