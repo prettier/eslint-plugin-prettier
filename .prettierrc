@@ -9,6 +9,7 @@
   "overrides": [
     {
       "files": [".*rc"],
+      "excludeFiles": [".nvmrc"],
       "options": {
         "parser": "json"
       }

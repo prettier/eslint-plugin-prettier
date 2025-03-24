@@ -10,7 +10,7 @@
   ],
   "funding": "https://opencollective.com/eslint-plugin-prettier",
   "license": "MIT",
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@7.33.5",
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
@@ -45,7 +45,7 @@
     "format": "prettier --write . && pnpm lint --fix",
     "lint": "eslint . --cache --max-warnings 10",
     "prepare": "simple-git-hooks",
-    "release": "pnpm check && mocha && && clean-pkg-json changeset publish",
+    "release": "pnpm check && mocha && clean-pkg-json changeset publish",
     "test": "pnpm lint && mocha"
   },
   "peerDependencies": {

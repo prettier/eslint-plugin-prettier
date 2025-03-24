@@ -42,11 +42,11 @@ jobs:
           cache: pnpm
 
       - name: Install
-        run: pnpm install
+        run: pnpm install --prefer-frozen-lockfile
 
       - name: Install ESLint ${{ matrix.node }}
         if: ${{ matrix.eslint != 9 }}
-        run: pnpm install -D eslint@${{ matrix.eslint }} eslint-plugin-svelte@2 svelte@3
+        run: pnpm install -D eslint@${{ matrix.eslint }} @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
         run: pnpm mocha
