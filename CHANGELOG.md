@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.4
+
+### Patch Changes
+
+- [#715](https://github.com/prettier/eslint-plugin-prettier/pull/715) [`b8cfe56`](https://github.com/prettier/eslint-plugin-prettier/commit/b8cfe56e345a9cd0f0160da91d99b8ee9e37c67e) Thanks [@JounQin](https://github.com/JounQin)! - chore: hourcekeeping, bump all (dev) deps
+
 ## 5.2.3
 
 ### Patch Changes
