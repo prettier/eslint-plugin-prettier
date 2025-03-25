@@ -10,7 +10,7 @@
   ],
   "funding": "https://opencollective.com/eslint-plugin-prettier",
   "license": "MIT",
-  "packageManager": "pnpm@7.33.5",
+  "packageManager": "pnpm@10.6.5",
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
