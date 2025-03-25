@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.5
+
+### Patch Changes
+
+- [#721](https://github.com/prettier/eslint-plugin-prettier/pull/721) [`4f5513d`](https://github.com/prettier/eslint-plugin-prettier/commit/4f5513de4ce919c607773fd35d833117a8d8b676) Thanks [@JounQin](https://github.com/JounQin)! - fix: clarify correct `eslint-config-prettier` peer range
+
 ## 5.2.4
 
 ### Patch Changes
