@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.6
+
+### Patch Changes
+
+- [#723](https://github.com/prettier/eslint-plugin-prettier/pull/723) [`1451176`](https://github.com/prettier/eslint-plugin-prettier/commit/1451176a82fae991c0f4f74adf80af283c3a01c3) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): bump `synckit` to `v0.11.0`
+
 ## 5.2.5
 
 ### Patch Changes
