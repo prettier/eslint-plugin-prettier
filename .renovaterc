@@ -1,3 +1,4 @@
 {
-  "extends": ["github>1stG/configs"]
+  "extends": ["github>1stG/configs"],
+  "ignoreDeps": ["pnpm"]
 }
