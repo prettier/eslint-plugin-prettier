@@ -17,7 +17,7 @@ specifiers:
   '@eslint-community/eslint-plugin-eslint-comments': ^4.4.1
   '@eslint/js': ^9.23.0
   '@graphql-eslint/eslint-plugin': ^4.3.0
-  '@html-eslint/parser': ^0.36.0
+  '@html-eslint/parser': ^0.37.0
   '@prettier/plugin-pug': ^3.2.1
   '@types/prettier-linter-helpers': ^1.0.4
   clean-pkg-json: ^1.2.1
@@ -39,12 +39,12 @@ specifiers:
   prettier-plugin-svelte: ^3.3.3
   simple-git-hooks: ^2.12.1
   svelte: ^5.25.3
-  synckit: ^0.10.2
+  synckit: ^0.11.0
   vue-eslint-parser: ^10.1.1
 
 dependencies:
   prettier-linter-helpers: 1.0.0
-  synckit: 0.10.2
+  synckit: 0.11.1
 
 devDependencies:
   '@1stg/remark-preset': 3.0.1_prettier@3.5.3
@@ -55,7 +55,7 @@ devDependencies:
   '@eslint-community/eslint-plugin-eslint-comments': 4.4.1_eslint@9.23.0
   '@eslint/js': 9.23.0
   '@graphql-eslint/eslint-plugin': 4.3.0_garjxkg63rquziivo3mxre4wya
-  '@html-eslint/parser': 0.36.0
+  '@html-eslint/parser': 0.37.0
   '@prettier/plugin-pug': 3.2.1_prettier@3.5.3
   '@types/prettier-linter-helpers': 1.0.4
   clean-pkg-json: 1.2.1
@@ -1067,15 +1067,15 @@ packages:
       graphql: 16.10.0
     dev: true
 
-  /@html-eslint/parser/0.36.0:
-    resolution: {integrity: sha512-MFA2M1WIMHTAwS+ibPvKTCYCPL/geLtO3GlQoee3q3GWG17QtDMDKxse8/HaLoHn9u0ehtGDAGo+uAX5nehKJw==}
+  /@html-eslint/parser/0.37.0:
+    resolution: {integrity: sha512-shrBuyEsa8iilhRrUlArULkleVlsNZVPXVulejmq7DkxNj1bQyYVFRYHIkhg5GkbPZT6wrUeA2SLOJ2xanpYIA==}
     dependencies:
-      '@html-eslint/template-syntax-parser': 0.36.0
+      '@html-eslint/template-syntax-parser': 0.37.0
       es-html-parser: 0.1.1
     dev: true
 
-  /@html-eslint/template-syntax-parser/0.36.0:
-    resolution: {integrity: sha512-lBjcbATQ4Q1hLDtedyunPtbRCkiR5NdOu1l5PrcO2Zr+7cKLBWniR3Eo1txBXMbp5MB4X06f7ppqtTn93MEHDA==}
+  /@html-eslint/template-syntax-parser/0.37.0:
+    resolution: {integrity: sha512-xL/OVGJOJQ8G3akZFlQeADPMX9OTVrUwMaAGrwIewf4k7lxnpz8sDaFgpkA5X7AYzmhIeENrhaB/pIbC0KaSyQ==}
     dev: true
 
   /@humanfs/core/0.19.1:
@@ -5593,8 +5593,8 @@ packages:
       whatwg-mimetype: 4.0.0
     dev: true
 
-  /synckit/0.10.2:
-    resolution: {integrity: sha512-cSGiaCPhFzeFIQY8KKEacv46LclENY4d60jgkwCrKomvRkIjtMyss1dPkHLp/62c1leuOjEedB1+lWcwqTJSvA==}
+  /synckit/0.11.1:
+    resolution: {integrity: sha512-fWZqNBZNNFp/7mTUy1fSsydhKsAKJ+u90Nk7kOK5Gcq9vObaqLBLjWFDBkyVU9Vvc6Y71VbOevMuGhqv02bT+Q==}
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
       '@pkgr/core': 0.2.0

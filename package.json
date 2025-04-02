@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "prettier-linter-helpers": "^1.0.0",
-    "synckit": "^0.10.2"
+    "synckit": "^0.11.0"
   },
   "devDependencies": {
     "@1stg/remark-preset": "^3.0.1",
@@ -75,7 +75,7 @@
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.23.0",
     "@graphql-eslint/eslint-plugin": "^4.3.0",
-    "@html-eslint/parser": "^0.36.0",
+    "@html-eslint/parser": "^0.37.0",
     "@prettier/plugin-pug": "^3.2.1",
     "@types/prettier-linter-helpers": "^1.0.4",
     "clean-pkg-json": "^1.2.1",
