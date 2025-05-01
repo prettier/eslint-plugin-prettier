@@ -15,6 +15,7 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "main": "eslint-plugin-prettier.js",
+  "types": "eslint-plugin-prettier.d.ts",
   "exports": {
     ".": {
       "types": "./eslint-plugin-prettier.d.ts",
@@ -26,7 +27,6 @@
     },
     "./package.json": "./package.json"
   },
-  "types": "eslint-plugin-prettier.d.ts",
   "files": [
     "eslint-plugin-prettier.d.ts",
     "eslint-plugin-prettier.js",
@@ -75,7 +75,7 @@
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.23.0",
     "@graphql-eslint/eslint-plugin": "^4.3.0",
-    "@html-eslint/parser": "^0.37.0",
+    "@html-eslint/parser": "^0.39.0",
     "@prettier/plugin-pug": "^3.2.1",
     "@types/prettier-linter-helpers": "^1.0.4",
     "clean-pkg-json": "^1.2.1",
@@ -92,7 +92,7 @@
     "lint-staged": "^15.5.0",
     "mocha": "^11.1.0",
     "prettier": "^3.5.3",
-    "prettier-plugin-pkg": "^0.18.1",
+    "prettier-plugin-pkg": "^0.19.0",
     "prettier-plugin-svelte": "^3.3.3",
     "simple-git-hooks": "^2.12.1",
     "svelte": "^5.25.3",
