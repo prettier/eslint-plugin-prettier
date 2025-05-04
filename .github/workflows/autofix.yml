@@ -1,22 +1,18 @@
-name: Release
+name: autofix.ci # For security reasons, the workflow in which the autofix.ci action is used must be named "autofix.ci".
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  id-token: write
-  pull-requests: write
-
 jobs:
-  release:
-    name: Release
+  autofix:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -34,14 +30,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --prefer-frozen-lockfile
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
+      - name: Format Codes
+        run: pnpm format
+
+      - name: Apply autofix.ci
+        uses: autofix-ci/action@2891949f3779a1cafafae1523058501de3d4e944 # v1.3.1
         with:
-          publish: pnpm release
-          commit: 'chore: release eslint-plugin-prettier'
-          title: 'chore: release eslint-plugin-prettier'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          fail-fast: false

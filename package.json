@@ -5,8 +5,8 @@
   "repository": "https://github.com/prettier/eslint-plugin-prettier.git",
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
   "author": "Teddy Katz",
-  "contributors": [
-    "JounQin (https://github.com/JounQin) <admin@1stg.me>"
+  "maintainers": [
+    "JounQin <admin@1stg.me> (https://github.com/JounQin)"
   ],
   "funding": "https://opencollective.com/eslint-plugin-prettier",
   "license": "MIT",
