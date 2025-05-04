@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.0
+
+### Minor Changes
+
+- [#674](https://github.com/prettier/eslint-plugin-prettier/pull/674) [`6fe0c90`](https://github.com/prettier/eslint-plugin-prettier/commit/6fe0c90e277acba301e5a5db445130374d4254ea) Thanks [@irsooti](https://github.com/irsooti)! - feat(types): prefer `Config` over `FlatConfig` when they're equal
+
 ## 5.2.6
 
 ### Patch Changes
