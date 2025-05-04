@@ -1,15 +1,21 @@
 // @ts-check
 
 /**
- * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('eslint').ESLint.ObjectMetaProperties} ObjectMetaProperties
- * @typedef {import('prettier').Options & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
+ * @typedef {PrettierOptions & {
+ *   onDiskFilepath: string;
+ *   parserMeta?: ESLint.ObjectMetaProperties['meta'];
+ *   parserPath?: string;
+ *   usePrettierrc?: boolean;
+ * }} Options
+ * @import {FileInfoOptions, Options as PrettierOptions} from 'prettier'
+ * @import {ESLint} from 'eslint'
  */
 
 const { runAsWorker } = require('synckit');
 
 /**
- * @type {typeof import('prettier')}
+ * @type {typeof Prettier}
+ * @import * as Prettier from 'prettier'
  */
 let prettier;
 
@@ -176,9 +182,7 @@ runAsWorker(
       }
     }
 
-    /**
-     * @type {import('prettier').Options}
-     */
+    /** @type {PrettierOptions} */
     const prettierOptions = {
       ...initialOptions,
       ...prettierRcOptions,

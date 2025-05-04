@@ -291,9 +291,7 @@ runFixture('*.mdx', [
   ],
 ]);
 
-/**
- * @see https://github.com/sveltejs/svelte/blob/226bf419f9b9b5f1a6da33bd6403dd70afe58b52/packages/svelte/package.json#L73
- */
+/** @see https://github.com/sveltejs/svelte/blob/226bf419f9b9b5f1a6da33bd6403dd70afe58b52/packages/svelte/package.json#L73 */
 const svelteUnsupported = +process.versions.node.split('.')[0] < 16;
 
 runFixture(
@@ -387,10 +385,10 @@ runFixture('invalid-prettierrc/*', [
 // ------------------------------------------------------------------------------
 
 /**
- * Reads a fixture file and returns an "invalid" case for use by RuleTester.
- * The fixture format aims to reduce the pain of debugging offsets by keeping
- * the lines and columns of the test code as close to what the rule will report
- * as possible.
+ * Reads a fixture file and returns an "invalid" case for use by RuleTester. The
+ * fixture format aims to reduce the pain of debugging offsets by keeping the
+ * lines and columns of the test code as close to what the rule will report as
+ * possible.
  *
  * @param {string} name - Fixture basename.
  * @returns {object} A {code, output, options, errors} test object.
@@ -421,7 +419,8 @@ function loadInvalidFixture(name) {
 }
 
 /**
- * Builds a dummy javascript file path to trick prettier into resolving a specific .prettierrc file.
+ * Builds a dummy javascript file path to trick prettier into resolving a
+ * specific .prettierrc file.
  *
  * @param {string} dir - Prettierrc fixture basename.
  * @param {string} file
@@ -433,14 +432,18 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
   );
 }
 
+/**
+ * @type {ESLint}
+ * @import {ESLint} from 'eslint'
+ */
 let eslint;
 
 /**
- *
  * @param {string} pattern
- * @param {import('eslint').Linter.LintMessage[][]} asserts
+ * @param {Linter.LintMessage[][]} asserts
  * @param {boolean} [skip]
  * @returns {Promise<void>}
+ * @import {Linter} from 'eslint'
  */
 async function runFixture(pattern, asserts, skip) {
   if (!eslint) {

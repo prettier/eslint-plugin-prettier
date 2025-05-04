@@ -6,14 +6,25 @@
 // @ts-check
 
 /**
- * @typedef {import('eslint').AST.Range} Range
- * @typedef {import('eslint').AST.SourceLocation} SourceLocation
- * @typedef {import('eslint').ESLint.Plugin} Plugin
- * @typedef {import('eslint').ESLint.ObjectMetaProperties} ObjectMetaProperties
- * @typedef {import('prettier').FileInfoOptions} FileInfoOptions
- * @typedef {import('prettier').Options} PrettierOptions
- * @typedef {PrettierOptions & { onDiskFilepath: string, parserMeta?: ObjectMetaProperties['meta'], parserPath?: string, usePrettierrc?: boolean }} Options
- * @typedef {(source: string, options: Options, fileInfoOptions: FileInfoOptions) => string} PrettierFormat
+ * @import {AST, ESLint, Linter, Rule, SourceCode} from 'eslint'
+ * @import {FileInfoOptions, Options as PrettierOptions} from 'prettier'
+ * @import {Difference} from 'prettier-linter-helpers'
+ */
+
+/**
+ * @typedef {PrettierOptions & {
+ *   onDiskFilepath: string;
+ *   parserMeta?: ESLint.ObjectMetaProperties['meta'];
+ *   parserPath?: string;
+ *   usePrettierrc?: boolean;
+ * }} Options
+ *
+ *
+ * @typedef {(
+ *   source: string,
+ *   options: Options,
+ *   fileInfoOptions: FileInfoOptions,
+ * ) => string} PrettierFormat
  */
 
 'use strict';
@@ -39,9 +50,7 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 // ------------------------------------------------------------------------------
 
 // Lazily-loaded Prettier.
-/**
- * @type {PrettierFormat}
- */
+/** @type {PrettierFormat} */
 let prettierFormat;
 
 // ------------------------------------------------------------------------------
@@ -51,13 +60,14 @@ let prettierFormat;
 /**
  * Reports a difference.
  *
- * @param {import('eslint').Rule.RuleContext} context - The ESLint rule context.
- * @param {import('prettier-linter-helpers').Difference} difference - The difference object.
+ * @param {Rule.RuleContext} context - The ESLint rule context.
+ * @param {Difference} difference - The difference object.
  * @returns {void}
  */
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
-  const range = /** @type {Range} */ ([offset, offset + deleteText.length]);
+  /** @type {AST.Range} */
+  const range = [offset, offset + deleteText.length];
   // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
@@ -80,9 +90,7 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-/**
- * @type {Plugin}
- */
+/** @type {ESLint.Plugin} */
 const eslintPluginPrettier = {
   meta: { name, version },
   configs: {
@@ -131,18 +139,17 @@ const eslintPluginPrettier = {
         },
       },
       create(context) {
-        const usePrettierrc =
-          !context.options[1] || context.options[1].usePrettierrc !== false;
-        /**
-         * @type {FileInfoOptions}
-         */
-        const fileInfoOptions =
-          (context.options[1] && context.options[1].fileInfoOptions) || {};
+        const options = /** @type {Options | undefined} */ (context.options[1]);
+        const usePrettierrc = !options || options.usePrettierrc !== false;
+        /** @type {FileInfoOptions} */
+        const fileInfoOptions = options?.fileInfoOptions || {};
 
         // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
         // with the `sourceCode` property.
         // TODO: Only use property when our eslint peerDependency is >=8.40.0.
-        const sourceCode = context.sourceCode ?? context.getSourceCode();
+        const sourceCode = /** @type {SourceCode} */ (
+          context.sourceCode ?? context.getSourceCode()
+        );
         // `context.getFilename()` was deprecated in ESLint v8.40.0 and replaced
         // with the `filename` property.
         // TODO: Only use property when our eslint peerDependency is >=8.40.0.
@@ -169,12 +176,12 @@ const eslintPluginPrettier = {
               );
             }
 
-            /**
-             * @type {PrettierOptions}
-             */
+            /** @type {PrettierOptions} */
             const eslintPrettierOptions = context.options[0] || {};
 
-            const parser = context.languageOptions?.parser;
+            const parser = /** @type {Linter.Parser | undefined} */ (
+              context.languageOptions?.parser
+            );
 
             // prettier.format() may throw a SyntaxError if it cannot parse the
             // source code it is given. Usually for JS files this isn't a
@@ -184,9 +191,7 @@ const eslintPluginPrettier = {
             // files throw an error if they contain unclosed elements, such as
             // `<template><div></template>. In this case report an error at the
             // point at which parsing failed.
-            /**
-             * @type {string}
-             */
+            /** @type {string} */
             let prettierSource;
             try {
               prettierSource = prettierFormat(
@@ -213,10 +218,12 @@ const eslintPluginPrettier = {
 
               let message = 'Parsing error: ' + err.message;
 
-              const error =
-                /** @type {SyntaxError & {codeFrame: string; loc?: SourceLocation}} */ (
-                  err
-                );
+              const error = /**
+               * @type {SyntaxError & {
+               *   codeFrame: string;
+               *   loc?: AST.SourceLocation;
+               * }}
+               */ (err);
 
               // Prettier's message contains a codeframe style preview of the
               // invalid code and the line/column at which the error occurred.
@@ -243,7 +250,10 @@ const eslintPluginPrettier = {
               const differences = generateDifferences(source, prettierSource);
 
               for (const difference of differences) {
-                reportDifference(context, difference);
+                reportDifference(
+                  /** @type {Rule.RuleContext} */ (context),
+                  difference,
+                );
               }
             }
           },
