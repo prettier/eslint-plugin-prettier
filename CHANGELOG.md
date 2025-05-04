@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.3.1
+
+### Patch Changes
+
+- [#734](https://github.com/prettier/eslint-plugin-prettier/pull/734) [`dcf2c80`](https://github.com/prettier/eslint-plugin-prettier/commit/dcf2c8083e0f7146b7b7d641224ee2db8b318189) Thanks [@JounQin](https://github.com/JounQin)! - ci: enable `NPM_CONFIG_PROVENANCE` env
+
 ## 5.3.0
 
 ### Minor Changes
