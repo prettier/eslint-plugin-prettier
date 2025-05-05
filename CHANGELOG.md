@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.4.0
+
+### Minor Changes
+
+- [`59a0cae`](https://github.com/prettier/eslint-plugin-prettier/commit/59a0cae5f27801d7e00f257c6be059a848b32fbe) Thanks [@yashtech00](https://github.com/yashtech00)! - refactor: migrate `worker.js` to `worker.mjs`
+
 ## 5.3.1
 
 ### Patch Changes
