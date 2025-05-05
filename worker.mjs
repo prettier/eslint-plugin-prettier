@@ -11,8 +11,8 @@
  * @import {ESLint} from 'eslint'
  */
 
-import { runAsWorker } from 'synckit';
 import prettier from 'prettier';
+import { runAsWorker } from 'synckit';
 
 runAsWorker(
   /**
