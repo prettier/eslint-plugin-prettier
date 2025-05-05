@@ -12,12 +12,7 @@
  */
 
 import { runAsWorker } from 'synckit';
-
-/**
- * @type {typeof Prettier}
- * @import * as Prettier from 'prettier'
- */
-let prettier;
+import prettier from 'prettier';
 
 runAsWorker(
   /**
@@ -38,10 +33,6 @@ runAsWorker(
     },
     eslintFileInfoOptions,
   ) => {
-    if (!prettier) {
-      prettier = await import('prettier');
-    }
-
     const prettierRcOptions = usePrettierrc
       ? await prettier.resolveConfig(onDiskFilepath, {
           editorconfig: true,
