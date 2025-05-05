@@ -11,7 +11,7 @@
  * @import {ESLint} from 'eslint'
  */
 
-const { runAsWorker } = require('synckit');
+import { runAsWorker } from 'synckit';
 
 /**
  * @type {typeof Prettier}
