@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.4.1
+
+### Patch Changes
+
+- [#740](https://github.com/prettier/eslint-plugin-prettier/pull/740) [`c21521f`](https://github.com/prettier/eslint-plugin-prettier/commit/c21521ffbe7bfb60bdca8cbf6349fba4de774d21) Thanks [@JounQin](https://github.com/JounQin)! - fix(deps): bump `synckit` to v0.11.7 to fix potential `TypeError: Cannot read properties of undefined (reading 'message')` error
+
 ## 5.4.0
 
 ### Minor Changes
