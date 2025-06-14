@@ -12,6 +12,13 @@
  */
 
 /**
+ * @typedef {{
+ *   line: number;
+ *   column: number;
+ *   offset: number;
+ * }} Location
+ *
+ *
  * @typedef {PrettierOptions & {
  *   onDiskFilepath: string;
  *   parserMeta?: ESLint.ObjectMetaProperties['meta'];
@@ -25,6 +32,9 @@
  *   options: Options,
  *   fileInfoOptions: FileInfoOptions,
  * ) => string} PrettierFormat
+ *
+ *
+ * @typedef {Parameters<Exclude<ESLint.Plugin['rules'], undefined>[string]['create']>[0]} RuleContext
  */
 
 'use strict';
@@ -58,9 +68,28 @@ let prettierFormat;
 // ------------------------------------------------------------------------------
 
 /**
+ * Converts a byte offset to a Location.
+ *
+ * See also `getLocFromIndex` in `@eslint/js`.
+ *
+ * @param {number[]} lineIndexes
+ * @param {number} offset
+ * @returns {Location}
+ */
+function getLocFromOffset(lineIndexes, offset) {
+  let line = 0;
+  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < offset) {
+    line += 1;
+  }
+
+  const column = offset - lineIndexes[line];
+  return { line: line + 1, column, offset };
+}
+
+/**
  * Reports a difference.
  *
- * @param {Rule.RuleContext} context - The ESLint rule context.
+ * @param {RuleContext} context - The ESLint rule context.
  * @param {Difference} difference - The difference object.
  * @returns {void}
  */
@@ -71,8 +100,16 @@ function reportDifference(context, difference) {
   // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
+  const sourceCode = context.sourceCode ?? context.getSourceCode();
+  if (!('text' in sourceCode)) {
+    throw new Error('prettier/prettier: non-textual source code is unsupported');
+  }
+
+  const lineIndexes = [...sourceCode.text.matchAll(/\n/g)].map(match => match.index);
+  // first line in the file starts at byte offset 0
+  lineIndexes.unshift(0);
   const [start, end] = range.map(index =>
-    (context.sourceCode ?? context.getSourceCode()).getLocFromIndex(index),
+    getLocFromOffset(lineIndexes, index)
   );
 
   context.report({
@@ -90,7 +127,7 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-/** @type {ESLint.Plugin} */
+/** @satisfies {ESLint.Plugin} */
 const eslintPluginPrettier = {
   meta: { name, version },
   configs: {
@@ -168,7 +205,7 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          Program(node) {
+          [sourceCode.ast.type](node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
               prettierFormat = /** @type {PrettierFormat} */ (
@@ -251,7 +288,7 @@ const eslintPluginPrettier = {
 
               for (const difference of differences) {
                 reportDifference(
-                  /** @type {Rule.RuleContext} */ (context),
+                  /** @type {Rule.RuleContext} */(context),
                   difference,
                 );
               }
