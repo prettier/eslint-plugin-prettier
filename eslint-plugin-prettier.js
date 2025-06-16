@@ -12,8 +12,7 @@
  */
 
 /**
- * @typedef {{ line: number; column: number; offset: number; }} Location
- *
+ * @typedef {{ line: number; column: number; offset: number }} Location
  *
  * @typedef {PrettierOptions & {
  *   onDiskFilepath: string;
@@ -30,7 +29,9 @@
  * ) => string} PrettierFormat
  *
  *
- * @typedef {Parameters<Exclude<ESLint.Plugin['rules'], undefined>[string]['create']>[0]} RuleContext
+ * @typedef {Parameters<
+ *   Exclude<ESLint.Plugin['rules'], undefined>[string]['create']
+ * >[0]} RuleContext
  */
 
 'use strict';
@@ -97,15 +98,38 @@ function reportDifference(context, difference) {
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
   const sourceCode = context.sourceCode ?? context.getSourceCode();
-  if (!('text' in sourceCode)) {
-    throw new Error('prettier/prettier: non-textual source code is unsupported');
-  }
 
-  const lineIndexes = [...sourceCode.text.matchAll(/\n/g)].map(match => match.index);
-  // first line in the file starts at byte offset 0
-  lineIndexes.unshift(0);
-  const [start, end] = range.map(index =>
-    getLocFromOffset(lineIndexes, index)
+  const lazy = {
+    /**
+     * Lazily computes the line indices for `sourceCode`.
+     *
+     * @returns {number[]}
+     */
+    get lineIndexes() {
+      // @ts-ignore
+      delete this.lineIndexes;
+
+      if (!('text' in sourceCode)) {
+        throw new Error(
+          'prettier/prettier: non-textual source code is unsupported',
+        );
+      }
+
+      // @ts-ignore
+      this.lineIndexes = [...sourceCode.text.matchAll(/\n/g)].map(
+        match => match.index,
+      );
+      // first line in the file starts at byte offset 0
+      this.lineIndexes.unshift(0);
+      return this.lineIndexes;
+    },
+  };
+
+  const [start, end] = range.map(
+    index =>
+      // @ts-ignore
+      sourceCode.getLocFromIndex?.(index) ??
+      getLocFromOffset(lazy.lineIndexes, index),
   );
 
   context.report({
@@ -284,7 +308,7 @@ const eslintPluginPrettier = {
 
               for (const difference of differences) {
                 reportDifference(
-                  /** @type {Rule.RuleContext} */(context),
+                  /** @type {Rule.RuleContext} */ (context),
                   difference,
                 );
               }
