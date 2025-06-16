@@ -12,11 +12,7 @@
  */
 
 /**
- * @typedef {{
- *   line: number;
- *   column: number;
- *   offset: number;
- * }} Location
+ * @typedef {{ line: number; column: number; offset: number; }} Location
  *
  *
  * @typedef {PrettierOptions & {
