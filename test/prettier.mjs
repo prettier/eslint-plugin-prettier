@@ -25,6 +25,7 @@ import eslintPluginPug from 'eslint-plugin-pug';
 import vueEslintParser from 'vue-eslint-parser';
 import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
 import eslintMdx from 'eslint-mdx';
+import eslintPluginJson from '@eslint/json';
 
 const rule = eslintPluginPrettier.rules.prettier;
 const RuleTester =
@@ -379,6 +380,31 @@ runFixture('invalid-prettierrc/*', [
     },
   ],
 ]);
+
+const jsonRuleTester = new RuleTester({
+  plugins: {
+    json: eslintPluginJson,
+  },
+  language: 'json/json',
+});
+
+jsonRuleTester.run('@eslint/json', rule, {
+  valid: [
+    {
+      code: '{}\n',
+      filename: 'empty.json',
+    },
+    {
+      code: '{ "foo": 1 }\n',
+      filename: 'simple.json',
+    },
+  ],
+  invalid: [
+    Object.assign(loadInvalidFixture('json'), {
+      filename: 'invalid.json',
+    }),
+  ],
+});
 
 // ------------------------------------------------------------------------------
 //  Helpers

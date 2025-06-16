@@ -16,6 +16,7 @@ specifiers:
   '@commitlint/config-conventional': ^19.8.0
   '@eslint-community/eslint-plugin-eslint-comments': ^4.4.1
   '@eslint/js': ^9.23.0
+  '@eslint/json': ^0.12.0
   '@graphql-eslint/eslint-plugin': ^4.3.0
   '@html-eslint/parser': ^0.41.0
   '@prettier/plugin-pug': ^3.2.1
@@ -55,6 +56,7 @@ devDependencies:
   '@commitlint/config-conventional': 19.8.0
   '@eslint-community/eslint-plugin-eslint-comments': 4.4.1_eslint@9.23.0
   '@eslint/js': 9.23.0
+  '@eslint/json': 0.12.0
   '@graphql-eslint/eslint-plugin': 4.3.0_garjxkg63rquziivo3mxre4wya
   '@html-eslint/parser': 0.41.0
   '@prettier/plugin-pug': 3.2.1_prettier@3.5.3
@@ -735,6 +737,16 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     dev: true
 
+  /@eslint/json/0.12.0:
+    resolution: {integrity: sha512-n/7dz8HFStpEe4o5eYk0tdkBdGUS/ZGb0GQCeDWN1ZmRq67HMHK4vC33b0rQlTT6xdZoX935P4vstiWVk5Ying==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    dependencies:
+      '@eslint/core': 0.12.0
+      '@eslint/plugin-kit': 0.2.7
+      '@humanwhocodes/momoa': 3.3.8
+      natural-compare: 1.4.0
+    dev: true
+
   /@eslint/object-schema/2.1.6:
     resolution: {integrity: sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -1096,6 +1108,11 @@ packages:
   /@humanwhocodes/module-importer/1.0.1:
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
     engines: {node: '>=12.22'}
+    dev: true
+
+  /@humanwhocodes/momoa/3.3.8:
+    resolution: {integrity: sha512-/3PZzor2imi/RLLcnHztkwA79txiVvW145Ve2cp5dxRcH5qOUNJPToasqLFHniTfw4B4lT7jGDdBOPXbXYlIMQ==}
+    engines: {node: '>=18'}
     dev: true
 
   /@humanwhocodes/retry/0.3.1:
