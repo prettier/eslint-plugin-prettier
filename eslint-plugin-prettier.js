@@ -7,13 +7,12 @@
 
 /**
  * @import {AST, ESLint, Linter, Rule, SourceCode} from 'eslint'
+ * @import {Position} from 'estree'
  * @import {FileInfoOptions, Options as PrettierOptions} from 'prettier'
  * @import {Difference} from 'prettier-linter-helpers'
  */
 
 /**
- * @typedef {{ line: number; column: number; offset: number }} Location
- *
  * @typedef {PrettierOptions & {
  *   onDiskFilepath: string;
  *   parserMeta?: ESLint.ObjectMetaProperties['meta'];
@@ -27,11 +26,6 @@
  *   options: Options,
  *   fileInfoOptions: FileInfoOptions,
  * ) => string} PrettierFormat
- *
- *
- * @typedef {Parameters<
- *   Exclude<ESLint.Plugin['rules'], undefined>[string]['create']
- * >[0]} RuleContext
  */
 
 'use strict';
@@ -64,29 +58,46 @@ let prettierFormat;
 //  Rule Definition
 // ------------------------------------------------------------------------------
 
+/** @type {WeakMap<SourceCode, number[]>} */
+const lineIndexesCache = new WeakMap();
+
 /**
- * Converts a byte offset to a Location.
+ * Ponyfill `sourceCode.getLocFromIndex` when it's unavailable.
  *
  * See also `getLocFromIndex` in `@eslint/js`.
  *
- * @param {number[]} lineIndexes
- * @param {number} offset
- * @returns {Location}
+ * @param {SourceCode} sourceCode
+ * @param {number} index
+ * @returns {Position}
  */
-function getLocFromOffset(lineIndexes, offset) {
-  let line = 0;
-  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < offset) {
-    line += 1;
+function getLocFromIndex(sourceCode, index) {
+  if (typeof sourceCode.getLocFromIndex === 'function') {
+    return sourceCode.getLocFromIndex(index);
   }
 
-  const column = offset - lineIndexes[line];
-  return { line: line + 1, column, offset };
+  let lineIndexes = lineIndexesCache.get(sourceCode);
+  if (!lineIndexes) {
+    lineIndexes = [...sourceCode.text.matchAll(/\r?\n/g)].map(
+      match => match.index,
+    );
+    // first line in the file starts at byte offset 0
+    lineIndexes.unshift(0);
+    lineIndexesCache.set(sourceCode, lineIndexes);
+  }
+
+  let line = 0;
+  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < index) {
+    line += 1;
+  }
+  const column = index - lineIndexes[line];
+
+  return { line: line + 1, column };
 }
 
 /**
  * Reports a difference.
  *
- * @param {RuleContext} context - The ESLint rule context.
+ * @param {Rule.RuleContext} context - The ESLint rule context.
  * @param {Difference} difference - The difference object.
  * @returns {void}
  */
@@ -99,38 +110,7 @@ function reportDifference(context, difference) {
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
   const sourceCode = context.sourceCode ?? context.getSourceCode();
 
-  const lazy = {
-    /**
-     * Lazily computes the line indices for `sourceCode`.
-     *
-     * @returns {number[]}
-     */
-    get lineIndexes() {
-      // @ts-ignore
-      delete this.lineIndexes;
-
-      if (!('text' in sourceCode)) {
-        throw new Error(
-          'prettier/prettier: non-textual source code is unsupported',
-        );
-      }
-
-      // @ts-ignore
-      this.lineIndexes = [...sourceCode.text.matchAll(/\n/g)].map(
-        match => match.index,
-      );
-      // first line in the file starts at byte offset 0
-      this.lineIndexes.unshift(0);
-      return this.lineIndexes;
-    },
-  };
-
-  const [start, end] = range.map(
-    index =>
-      // @ts-ignore
-      sourceCode.getLocFromIndex?.(index) ??
-      getLocFromOffset(lazy.lineIndexes, index),
-  );
+  const [start, end] = range.map(index => getLocFromIndex(sourceCode, index));
 
   context.report({
     messageId: operation,
@@ -147,7 +127,7 @@ function reportDifference(context, difference) {
 //  Module Definition
 // ------------------------------------------------------------------------------
 
-/** @satisfies {ESLint.Plugin} */
+/** @type {ESLint.Plugin} */
 const eslintPluginPrettier = {
   meta: { name, version },
   configs: {
@@ -225,6 +205,7 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
+          /** @param {unknown} node */
           [sourceCode.ast.type](node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
