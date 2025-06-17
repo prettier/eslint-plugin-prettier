@@ -37,7 +37,7 @@ specifiers:
   prettier: ^3.5.3
   prettier-linter-helpers: ^1.0.0
   prettier-plugin-jsdoc: ^1.3.2
-  prettier-plugin-pkg: ^0.20.0
+  prettier-plugin-pkg: ^0.21.0
   prettier-plugin-svelte: ^3.3.3
   simple-git-hooks: ^2.12.1
   svelte: ^5.25.3
@@ -76,7 +76,7 @@ devDependencies:
   mocha: 11.1.0
   prettier: 3.5.3
   prettier-plugin-jsdoc: 1.3.2_prettier@3.5.3
-  prettier-plugin-pkg: 0.20.0_prettier@3.5.3
+  prettier-plugin-pkg: 0.21.1_prettier@3.5.3
   prettier-plugin-svelte: 3.3.3_2ymjksukde6plevbhihn5hqk44
   simple-git-hooks: 2.12.1
   svelte: 5.25.3
@@ -4365,8 +4365,8 @@ packages:
       - supports-color
     dev: true
 
-  /prettier-plugin-pkg/0.20.0_prettier@3.5.3:
-    resolution: {integrity: sha512-SOMC6CweLsSAmbtaZJcv8z9oHY7okHrHm9WW0r9xYIdUJQJS3aw8pUUdve6Typ1fiBQM9roc2U3s6K5ud5oyaA==}
+  /prettier-plugin-pkg/0.21.1_prettier@3.5.3:
+    resolution: {integrity: sha512-f9qlj08joTh+x4UAQvL0UdhLf+LyJyBN9CBEnH7Ip1hitcc52vfkZEH5I7PsRFyDu/bm4d94GaJ7mfeLmFEsfg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       prettier: ^3.0.3
