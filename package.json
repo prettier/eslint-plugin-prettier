@@ -74,6 +74,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.23.0",
+    "@eslint/json": "^0.12.0",
     "@graphql-eslint/eslint-plugin": "^4.3.0",
     "@html-eslint/parser": "^0.41.0",
     "@prettier/plugin-pug": "^3.2.1",

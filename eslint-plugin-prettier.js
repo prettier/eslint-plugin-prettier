@@ -7,6 +7,7 @@
 
 /**
  * @import {AST, ESLint, Linter, Rule, SourceCode} from 'eslint'
+ * @import {Position} from 'estree'
  * @import {FileInfoOptions, Options as PrettierOptions} from 'prettier'
  * @import {Difference} from 'prettier-linter-helpers'
  */
@@ -57,6 +58,42 @@ let prettierFormat;
 //  Rule Definition
 // ------------------------------------------------------------------------------
 
+/** @type {WeakMap<SourceCode, number[]>} */
+const lineIndexesCache = new WeakMap();
+
+/**
+ * Ponyfill `sourceCode.getLocFromIndex` when it's unavailable.
+ *
+ * See also `getLocFromIndex` in `@eslint/js`.
+ *
+ * @param {SourceCode} sourceCode
+ * @param {number} index
+ * @returns {Position}
+ */
+function getLocFromIndex(sourceCode, index) {
+  if (typeof sourceCode.getLocFromIndex === 'function') {
+    return sourceCode.getLocFromIndex(index);
+  }
+
+  let lineIndexes = lineIndexesCache.get(sourceCode);
+  if (!lineIndexes) {
+    lineIndexes = [...sourceCode.text.matchAll(/\r?\n/g)].map(
+      match => match.index,
+    );
+    // first line in the file starts at byte offset 0
+    lineIndexes.unshift(0);
+    lineIndexesCache.set(sourceCode, lineIndexes);
+  }
+
+  let line = 0;
+  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < index) {
+    line += 1;
+  }
+  const column = index - lineIndexes[line];
+
+  return { line: line + 1, column };
+}
+
 /**
  * Reports a difference.
  *
@@ -71,9 +108,9 @@ function reportDifference(context, difference) {
   // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
-  const [start, end] = range.map(index =>
-    (context.sourceCode ?? context.getSourceCode()).getLocFromIndex(index),
-  );
+  const sourceCode = context.sourceCode ?? context.getSourceCode();
+
+  const [start, end] = range.map(index => getLocFromIndex(sourceCode, index));
 
   context.report({
     messageId: operation,
@@ -168,7 +205,8 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          Program(node) {
+          /** @param {unknown} node */
+          [sourceCode.ast.type](node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
               prettierFormat = /** @type {PrettierFormat} */ (

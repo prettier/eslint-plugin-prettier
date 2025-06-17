@@ -25,11 +25,14 @@ import eslintPluginPug from 'eslint-plugin-pug';
 import vueEslintParser from 'vue-eslint-parser';
 import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
 import eslintMdx from 'eslint-mdx';
+import eslintPluginJson from '@eslint/json';
 
 const rule = eslintPluginPrettier.rules.prettier;
 const RuleTester =
   eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
 const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
+
+const isESLint9 = !eslintUnsupportedApi.FlatRuleTester;
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -380,6 +383,53 @@ runFixture('invalid-prettierrc/*', [
   ],
 ]);
 
+runFixture('*.json', [
+  [
+    {
+      column: 1,
+      endColumn: 1,
+      endLine: 2,
+      fix: {
+        range: [0, 1],
+        text: '',
+      },
+      line: 1,
+      message: 'Delete `⏎`',
+      messageId: 'delete',
+      nodeType: null,
+      ruleId: 'prettier/prettier',
+      severity: 2,
+    },
+  ],
+]);
+
+if (isESLint9) {
+  const jsonRuleTester = new RuleTester({
+    plugins: {
+      json: eslintPluginJson,
+    },
+    language: 'json/json',
+  });
+
+  jsonRuleTester.run('@eslint/json', rule, {
+    valid: [
+      {
+        code: '{}\n',
+        filename: 'empty.json',
+      },
+      {
+        code: '{ "foo": 1 }\n',
+        filename: 'simple.json',
+      },
+    ],
+    invalid: [
+      Object.assign(loadInvalidFixture('json'), {
+        filename: 'invalid.json',
+      }),
+    ],
+  });
+}
+
 // ------------------------------------------------------------------------------
 //  Helpers
 // ------------------------------------------------------------------------------
@@ -436,7 +486,7 @@ function getPrettierRcJsFilename(dir, file = 'dummy.js') {
  * @type {ESLint}
  * @import {ESLint} from 'eslint'
  */
-let eslint;
+var eslint; // bad mocha: `ReferenceError: Cannot access 'eslint' before initialization`
 
 /**
  * @param {string} pattern
@@ -504,11 +554,16 @@ async function runFixture(pattern, asserts, skip) {
             pug: eslintPluginPug,
           },
         },
+        {
+          files: ['**/*.json'],
+          plugins: {
+            json: eslintPluginJson,
+          },
+        },
       ],
       ignore: false,
     });
   }
-
   if (skip) {
     return;
   }
