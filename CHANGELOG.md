@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.5.0
+
+### Minor Changes
+
+- [#743](https://github.com/prettier/eslint-plugin-prettier/pull/743) [`92f2c9c`](https://github.com/prettier/eslint-plugin-prettier/commit/92f2c9c8f0b083a0208b4236cf5c8e4af5612a8b) Thanks [@dotcarmen](https://github.com/dotcarmen)! - feat: support non-js languages like `css` for `@eslint/css` and `json` for `@eslint/json`
+
 ## 5.4.1
 
 ### Patch Changes
