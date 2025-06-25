@@ -93,7 +93,6 @@
     "lint-staged": "^16.0.0",
     "mocha": "^11.1.0",
     "prettier": "^3.5.3",
-    "prettier-plugin-jsdoc": "^1.3.2",
     "prettier-plugin-pkg": "^0.21.0",
     "prettier-plugin-svelte": "^3.3.3",
     "simple-git-hooks": "^2.12.1",
@@ -105,7 +104,7 @@
       "unified-engine@11.2.2": "patches/unified-engine@11.2.2.patch"
     },
     "overrides": {
-      "prettier": "^3.5.3"
+      "prettier": "^3.6.1"
     }
   }
 }

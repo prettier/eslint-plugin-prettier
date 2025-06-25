@@ -45,9 +45,7 @@ runAsWorker(
         resolveConfig: false,
         withNodeModules: false,
         ignorePath: '.prettierignore',
-        plugins: /** @type {string[] | undefined} */ (
-          prettierRcOptions ? prettierRcOptions.plugins : undefined
-        ),
+        ...prettierRcOptions,
         ...eslintFileInfoOptions,
       },
     );
