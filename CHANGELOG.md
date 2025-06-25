@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.5.1
+
+### Patch Changes
+
+- [#748](https://github.com/prettier/eslint-plugin-prettier/pull/748) [`bfd1e95`](https://github.com/prettier/eslint-plugin-prettier/commit/bfd1e9547de9afaaf30318735f2f441c0250b77e) Thanks [@JounQin](https://github.com/JounQin)! - fix: use `prettierRcOptions` directly for prettier 3.6+
+
 ## 5.5.0
 
 ### Minor Changes
