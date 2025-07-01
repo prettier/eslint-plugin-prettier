@@ -18,7 +18,7 @@ specifiers:
   '@eslint/js': ^9.23.0
   '@eslint/json': ^0.12.0
   '@graphql-eslint/eslint-plugin': ^4.3.0
-  '@html-eslint/parser': ^0.41.0
+  '@html-eslint/parser': ^0.42.0
   '@prettier/plugin-pug': ^3.2.1
   '@types/prettier-linter-helpers': ^1.0.4
   clean-pkg-json: ^1.2.1
@@ -57,7 +57,7 @@ devDependencies:
   '@eslint/js': 9.23.0
   '@eslint/json': 0.12.0
   '@graphql-eslint/eslint-plugin': 4.3.0_garjxkg63rquziivo3mxre4wya
-  '@html-eslint/parser': 0.41.0
+  '@html-eslint/parser': 0.42.0
   '@prettier/plugin-pug': 3.2.1_prettier@3.6.1
   '@types/prettier-linter-helpers': 1.0.4
   clean-pkg-json: 1.2.1
@@ -1079,15 +1079,15 @@ packages:
       graphql: 16.10.0
     dev: true
 
-  /@html-eslint/parser/0.41.0:
-    resolution: {integrity: sha512-QQJeq2G11T/SGYcG09+XOajm+X8XX6bVVSouB3SVlGmm3exvJis0B6tBnb+5Rz2kC/q3C21z1ZuCc/AXcFKzIA==}
+  /@html-eslint/parser/0.42.0:
+    resolution: {integrity: sha512-fLH5u91H4q83jRS+Grlxv229RKd4JQpp4MAwGYdR3CoVtloXBHFC+QvX3+lAlTiDHytTWNNbrCKHfk3vtQWXrg==}
     dependencies:
-      '@html-eslint/template-syntax-parser': 0.41.0
+      '@html-eslint/template-syntax-parser': 0.42.0
       es-html-parser: 0.2.0
     dev: true
 
-  /@html-eslint/template-syntax-parser/0.41.0:
-    resolution: {integrity: sha512-dgiE30uXWCoD89chi6KdjYOF+143bImJ3GNl3j2iy6/ZM8enTqCQVHZ48+Esf6Tx2rLBBBdxx4Rb0fG11myHsw==}
+  /@html-eslint/template-syntax-parser/0.42.0:
+    resolution: {integrity: sha512-wUgjZJHof/O24e9AwKFip7rSR2+Xr/Oy++GHGOyDJoPQ6bjl9MHdDEbzofT6gDU6wAFx8+YCE4fZl4nnwjNEJQ==}
     dev: true
 
   /@humanfs/core/0.19.1:
