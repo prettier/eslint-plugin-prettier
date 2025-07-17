@@ -166,7 +166,7 @@ const eslintPluginPrettier = {
                 additionalProperties: true,
               },
             },
-            additionalProperties: true,
+            additionalProperties: false,
           },
         ],
         messages: {
