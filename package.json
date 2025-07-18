@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prettier",
-  "version": "4.2.4",
+  "version": "4.2.5",
   "description": "Runs prettier as an eslint rule",
   "repository": "git+https://github.com/prettier/eslint-plugin-prettier.git",
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
@@ -27,7 +27,7 @@
     "lint": "eslint . --cache -f friendly --max-warnings 10",
     "prepare": "patch-package && simple-git-hooks && yarn-deduplicate --strategy fewer || exit 0",
     "prerelease": "yarn format && yarn test",
-    "release": "changeset publish",
+    "release": "changeset publish --tag release-v4",
     "test": "yarn lint && mocha"
   },
   "peerDependencies": {
