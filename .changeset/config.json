@@ -9,7 +9,7 @@
   "commit": false,
   "linked": [],
   "access": "public",
-  "baseBranch": "master",
+  "baseBranch": "release-v4",
   "updateInternalDependencies": "patch",
   "ignore": []
 }

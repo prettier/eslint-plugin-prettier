@@ -3,7 +3,12 @@ name: Release
 on:
   push:
     branches:
-      - master
+      - release-v4
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
 
 jobs:
   release:
@@ -26,7 +31,10 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: 'chore: release prettier-plugin-svelte'
-          title: 'chore: release prettier-plugin-svelte'
+          commit: 'chore: release eslint-plugin-prettier'
+          title: 'chore: release eslint-plugin-prettier'
+          publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
