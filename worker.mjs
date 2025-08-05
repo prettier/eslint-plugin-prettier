@@ -165,6 +165,9 @@ runAsWorker(
         'angular',
         'svelte',
         'pug',
+        'oxc',
+        'oxc-ts',
+        'hermes',
       ];
       if (parserBlocklist.includes(/** @type {string} */ (inferredParser))) {
         return;
