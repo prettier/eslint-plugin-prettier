@@ -1,15 +1,16 @@
-const { configs: eslintConfigs } = require('@eslint/js');
-const eslintPluginN = require('eslint-plugin-n');
-const eslintPluginEslintCommentsConfigs = require('@eslint-community/eslint-plugin-eslint-comments/configs');
-const eslintPluginEslintPluginRecommended = require('eslint-plugin-eslint-plugin/configs/recommended');
-const eslintPluginMdx = require('eslint-plugin-mdx');
-const eslintPluginPrettierRecommended = require('./recommended');
+import eslintJs from '@eslint/js';
+import eslintPluginN from 'eslint-plugin-n';
+import eslintPluginEslintCommentsConfigs from '@eslint-community/eslint-plugin-eslint-comments/configs';
+import eslintPluginEslintPlugin from 'eslint-plugin-eslint-plugin';
+import * as eslintPluginMdx from 'eslint-plugin-mdx';
 
-module.exports = [
-  eslintConfigs.recommended,
+import eslintPluginPrettierRecommended from './recommended.js';
+
+export default [
+  eslintJs.configs.recommended,
   eslintPluginN.configs['flat/recommended'],
   eslintPluginEslintCommentsConfigs.recommended,
-  eslintPluginEslintPluginRecommended,
+  eslintPluginEslintPlugin.configs.recommended,
   eslintPluginMdx.flat,
   eslintPluginMdx.flatCodeBlocks,
   eslintPluginPrettierRecommended,
