@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.5.4
+
+### Patch Changes
+
+- [#755](https://github.com/prettier/eslint-plugin-prettier/pull/755) [`723f7a8`](https://github.com/prettier/eslint-plugin-prettier/commit/723f7a803f014746f2146e5be021c9071fa52d7e) Thanks [@kbrilla](https://github.com/kbrilla)! - fix: add 'oxc', 'oxc-ts' and 'hermes' parsers to `parserBlocklist`
+
+- [#751](https://github.com/prettier/eslint-plugin-prettier/pull/751) [`cf52b30`](https://github.com/prettier/eslint-plugin-prettier/commit/cf52b306a533b971bf40bbbf0d2033a1ed4f3c5d) Thanks [@andreww2012](https://github.com/andreww2012)! - fix: disallow extra properties in rule options
+
 ## 5.5.1
 
 ### Patch Changes

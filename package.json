@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prettier",
-  "version": "5.5.3",
+  "version": "5.5.4",
   "description": "Runs prettier as an eslint rule",
   "repository": "https://github.com/prettier/eslint-plugin-prettier.git",
   "homepage": "https://github.com/prettier/eslint-plugin-prettier#readme",
