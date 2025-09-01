@@ -140,6 +140,18 @@ const eslintPluginPrettier = {
         'prefer-arrow-callback': 'off',
       },
     },
+    'flat/recommended': {
+      plugins: {
+        get prettier() {
+          return eslintPluginPrettier
+        }
+      },
+      rules: {
+        'prettier/prettier': 'error',
+        'arrow-body-style': 'off',
+        'prefer-arrow-callback': 'off',
+      },
+    }
   },
   rules: {
     prettier: {
