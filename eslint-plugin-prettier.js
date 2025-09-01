@@ -141,6 +141,7 @@ const eslintPluginPrettier = {
       },
     },
     'flat/recommended': {
+      name: 'prettier/recommended',
       plugins: {
         get prettier() {
           return eslintPluginPrettier
