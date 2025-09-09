@@ -24,11 +24,6 @@ jobs:
         eslint:
           - 9
           - 8
-        # include:
-        #   - node: 16
-        #     eslint: 8
-        #   - node: 14
-        #     eslint: 8
 
     steps:
       - name: Checkout Repo
@@ -46,15 +41,12 @@ jobs:
       - name: Install
         run: pnpm install --prefer-frozen-lockfile
 
-      - name: Install ESLint ${{ matrix.node }}
+      - name: Install ESLint ${{ matrix.eslint  }}
         if: ${{ matrix.eslint != 9 }}
         run: pnpm install -D eslint@${{ matrix.eslint }} @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
         run: pnpm mocha
 
-      # - name: Perf
-      #   # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
-      #   # with node 14
-      #   if: ${{ matrix.node != 14 }}
-      #   run: TIMING=1 pnpm lint
+      - name: Lint
+        run: pnpm lint
