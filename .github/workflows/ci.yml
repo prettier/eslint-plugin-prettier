@@ -24,11 +24,6 @@ jobs:
         eslint:
           - 9
           - 8
-        include:
-          - node: 16
-            eslint: 8
-          - node: 14
-            eslint: 8
 
     steps:
       - name: Checkout Repo
@@ -37,7 +32,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
-      - name: Setup Node.js ${{ matrix.node }}
+      - name: Setup Node.js ${{ matrix.eslint }}
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node }}
@@ -53,8 +48,5 @@ jobs:
       - name: Test
         run: pnpm mocha
 
-      - name: Perf
-        # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
-        # with node 14
-        if: ${{ matrix.node != 14 }}
-        run: TIMING=1 pnpm lint
+      - name: Lint
+        run: pnpm lint

@@ -12,7 +12,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.17.1",
   "engines": {
-    "node": "^14.18.0 || >=16.0.0"
+    "node": ">=18.18.0"
   },
   "main": "eslint-plugin-prettier.js",
   "types": "eslint-plugin-prettier.d.ts",
