@@ -212,7 +212,7 @@ runFixture('*.html', [
 
 const mdxRuleTester = new RuleTester({
   languageOptions: {
-    parser: eslintMdx,
+    parser: eslintMdx.default ?? eslintMdx,
     parserOptions: {
       sourceType: 'module',
       ecmaVersion: 'latest',
