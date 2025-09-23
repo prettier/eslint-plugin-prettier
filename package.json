@@ -10,7 +10,7 @@
   ],
   "funding": "https://opencollective.com/eslint-plugin-prettier",
   "license": "MIT",
-  "packageManager": "pnpm@7.33.5",
+  "packageManager": "pnpm@10.17.1",
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
@@ -49,15 +49,11 @@
     "test": "pnpm lint && mocha"
   },
   "peerDependencies": {
-    "@types/eslint": ">=8.0.0",
     "eslint": ">=8.0.0",
     "eslint-config-prettier": ">= 7.0.0 <10.0.0 || >=10.1.0",
     "prettier": ">=3.0.0"
   },
   "peerDependenciesMeta": {
-    "@types/eslint": {
-      "optional": true
-    },
     "eslint-config-prettier": {
       "optional": true
     }
