@@ -2,4 +2,5 @@
 "eslint-plugin-prettier": major
 ---
 
-Removes @types/eslint which now conflicts with ESLint 9. ESLint 8 users can still manually add @types/eslint if they so require.
+Remove `@types/eslint` from `peerDependencies` to avoid conflicts with ESLint 9 (types are bundled there).
+If you're on ESLint 8 and rely on typings, add `@types/eslint` to your project's `devDependencies`. See #762.
