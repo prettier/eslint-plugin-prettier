@@ -19,12 +19,12 @@ import eslintUnsupportedApi from 'eslint/use-at-your-own-risk';
 import eslintPluginPrettier from '../eslint-plugin-prettier.js';
 import recommendedConfig from '../recommended.js';
 import htmlEslintParser from '@html-eslint/parser';
-import eslintPluginMdx from 'eslint-plugin-mdx';
+import * as eslintPluginMdx from 'eslint-plugin-mdx';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
 import eslintPluginPug from 'eslint-plugin-pug';
 import vueEslintParser from 'vue-eslint-parser';
 import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
-import eslintMdx from 'eslint-mdx';
+import * as eslintMdx from 'eslint-mdx';
 import eslintPluginJson from '@eslint/json';
 
 const rule = eslintPluginPrettier.rules.prettier;
