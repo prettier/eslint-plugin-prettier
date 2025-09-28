@@ -131,15 +131,21 @@ function reportDifference(context, difference) {
 const eslintPluginPrettier = {
   meta: { name, version },
   configs: {
-    recommended: {
-      extends: ['prettier'],
-      plugins: ['prettier'],
-      rules: {
-        'prettier/prettier': 'error',
-        'arrow-body-style': 'off',
-        'prefer-arrow-callback': 'off',
+    recommended: [
+      {
+        name: 'prettier/recommended',
+        plugins: {
+          get prettier() {
+            return eslintPluginPrettier;
+          },
+        },
+        rules: {
+          'prettier/prettier': 'error',
+          'arrow-body-style': 'off',
+          'prefer-arrow-callback': 'off',
+        },
       },
-    },
+    ],
   },
   rules: {
     prettier: {
