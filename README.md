@@ -80,17 +80,18 @@ This will:
 
 ## Configuration (new: `eslint.config.js`)
 
-For [flat configuration](https://eslint.org/docs/latest/use/configure/configuration-files-new), this plugin ships with an `eslint-plugin-prettier/recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
+For [flat configuration](https://eslint.org/docs/latest/use/configure/configuration-files-new), this plugin ships with a `recommended` config that sets up both `eslint-plugin-prettier` and [`eslint-config-prettier`](https://github.com/prettier/eslint-config-prettier) in one go.
 
-Import `eslint-plugin-prettier/recommended` and add it as the _last_ item in the configuration array in your `eslint.config.js` file so that `eslint-config-prettier` has the opportunity to override other configs:
+Import `eslint-plugin-prettier` and use `...prettier.configs.recommended` as the _last_ item in your `defineConfig` so that `eslint-config-prettier` has the opportunity to override other configs:
 
 ```js
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+import prettier from 'eslint-plugin-prettier';
+import { defineConfig } from 'eslint/config';
 
-module.exports = [
+export default defineConfig(
   // Any other config imports go at the top
-  eslintPluginPrettierRecommended,
-];
+  ...prettier.configs.recommended,
+);
 ```
 
 This will:
