@@ -106,7 +106,7 @@ function reportDifference(context, difference) {
   /** @type {AST.Range} */
   const [highlightStart, highlightEnd] = [
     offset,
-    offset + deleteText.length + Math.min(insertText.length, 1),
+    offset + (deleteText.length || Math.min(insertText.length, 1)),
   ];
   /** @type {AST.Range} */
   const replaceRange = [offset, offset + deleteText.length];
