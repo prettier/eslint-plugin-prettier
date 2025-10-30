@@ -103,13 +103,13 @@ function getLocFromIndex(sourceCode, index) {
  */
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
-  // Provided that new characters need to be added, we create a fake one
-  // indent so that the editor can suggest corrections within
-  // the specified range.
-  const insertSuggestionOffset = Math.min(insertText.length, 1);
   /** @type {AST.Range} */
-  const range = [offset, offset + deleteText.length];
-  const [start, end] = range;
+  const [highlightStart, highlightEnd] = [
+    offset,
+    offset + deleteText.length + Math.min(insertText.length, 1),
+  ];
+  /** @type {AST.Range} */
+  const replaceRange = [offset, offset + deleteText.length];
   // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
@@ -122,10 +122,10 @@ function reportDifference(context, difference) {
       insertText: showInvisibles(insertText),
     },
     loc: {
-      start: getLocFromIndex(sourceCode, start),
-      end: getLocFromIndex(sourceCode, end + insertSuggestionOffset),
+      start: getLocFromIndex(sourceCode, highlightStart),
+      end: getLocFromIndex(sourceCode, highlightEnd),
     },
-    fix: fixer => fixer.replaceTextRange(range, insertText),
+    fix: fixer => fixer.replaceTextRange(replaceRange, insertText),
   });
 }
 
