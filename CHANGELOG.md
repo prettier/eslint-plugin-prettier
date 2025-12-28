@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.5.5
+
+### Patch Changes
+
+- [#772](https://github.com/prettier/eslint-plugin-prettier/pull/772) [`7264ed0`](https://github.com/prettier/eslint-plugin-prettier/commit/7264ed0a6cf47fc36befed32f459e7d875f5992c) Thanks [@BPScott](https://github.com/BPScott)! - Bump prettier-linter-helpers dependency to v1.0.1
+
 ## 5.5.4
 
 ### Patch Changes
