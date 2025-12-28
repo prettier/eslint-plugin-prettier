@@ -20,7 +20,6 @@ specifiers:
   '@graphql-eslint/eslint-plugin': ^4.3.0
   '@html-eslint/parser': ^0.44.0
   '@prettier/plugin-pug': ^3.2.1
-  '@types/prettier-linter-helpers': ^1.0.4
   clean-pkg-json: ^1.2.1
   eslint: ^9.23.0
   eslint-config-prettier: ^10.1.1
@@ -35,7 +34,7 @@ specifiers:
   lint-staged: ^16.0.0
   mocha: ^11.1.0
   prettier: ^3.6.1
-  prettier-linter-helpers: ^1.0.0
+  prettier-linter-helpers: ^1.0.1
   prettier-plugin-pkg: ^0.21.0
   prettier-plugin-svelte: ^3.3.3
   simple-git-hooks: ^2.12.1
@@ -44,7 +43,7 @@ specifiers:
   vue-eslint-parser: ^10.1.1
 
 dependencies:
-  prettier-linter-helpers: 1.0.0
+  prettier-linter-helpers: 1.0.1
   synckit: 0.11.7
 
 devDependencies:
@@ -59,7 +58,6 @@ devDependencies:
   '@graphql-eslint/eslint-plugin': 4.3.0_garjxkg63rquziivo3mxre4wya
   '@html-eslint/parser': 0.44.0
   '@prettier/plugin-pug': 3.2.1_prettier@3.6.1
-  '@types/prettier-linter-helpers': 1.0.4
   clean-pkg-json: 1.2.1
   eslint: 9.23.0
   eslint-config-prettier: 10.1.1_eslint@9.23.0
@@ -1400,10 +1398,6 @@ packages:
     resolution: {integrity: sha512-iEUCUJoU0i3VnrCmgoWCXttklWcvoCIx4jzcP22fioIVSdTmjgoEvmAO/QPw6TcS9k5FrNgn4w7q5lGOd1CT5g==}
     dependencies:
       undici-types: 6.20.0
-    dev: true
-
-  /@types/prettier-linter-helpers/1.0.4:
-    resolution: {integrity: sha512-ZGhi9aiUREt6bUsqdArRElJFay8b+C1IjbF0ETRFVBJd/g6bAiwzRIgqyepZo+LiESL2d2tdTXOPWIrcj+AMpw==}
     dev: true
 
   /@types/supports-color/8.1.3:
@@ -4348,8 +4342,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-linter-helpers/1.0.0:
-    resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
+  /prettier-linter-helpers/1.0.1:
+    resolution: {integrity: sha512-SxToR7P8Y2lWmv/kTzVLC1t/GDI2WGjMwNhLLE9qtH8Q13C+aEmuRlzDst4Up4s0Wc8sF2M+J57iB3cMLqftfg==}
     engines: {node: '>=6.0.0'}
     dependencies:
       fast-diff: 1.3.0
