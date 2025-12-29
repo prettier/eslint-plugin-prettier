@@ -106,13 +106,16 @@ function reportDifference(context, difference) {
   const insertText = 'insertText' in difference ? difference.insertText : '';
   const deleteText = 'deleteText' in difference ? difference.deleteText : '';
   /** @type {AST.Range} */
-  const range = [offset, offset + deleteText.length];
+  const [highlightStart, highlightEnd] = [
+    offset,
+    offset + (deleteText.length || Math.min(insertText.length, 1)),
+  ];
+  /** @type {AST.Range} */
+  const replaceRange = [offset, offset + deleteText.length];
   // `context.getSourceCode()` was deprecated in ESLint v8.40.0 and replaced
   // with the `sourceCode` property.
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
   const sourceCode = context.sourceCode ?? context.getSourceCode();
-
-  const [start, end] = range.map(index => getLocFromIndex(sourceCode, index));
 
   context.report({
     messageId: operation,
@@ -120,8 +123,11 @@ function reportDifference(context, difference) {
       deleteText: showInvisibles(deleteText),
       insertText: showInvisibles(insertText),
     },
-    loc: { start, end },
-    fix: fixer => fixer.replaceTextRange(range, insertText),
+    loc: {
+      start: getLocFromIndex(sourceCode, highlightStart),
+      end: getLocFromIndex(sourceCode, highlightEnd),
+    },
+    fix: fixer => fixer.replaceTextRange(replaceRange, insertText),
   });
 }
 
