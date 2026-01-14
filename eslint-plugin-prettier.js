@@ -114,7 +114,9 @@ function reportDifference(context, difference) {
   // TODO: Only use property when our eslint peerDependency is >=8.40.0.
   const sourceCode = context.sourceCode ?? context.getSourceCode();
 
-  const [start, end] = highlightRange.map(index => getLocFromIndex(sourceCode, index));
+  const [start, end] = highlightRange.map(index =>
+    getLocFromIndex(sourceCode, index),
+  );
 
   context.report({
     messageId: operation,
