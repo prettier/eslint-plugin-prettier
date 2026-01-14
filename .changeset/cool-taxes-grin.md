@@ -2,4 +2,4 @@
 "eslint-plugin-prettier": patch
 ---
 
-Restore diagnostics with Yarn PnP
+fix: bump synckit for yarn PnP ESM issue
