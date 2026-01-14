@@ -102,7 +102,9 @@ function getLocFromIndex(sourceCode, index) {
  * @returns {void}
  */
 function reportDifference(context, difference) {
-  const { operation, offset, deleteText = '', insertText = '' } = difference;
+  const { operation, offset } = difference;
+  const insertText = 'insertText' in difference ? difference.insertText : '';
+  const deleteText = 'deleteText' in difference ? difference.deleteText : '';
   /** @type {AST.Range} */
   const [highlightStart, highlightEnd] = [
     offset,
