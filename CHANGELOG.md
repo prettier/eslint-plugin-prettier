@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.5.5
+
+### Patch Changes
+
+- [#772](https://github.com/prettier/eslint-plugin-prettier/pull/772) [`7264ed0`](https://github.com/prettier/eslint-plugin-prettier/commit/7264ed0a6cf47fc36befed32f459e7d875f5992c) Thanks [@BPScott](https://github.com/BPScott)! - Bump prettier-linter-helpers dependency to v1.0.1
+
+- [#776](https://github.com/prettier/eslint-plugin-prettier/pull/776) [`77651a3`](https://github.com/prettier/eslint-plugin-prettier/commit/77651a33cd16fd4c50b7346971990b900a42408b) Thanks [@aswils](https://github.com/aswils)! - fix: bump synckit for yarn PnP ESM issue
+
 ## 5.5.4
 
 ### Patch Changes
