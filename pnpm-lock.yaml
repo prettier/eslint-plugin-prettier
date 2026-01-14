@@ -39,12 +39,12 @@ specifiers:
   prettier-plugin-svelte: ^3.3.3
   simple-git-hooks: ^2.12.1
   svelte: ^5.25.3
-  synckit: ^0.11.7
+  synckit: ^0.11.12
   vue-eslint-parser: ^10.1.1
 
 dependencies:
   prettier-linter-helpers: 1.0.1
-  synckit: 0.11.7
+  synckit: 0.11.12
 
 devDependencies:
   '@1stg/remark-preset': 3.0.1_prettier@3.6.1
@@ -1301,8 +1301,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
 
-  /@pkgr/core/0.2.4:
-    resolution: {integrity: sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==}
+  /@pkgr/core/0.2.9:
+    resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: false
 
@@ -5562,11 +5562,11 @@ packages:
       whatwg-mimetype: 4.0.0
     dev: true
 
-  /synckit/0.11.7:
-    resolution: {integrity: sha512-/5aUeiRPqmY0CRTJ+iVWfOOMHWTDh8JAIuNF1A6nZ2/RdCNWwKaUrO5Qw5ephLK6dYa7NclYBI0ahdgUECvdhA==}
+  /synckit/0.11.12:
+    resolution: {integrity: sha512-Bh7QjT8/SuKUIfObSXNHNSK6WHo6J1tHCqJsuaFDP7gP0fkzSfTxI8y85JrppZ0h8l0maIgc2tfuZQ6/t3GtnQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
-      '@pkgr/core': 0.2.4
+      '@pkgr/core': 0.2.9
     dev: false
 
   /synckit/0.9.2:
