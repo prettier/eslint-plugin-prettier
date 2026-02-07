@@ -17,18 +17,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node:
-          - 22
-          - 20
-          - 18
-        eslint:
-          - 9
-          - 8
+        node: [24, 22, 20]
+        eslint: [10, 9, 8]
         include:
-          - node: 16
-            eslint: 8
-          - node: 14
-            eslint: 8
+          - { node: 18, eslint: 9 }
+          - { node: 18, eslint: 8 }
+          - { node: 16, eslint: 8 }
+          - { node: 14, eslint: 8 }
 
     steps:
       - name: Checkout Repo
@@ -46,9 +41,16 @@ jobs:
       - name: Install
         run: pnpm install --prefer-frozen-lockfile
 
-      - name: Install ESLint ${{ matrix.node }}
-        if: ${{ matrix.eslint != 9 }}
-        run: pnpm install -D eslint@${{ matrix.eslint }} @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
+      - name: Install ESLint ${{ matrix.eslint }}
+        run: pnpm upgrade eslint@${{ matrix.eslint }}
+
+      - name: Install older transitive dependencies for ESLint 9
+        if: ${{ matrix.eslint == 9 }}
+        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14
+
+      - name: Install older transitive dependencies for ESLint 8
+        if: ${{ matrix.eslint == 8 }}
+        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
         run: pnpm mocha

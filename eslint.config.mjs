@@ -2,7 +2,7 @@ import eslintJs from '@eslint/js';
 import eslintPluginN from 'eslint-plugin-n';
 import eslintPluginEslintCommentsConfigs from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import eslintPluginEslintPlugin from 'eslint-plugin-eslint-plugin';
-import * as eslintPluginMdx from 'eslint-plugin-mdx';
+// import * as eslintPluginMdx from 'eslint-plugin-mdx';
 
 import eslintPluginPrettierRecommended from './recommended.js';
 
@@ -11,8 +11,8 @@ export default [
   eslintPluginN.configs['flat/recommended'],
   eslintPluginEslintCommentsConfigs.recommended,
   eslintPluginEslintPlugin.configs.recommended,
-  eslintPluginMdx.flat,
-  eslintPluginMdx.flatCodeBlocks,
+  // eslintPluginMdx.flat,
+  // eslintPluginMdx.flatCodeBlocks,
   eslintPluginPrettierRecommended,
   { files: ['**/*.mjs'], languageOptions: { sourceType: 'module' } },
   {
