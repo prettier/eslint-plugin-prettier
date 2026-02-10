@@ -213,7 +213,10 @@ const eslintPluginPrettier = {
               // Prettier is expensive to load, so only load it if needed.
               try {
                 require.resolve('prettier');
-              } catch {
+              } catch (error) {
+                if (error?.code !== 'MODULE_NOT_FOUND') {
+                  throw error;
+                }
                 throw new Error(
                   'eslint-plugin-prettier requires "prettier" package to be installed. ' +
                     'Please install it with: npm install -D prettier',
