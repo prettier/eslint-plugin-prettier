@@ -168,6 +168,12 @@ runAsWorker(
         'oxc',
         'oxc-ts',
         'hermes',
+
+        // eslint-plugin-astro extracts <script> blocks as virtual .js files;
+        // without this entry, prettier would try to format those fragments
+        // with parser: "astro", which fails on TypeScript and JS with braces.
+        // https://github.com/ota-meshi/eslint-plugin-astro/issues/132
+        'astro',
       ];
       if (parserBlocklist.includes(/** @type {string} */ (inferredParser))) {
         return;

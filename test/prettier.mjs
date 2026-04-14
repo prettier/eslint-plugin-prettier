@@ -21,6 +21,7 @@ import recommendedConfig from '../recommended.js';
 import htmlEslintParser from '@html-eslint/parser';
 import * as eslintPluginMdx from 'eslint-plugin-mdx';
 import eslintPluginSvelte from 'eslint-plugin-svelte';
+import eslintPluginAstro from 'eslint-plugin-astro';
 import eslintPluginPug from 'eslint-plugin-pug';
 import vueEslintParser from 'vue-eslint-parser';
 import * as eslintPluginGraphql from '@graphql-eslint/eslint-plugin';
@@ -342,6 +343,8 @@ runFixture(
   svelteUnsupported,
 );
 
+runFixture('eslint-plugin-astro/*.astro', [[], [], [], []]);
+
 runFixture('*.pug', [
   [
     {
@@ -554,6 +557,30 @@ async function runFixture(pattern, asserts, skip) {
           ...config,
           files: ['**/eslint-plugin-svelte/*.svelte'],
         })),
+        ...eslintPluginAstro.configs['flat/base'].map(config => ({
+          ...config,
+          ...(config.files
+            ? {
+                files: config.files.map(f =>
+                  f.includes('.astro')
+                    ? f.replace('**/', '**/eslint-plugin-astro/')
+                    : f,
+                ),
+              }
+            : {}),
+        })),
+        {
+          files: [
+            '**/eslint-plugin-astro/*.astro/*.ts',
+            '**/eslint-plugin-astro/*.astro/*.js',
+          ],
+          languageOptions: {
+            parser: (await import('@typescript-eslint/parser')).default,
+          },
+          rules: {
+            'prettier/prettier': 'error',
+          },
+        },
         {
           files: ['**/*.pug'],
           plugins: {

@@ -1,0 +1,17 @@
+---
+const name = 'world';
+---
+
+<script>
+  interface Props {
+    title: string;
+  }
+
+  document.body.addEventListener('click', event => {
+    let target = event.target as HTMLElement | null;
+
+    console.log(target);
+  });
+</script>
+
+<h1>Hello {name}!</h1>
