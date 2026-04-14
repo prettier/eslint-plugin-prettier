@@ -4,7 +4,8 @@
   "plugins": [
     "@prettier/plugin-pug",
     "prettier-plugin-pkg",
-    "prettier-plugin-svelte"
+    "prettier-plugin-svelte",
+    "prettier-plugin-astro"
   ],
   "overrides": [
     {
