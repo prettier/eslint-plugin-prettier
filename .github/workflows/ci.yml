@@ -17,28 +17,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node:
-          - 22
-          - 20
-          - 18
-        eslint:
-          - 9
-          - 8
+        node: [24, 22, 20]
+        eslint: [10, 9, 8]
         include:
-          - node: 16
-            eslint: 8
-          - node: 14
-            eslint: 8
+          - { node: 18, eslint: 9 }
+          - { node: 18, eslint: 8 }
+          - { node: 16, eslint: 8 }
+          - { node: 14, eslint: 8 }
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
 
       - name: Setup Node.js ${{ matrix.node }}
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
@@ -46,9 +41,16 @@ jobs:
       - name: Install
         run: pnpm install --prefer-frozen-lockfile
 
-      - name: Install ESLint ${{ matrix.node }}
-        if: ${{ matrix.eslint != 9 }}
-        run: pnpm install -D eslint@${{ matrix.eslint }} @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
+      - name: Install ESLint ${{ matrix.eslint }}
+        run: pnpm upgrade eslint@${{ matrix.eslint }}
+
+      - name: Install older transitive dependencies for ESLint 9
+        if: ${{ matrix.eslint == 9 }}
+        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14
+
+      - name: Install older transitive dependencies for ESLint 8
+        if: ${{ matrix.eslint == 8 }}
+        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9 eslint-mdx@3.6.2 eslint-plugin-mdx@3.6.2
 
       - name: Test
         run: pnpm mocha

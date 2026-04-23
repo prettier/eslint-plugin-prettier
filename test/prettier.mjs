@@ -28,11 +28,17 @@ import * as eslintMdx from 'eslint-mdx';
 import eslintPluginJson from '@eslint/json';
 
 const rule = eslintPluginPrettier.rules.prettier;
-const RuleTester =
-  eslintUnsupportedApi.FlatRuleTester ?? eslintPackage.RuleTester;
-const ESLint = eslintUnsupportedApi.FlatESLint ?? eslintPackage.ESLint;
+// FlatRuleTester and FlatESLint only exist in eslint v8
+// FlatESLint only exists in eslint v8 and v9, not in v10
+const isESLint8 = !!eslintUnsupportedApi.FlatRuleTester;
+const isESLint10 = !eslintUnsupportedApi.FlatESLint;
 
-const isESLint9 = !eslintUnsupportedApi.FlatRuleTester;
+const RuleTester = isESLint8
+  ? eslintUnsupportedApi.FlatRuleTester
+  : eslintPackage.RuleTester;
+const ESLint = isESLint8
+  ? eslintUnsupportedApi.FlatESLint
+  : eslintPackage.ESLint;
 
 // ------------------------------------------------------------------------------
 // Tests
@@ -188,9 +194,9 @@ runFixture('*.html', [
       line: 3,
       message: 'Replace `<head>⏎⏎` with `··<head>·`',
       messageId: 'replace',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
     {
       column: 1,
@@ -203,9 +209,9 @@ runFixture('*.html', [
       line: 6,
       message: 'Replace `<body>⏎⏎` with `··<body>`',
       messageId: 'replace',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
 ]);
@@ -252,9 +258,9 @@ runFixture('*.md', [
       line: 4,
       message: 'Insert `;`',
       messageId: 'insert',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
 ]);
@@ -272,9 +278,9 @@ runFixture('*.mdx', [
       line: 1,
       message: 'Insert `;`',
       messageId: 'insert',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
     {
       column: 27,
@@ -287,9 +293,9 @@ runFixture('*.mdx', [
       line: 6,
       message: 'Insert `;`',
       messageId: 'insert',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
 ]);
@@ -312,9 +318,9 @@ runFixture(
         line: 2,
         message: 'Replace `let··name·` with `··let·name`',
         messageId: 'replace',
-        nodeType: null,
         ruleId: 'prettier/prettier',
         severity: 2,
+        ...(isESLint10 ? {} : { nodeType: null }),
       },
       {
         column: 4,
@@ -327,9 +333,9 @@ runFixture(
         line: 5,
         message: 'Replace `·>·Hello·{·name·` with `>Hello·{name`',
         messageId: 'replace',
-        nodeType: null,
         ruleId: 'prettier/prettier',
         severity: 2,
+        ...(isESLint10 ? {} : { nodeType: null }),
       },
     ],
   ],
@@ -349,9 +355,9 @@ runFixture('*.pug', [
       line: 2,
       message: 'Delete `;;;;;`',
       messageId: 'delete',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
 ]);
@@ -364,19 +370,19 @@ runFixture('invalid-prettierrc/*', [
       line: 1,
       message:
         "Parsing error: 'import' and 'export' may appear only with 'sourceType: module'",
-      nodeType: null,
       ruleId: null,
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
   [
     {
+      ...(isESLint10
+        ? { endColumn: 1, endLine: 2 }
+        : { endColumn: 20, endLine: 1, nodeType: 'Program' }),
       column: 1,
-      endColumn: 20,
-      endLine: 1,
       line: 1,
       message: 'Parsing error: Cannot use import statement outside a module',
-      nodeType: 'Program',
       ruleId: 'prettier/prettier',
       severity: 2,
     },
@@ -396,14 +402,14 @@ runFixture('*.json', [
       line: 1,
       message: 'Delete `⏎`',
       messageId: 'delete',
-      nodeType: null,
       ruleId: 'prettier/prettier',
       severity: 2,
+      ...(isESLint10 ? {} : { nodeType: null }),
     },
   ],
 ]);
 
-if (isESLint9) {
+if (!isESLint8) {
   const jsonRuleTester = new RuleTester({
     plugins: {
       json: eslintPluginJson,
