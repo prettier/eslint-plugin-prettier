@@ -50,13 +50,12 @@ jobs:
 
       - name: Install older transitive dependencies for ESLint 8
         if: ${{ matrix.eslint == 8 }}
-        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9 eslint-mdx@3.6.2 eslint-plugin-mdx@3.6.2
+        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
         run: pnpm mocha
 
       - name: Perf
-        # Skip on node 14, as eslint-plugin-n contains syntax that doesn't work
-        # with node 14
-        if: ${{ matrix.node != 14 }}
+        # Skip syntax errors or unavailable features on older Node.js versions
+        if: ${{ matrix.node >= 20 }}
         run: TIMING=1 pnpm lint
