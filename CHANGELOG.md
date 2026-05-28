@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.5.6
+
+### Patch Changes
+
+- [#791](https://github.com/prettier/eslint-plugin-prettier/pull/791) [`b5c96a3`](https://github.com/prettier/eslint-plugin-prettier/commit/b5c96a30d3e292a379d6e8ac030c29fd7acbc90b) Thanks [@JounQin](https://github.com/JounQin)! - chore: bump all (dev)Dependencies
+
 ## 5.5.5
 
 ### Patch Changes
