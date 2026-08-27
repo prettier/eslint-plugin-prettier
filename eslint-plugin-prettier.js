@@ -77,17 +77,22 @@ function getLocFromIndex(sourceCode, index) {
 
   let lineIndexes = lineIndexesCache.get(sourceCode);
   if (!lineIndexes) {
-    lineIndexes = [...sourceCode.text.matchAll(/\r?\n/g)].map(
-      match => match.index,
-    );
-    // first line in the file starts at byte offset 0
-    lineIndexes.unshift(0);
+    lineIndexes = [0];
+    for (const match of sourceCode.text.matchAll(/\r\n|[\r\n\u2028\u2029]/gu)) {
+      lineIndexes.push(match.index + match[0].length);
+    }
     lineIndexesCache.set(sourceCode, lineIndexes);
   }
 
   let line = 0;
-  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < index) {
-    line += 1;
+  let end = lineIndexes.length;
+  while (line + 1 < end) {
+    const middle = Math.floor((line + end) / 2);
+    if (lineIndexes[middle] <= index) {
+      line = middle;
+    } else {
+      end = middle;
+    }
   }
   const column = index - lineIndexes[line];
 
