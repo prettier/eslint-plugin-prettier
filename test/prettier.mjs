@@ -439,7 +439,7 @@ if (!isESLint8) {
         options: [{ endOfLine: 'crlf' }],
         errors: [
           {
-            message: 'Replace `"a":1` with `··"a":·1`',
+            message: 'Replace `"a":` with `··"a":·`',
             line: 2,
             column: 1,
           },
