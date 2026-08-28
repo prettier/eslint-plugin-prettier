@@ -79,6 +79,8 @@ function getLocFromIndex(sourceCode, index) {
   if (!lineIndexes) {
     // Store the offset after each complete line terminator so columns are
     // measured from the first character of a line, including after CRLF.
+    // U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR are ECMAScript
+    // line terminators: https://tc39.es/ecma262/#sec-line-terminators
     lineIndexes = [0];
     for (const match of sourceCode.text.matchAll(/\r\n|[\r\n\u2028\u2029]/gu)) {
       lineIndexes.push(match.index + match[0].length);
