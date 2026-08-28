@@ -432,6 +432,19 @@ if (!isESLint8) {
       Object.assign(loadInvalidFixture('json'), {
         filename: 'invalid.json',
       }),
+      {
+        code: '{\r\n"a":1\r\n}\r\n',
+        output: '{\r\n  "a": 1\r\n}\r\n',
+        filename: 'crlf.json',
+        options: [{ endOfLine: 'crlf' }],
+        errors: [
+          {
+            message: 'Replace `"a":1` with `··"a":·1`',
+            line: 2,
+            column: 1,
+          },
+        ],
+      },
     ],
   });
 }
