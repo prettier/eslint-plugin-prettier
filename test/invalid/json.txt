@@ -18,5 +18,7 @@ ERRORS:
 [
   {
     message: 'Replace `"a":·[⏎"b",⏎{"c":⏎"d"}⏎]·` with `··"a":·["b",·{·"c":·"d"·}]⏎`',
+    line: 2,
+    column: 1,
   },
 ]
