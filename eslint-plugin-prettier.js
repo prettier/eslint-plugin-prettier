@@ -77,6 +77,8 @@ function getLocFromIndex(sourceCode, index) {
 
   let lineIndexes = lineIndexesCache.get(sourceCode);
   if (!lineIndexes) {
+    // Store the offset after each complete line terminator so columns are
+    // measured from the first character of a line, including after CRLF.
     lineIndexes = [0];
     for (const match of sourceCode.text.matchAll(/\r\n|[\r\n\u2028\u2029]/gu)) {
       lineIndexes.push(match.index + match[0].length);
@@ -84,6 +86,7 @@ function getLocFromIndex(sourceCode, index) {
     lineIndexesCache.set(sourceCode, lineIndexes);
   }
 
+  // Find the last line start at or before the requested index.
   let line = 0;
   let end = lineIndexes.length;
   while (line + 1 < end) {
