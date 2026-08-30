@@ -58,8 +58,8 @@ let prettierFormat;
 //  Rule Definition
 // ------------------------------------------------------------------------------
 
-/** @type {WeakMap<SourceCode, number[]>} */
-const lineIndexesCache = new WeakMap();
+/** @type {WeakMap<SourceCode, { lineIndexes: number[], lineStart: number, columnStart: number, columnBase: number }>} */
+const locationCache = new WeakMap();
 
 /**
  * Ponyfill `sourceCode.getLocFromIndex` when it's unavailable.
@@ -75,18 +75,41 @@ function getLocFromIndex(sourceCode, index) {
     return sourceCode.getLocFromIndex(index);
   }
 
-  let lineIndexes = lineIndexesCache.get(sourceCode);
-  if (!lineIndexes) {
+  let location = locationCache.get(sourceCode);
+  if (!location) {
     // Store the offset after each complete line terminator so columns are
     // measured from the first character of a line, including after CRLF.
     // U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR are ECMAScript
     // line terminators: https://tc39.es/ecma262/#sec-line-terminators
-    lineIndexes = [0];
+    const lineIndexes = [0];
     for (const match of sourceCode.text.matchAll(/\r\n|[\r\n\u2028\u2029]/gu)) {
       lineIndexes.push(match.index + match[0].length);
     }
-    lineIndexesCache.set(sourceCode, lineIndexes);
+    const rootLocation =
+      typeof sourceCode.getLoc === 'function'
+        ? sourceCode.getLoc(sourceCode.ast)
+        : sourceCode.ast.loc;
+    const rootRange =
+      typeof sourceCode.getRange === 'function'
+        ? sourceCode.getRange(sourceCode.ast)
+        : sourceCode.ast.range;
+    let rootEndLine = lineIndexes.length - 1;
+    while (lineIndexes[rootEndLine] > rootRange[1]) {
+      rootEndLine--;
+    }
+    location = {
+      lineIndexes,
+      lineStart: rootLocation.start.line,
+      columnStart: rootLocation.start.column,
+      columnBase:
+        rootEndLine === 0
+          ? rootLocation.start.column
+          : rootLocation.end.column - (rootRange[1] - lineIndexes[rootEndLine]),
+    };
+    locationCache.set(sourceCode, location);
   }
+
+  const { lineIndexes, lineStart, columnStart, columnBase } = location;
 
   // Find the last line start at or before the requested index.
   let line = 0;
@@ -101,7 +124,10 @@ function getLocFromIndex(sourceCode, index) {
   }
   const column = index - lineIndexes[line];
 
-  return { line: line + 1, column };
+  return {
+    line: line + lineStart,
+    column: column + (line === 0 ? columnStart : columnBase),
+  };
 }
 
 /**

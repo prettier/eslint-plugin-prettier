@@ -28,6 +28,38 @@ import * as eslintMdx from 'eslint-mdx';
 import eslintPluginJson from '@eslint/json';
 
 const rule = eslintPluginPrettier.rules.prettier;
+const createRuleWithoutSourceCodeLocationApi = rootStart => ({
+  ...rule,
+  create(context) {
+    const sourceCode = context.sourceCode ?? context.getSourceCode();
+    const sourceCodeWithoutLocationApi = Object.create(sourceCode, {
+      getLocFromIndex: {
+        value: undefined,
+      },
+      ...(rootStart && {
+        getLoc: {
+          value(node) {
+            const location = sourceCode.getLoc(node);
+            return node === sourceCode.ast
+              ? { ...location, start: rootStart }
+              : location;
+          },
+        },
+      }),
+    });
+    const contextWithoutLocationApi = Object.create(context, {
+      sourceCode: {
+        value: sourceCodeWithoutLocationApi,
+      },
+      getSourceCode: {
+        value: () => sourceCodeWithoutLocationApi,
+      },
+    });
+    return rule.create(contextWithoutLocationApi);
+  },
+});
+const ruleWithoutSourceCodeLocationApi =
+  createRuleWithoutSourceCodeLocationApi();
 // FlatRuleTester and FlatESLint only exist in eslint v8
 // FlatESLint only exists in eslint v8 and v9, not in v10
 const isESLint8 = !!eslintUnsupportedApi.FlatRuleTester;
@@ -49,7 +81,7 @@ const ruleTester = new RuleTester({
   ignores: ['!**/node_modules/'],
 });
 
-ruleTester.run('prettier', rule, {
+ruleTester.run('prettier', ruleWithoutSourceCodeLocationApi, {
   valid: [
     // Correct style. Also proves that the plugin works if no filename is provided
     { code: `'';\n` },
@@ -142,6 +174,21 @@ ruleTester.run('prettier', rule, {
       },
     ]),
 });
+
+ruleTester.run(
+  'prettier with an embedded source location',
+  createRuleWithoutSourceCodeLocationApi({ line: 3, column: 5 }),
+  {
+    valid: [],
+    invalid: [
+      {
+        code: 'const a = 1;\nconst b=2;\n',
+        output: 'const a = 1;\nconst b = 2;\n',
+        errors: [{ messageId: 'replace', line: 4, column: 8 }],
+      },
+    ],
+  },
+);
 
 const vueRuleTester = new RuleTester({
   languageOptions: { parser: vueEslintParser },
@@ -446,7 +493,7 @@ if (!isESLint8) {
     language: 'json/json',
   });
 
-  jsonRuleTester.run('@eslint/json', rule, {
+  jsonRuleTester.run('@eslint/json', ruleWithoutSourceCodeLocationApi, {
     valid: [
       {
         code: '{}\n',
