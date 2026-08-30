@@ -111,7 +111,36 @@ ruleTester.run('prettier', rule, {
     '16',
     '17',
     '18',
-  ].map(name => loadInvalidFixture(name)),
+  ]
+    .map(name => loadInvalidFixture(name))
+    .concat([
+      {
+        code: 'const x = 1;\u2028const y=2;\u2028',
+        output: 'const x = 1;\nconst y = 2;\n',
+        errors: [
+          {
+            message: 'Replace `\u2028const·y=2;\u2028` with `⏎const·y·=·2;⏎`',
+            line: 1,
+            column: 13,
+            endLine: 3,
+            endColumn: 1,
+          },
+        ],
+      },
+      {
+        code: 'const x = 1;\u2029const y=2;\u2029',
+        output: 'const x = 1;\nconst y = 2;\n',
+        errors: [
+          {
+            message: 'Replace `\u2029const·y=2;\u2029` with `⏎const·y·=·2;⏎`',
+            line: 1,
+            column: 13,
+            endLine: 3,
+            endColumn: 1,
+          },
+        ],
+      },
+    ]),
 });
 
 const vueRuleTester = new RuleTester({
@@ -437,6 +466,19 @@ if (!isESLint8) {
         output: '{\r\n  "a": 1\r\n}\r\n',
         filename: 'crlf.json',
         options: [{ endOfLine: 'crlf' }],
+        errors: [
+          {
+            message: 'Replace `"a":` with `··"a":·`',
+            line: 2,
+            column: 1,
+          },
+        ],
+      },
+      {
+        code: '{\r"a":1\r}\r',
+        output: '{\r  "a": 1\r}\r',
+        filename: 'cr.json',
+        options: [{ endOfLine: 'auto' }],
         errors: [
           {
             message: 'Replace `"a":` with `··"a":·`',
