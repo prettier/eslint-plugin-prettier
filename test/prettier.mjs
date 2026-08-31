@@ -39,7 +39,10 @@ const createRuleWithoutSourceCodeLocationApi = rootStart => ({
       ...(rootStart && {
         getLoc: {
           value(node) {
-            const location = sourceCode.getLoc(node);
+            const location =
+              typeof sourceCode.getLoc === 'function'
+                ? sourceCode.getLoc(node)
+                : node.loc;
             return node === sourceCode.ast
               ? { ...location, start: rootStart }
               : location;
