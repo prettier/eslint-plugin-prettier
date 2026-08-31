@@ -93,18 +93,17 @@ function getLocFromIndex(sourceCode, index) {
       typeof sourceCode.getRange === 'function'
         ? sourceCode.getRange(sourceCode.ast)
         : sourceCode.ast.range;
-    let rootEndLine = lineIndexes.length - 1;
-    while (lineIndexes[rootEndLine] > rootRange[1]) {
-      rootEndLine--;
-    }
+    const rootStartsAtSource = rootRange[0] === 0;
     location = {
       lineIndexes,
-      lineStart: rootLocation.start.line,
-      columnStart: rootLocation.start.column,
+      lineStart: rootStartsAtSource ? rootLocation.start.line : 1,
+      columnStart: rootStartsAtSource ? rootLocation.start.column : 0,
+      // A root at the beginning of the source exposes the parser's column
+      // base. Embedded roots use their starting column only on the first line.
       columnBase:
-        rootEndLine === 0
+        rootStartsAtSource && rootLocation.start.line === 1
           ? rootLocation.start.column
-          : rootLocation.end.column - (rootRange[1] - lineIndexes[rootEndLine]),
+          : 0,
     };
     locationCache.set(sourceCode, location);
   }
