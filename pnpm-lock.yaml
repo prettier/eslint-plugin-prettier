@@ -1,8 +1,5 @@
 lockfileVersion: 5.4
 
-overrides:
-  webcrypto-core: ~1.9.0
-
 patchedDependencies:
   unified-engine@11.2.2:
     hash: 7ukzw754b2puuavfvjkmpcysye

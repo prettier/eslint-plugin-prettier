@@ -101,9 +101,6 @@
   "pnpm": {
     "patchedDependencies": {
       "unified-engine@11.2.2": "patches/unified-engine@11.2.2.patch"
-    },
-    "overrides": {
-      "webcrypto-core": "~1.9.0"
     }
   }
 }
