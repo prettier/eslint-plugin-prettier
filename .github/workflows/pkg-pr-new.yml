@@ -18,17 +18,17 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Setup Node.js LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: lts/*
-          cache: pnpm
+          cache: yarn
 
       - name: Install Dependencies
-        run: pnpm install --prefer-frozen-lockfile
+        run: yarn install --immutable
 
       - name: Publish
-        run: pnpm dlx pkg-pr-new publish --compact
+        run: yarn dlx pkg-pr-new publish --compact

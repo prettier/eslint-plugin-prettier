@@ -1,0 +1,9 @@
+{
+  "extends": "@1stg/tsconfig/nodenext",
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "exclude": ["test"]
+}

@@ -22,27 +22,22 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Setup Node.js LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: lts/*
-          cache: pnpm
-
-      - name: Upgrade npm
-        run: npm install -g npm@latest
+          cache: yarn
 
       - name: Install Dependencies
-        run: pnpm install --prefer-frozen-lockfile
+        run: yarn install --immutable
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm release
-          commit: 'chore: release eslint-plugin-prettier'
-          title: 'chore: release eslint-plugin-prettier'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish-script: yarn release
+          commit-message: 'chore: release eslint-plugin-prettier'
+          pr-title: 'chore: release eslint-plugin-prettier'
