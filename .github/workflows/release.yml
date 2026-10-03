@@ -31,9 +31,6 @@ jobs:
           node-version: lts/*
           cache: yarn
 
-      - name: Upgrade npm
-        run: npm install -g npm@latest
-
       - name: Install Dependencies
         run: yarn install --immutable
 
