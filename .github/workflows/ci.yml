@@ -44,6 +44,10 @@ jobs:
       - name: Install
         run: pnpm install --prefer-frozen-lockfile
 
+      - name: Install older graphql/mocha for older Node.js versions
+        if: ${{ matrix.node < 20 }}
+        run: pnpm upgrade graphql@16 mocha@11
+
       - name: Install ESLint ${{ matrix.eslint }}
         run: pnpm upgrade eslint@${{ matrix.eslint }}
 
