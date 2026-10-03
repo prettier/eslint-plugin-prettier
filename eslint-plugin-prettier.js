@@ -58,8 +58,8 @@ let prettierFormat;
 //  Rule Definition
 // ------------------------------------------------------------------------------
 
-/** @type {WeakMap<SourceCode, number[]>} */
-const lineIndexesCache = new WeakMap();
+/** @type {WeakMap<SourceCode, { lineIndexes: number[], lineStart: number, columnStart: number, columnBase: number }>} */
+const locationCache = new WeakMap();
 
 /**
  * Ponyfill `sourceCode.getLocFromIndex` when it's unavailable.
@@ -75,23 +75,58 @@ function getLocFromIndex(sourceCode, index) {
     return sourceCode.getLocFromIndex(index);
   }
 
-  let lineIndexes = lineIndexesCache.get(sourceCode);
-  if (!lineIndexes) {
-    lineIndexes = [...sourceCode.text.matchAll(/\r?\n/g)].map(
-      match => match.index,
-    );
-    // first line in the file starts at byte offset 0
-    lineIndexes.unshift(0);
-    lineIndexesCache.set(sourceCode, lineIndexes);
+  let location = locationCache.get(sourceCode);
+  if (!location) {
+    // Store the offset after each complete line terminator so columns are
+    // measured from the first character of a line, including after CRLF.
+    // U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR are ECMAScript
+    // line terminators: https://tc39.es/ecma262/#sec-line-terminators
+    const lineIndexes = [0];
+    for (const match of sourceCode.text.matchAll(/\r\n|[\r\n\u2028\u2029]/gu)) {
+      lineIndexes.push(match.index + match[0].length);
+    }
+    const rootLocation =
+      typeof sourceCode.getLoc === 'function'
+        ? sourceCode.getLoc(sourceCode.ast)
+        : sourceCode.ast.loc;
+    const rootRange =
+      typeof sourceCode.getRange === 'function'
+        ? sourceCode.getRange(sourceCode.ast)
+        : sourceCode.ast.range;
+    const rootStartsAtSource = rootRange[0] === 0;
+    location = {
+      lineIndexes,
+      lineStart: rootStartsAtSource ? rootLocation.start.line : 1,
+      columnStart: rootStartsAtSource ? rootLocation.start.column : 0,
+      // A root at the beginning of the source exposes the parser's column
+      // base. Embedded roots use their starting column only on the first line.
+      columnBase:
+        rootStartsAtSource && rootLocation.start.line === 1
+          ? rootLocation.start.column
+          : 0,
+    };
+    locationCache.set(sourceCode, location);
   }
 
+  const { lineIndexes, lineStart, columnStart, columnBase } = location;
+
+  // Find the last line start at or before the requested index.
   let line = 0;
-  while (line + 1 < lineIndexes.length && lineIndexes[line + 1] < index) {
-    line += 1;
+  let end = lineIndexes.length;
+  while (line + 1 < end) {
+    const middle = Math.floor((line + end) / 2);
+    if (lineIndexes[middle] <= index) {
+      line = middle;
+    } else {
+      end = middle;
+    }
   }
   const column = index - lineIndexes[line];
 
-  return { line: line + 1, column };
+  return {
+    line: line + lineStart,
+    column: column + (line === 0 ? columnStart : columnBase),
+  };
 }
 
 /**
