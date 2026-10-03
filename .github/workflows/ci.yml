@@ -53,6 +53,14 @@ jobs:
           corepack --version >/dev/null 2>&1 || npm install -g corepack
           corepack enable
 
+      - name: Cache Yarn
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.yarn/berry/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Adapt for Yarn 3 on older Node.js
         if: ${{ matrix.node < 18 }}
         run: |
