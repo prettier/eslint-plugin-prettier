@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.5.7
+
+### Patch Changes
+
+- [#796](https://github.com/prettier/eslint-plugin-prettier/pull/796) [`7e53ecd`](https://github.com/prettier/eslint-plugin-prettier/commit/7e53ecd882fe6f0f74150cb0a539776b64182b3e) Thanks [@OskarEichler](https://github.com/OskarEichler)! - Fix fallback diagnostic locations for all supported line endings.
+
 ## 5.5.6
 
 ### Patch Changes
