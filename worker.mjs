@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * @typedef {PrettierOptions & {
  *   onDiskFilepath: string;

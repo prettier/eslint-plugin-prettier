@@ -3,8 +3,6 @@
  * @author Andres Suarez
  */
 
-// @ts-check
-
 /**
  * @import {AST, ESLint, Linter, Rule, SourceCode} from 'eslint'
  * @import {Position} from 'estree'
@@ -26,6 +24,17 @@
  *   options: Options,
  *   fileInfoOptions: FileInfoOptions,
  * ) => string} PrettierFormat
+ *
+ * The legacy `context.get*()` accessors and `context.parserPath` were removed
+ * from the ESLint types (v9+) but are still available at runtime for the
+ * ESLint < 8.40.0 compatibility branches.
+ *
+ * @typedef {Rule.RuleContext & {
+ *   getSourceCode(): SourceCode;
+ *   getFilename(): string;
+ *   getPhysicalFilename(): string;
+ *   parserPath?: string;
+ * }} RuleContext
  */
 
 'use strict';
@@ -132,7 +141,7 @@ function getLocFromIndex(sourceCode, index) {
 /**
  * Reports a difference.
  *
- * @param {Rule.RuleContext} context - The ESLint rule context.
+ * @param {RuleContext} context - The ESLint rule context.
  * @param {Difference} difference - The difference object.
  * @returns {void}
  */
@@ -212,7 +221,7 @@ const eslintPluginPrettier = {
           [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`',
         },
       },
-      create(context) {
+      create(/** @type {RuleContext} */ context) {
         const options = /** @type {Options | undefined} */ (context.options[1]);
         const usePrettierrc = !options || options.usePrettierrc !== false;
         /** @type {FileInfoOptions} */
@@ -242,7 +251,7 @@ const eslintPluginPrettier = {
         const source = sourceCode.text;
 
         return {
-          /** @param {unknown} node */
+          /** @param {Rule.Node} node */
           [sourceCode.ast.type](node) {
             if (!prettierFormat) {
               // Prettier is expensive to load, so only load it if needed.
@@ -293,12 +302,13 @@ const eslintPluginPrettier = {
 
               let message = 'Parsing error: ' + err.message;
 
-              const error = /**
-               * @type {SyntaxError & {
-               *   codeFrame: string;
-               *   loc?: AST.SourceLocation;
-               * }}
-               */ (err);
+              const error =
+                /**
+                 * @type {SyntaxError & {
+                 *   codeFrame: string;
+                 *   loc?: AST.SourceLocation;
+                 * }}
+                 */ (err);
 
               // Prettier's message contains a codeframe style preview of the
               // invalid code and the line/column at which the error occurred.
@@ -325,10 +335,7 @@ const eslintPluginPrettier = {
               const differences = generateDifferences(source, prettierSource);
 
               for (const difference of differences) {
-                reportDifference(
-                  /** @type {Rule.RuleContext} */ (context),
-                  difference,
-                );
+                reportDifference(context, difference);
               }
             }
           },

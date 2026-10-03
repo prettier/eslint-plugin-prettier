@@ -32,39 +32,43 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-
       - name: Setup Node.js ${{ matrix.node }}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node }}
-          cache: pnpm
+          cache: yarn
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Adapt for Yarn 3 on older Node.js
+        if: ${{ matrix.node < 18 }}
+        run: |
+          jq '.packageManager = "yarn@3.8.7" | .resolutions["webcrypto-core"] = "~1.8.1"' package.json > package.json.tmp && mv package.json.tmp package.json
+          rm -f yarn.lock
 
       - name: Install
-        run: pnpm install --prefer-frozen-lockfile
+        run: yarn install --${{ matrix.node < 18 && 'no-' || '' }}immutable
 
       - name: Install older graphql/mocha for older Node.js versions
         if: ${{ matrix.node < 20 }}
-        run: pnpm upgrade graphql@16 mocha@11
+        run: yarn up graphql@16 mocha@11
 
       - name: Install ESLint ${{ matrix.eslint }}
-        run: pnpm upgrade eslint@${{ matrix.eslint }}
+        run: yarn up eslint@${{ matrix.eslint }}
 
       - name: Install older transitive dependencies for ESLint 9
         if: ${{ matrix.eslint == 9 }}
-        run: pnpm upgrade @eslint/js@9 @eslint/json@0.14
+        run: yarn up @eslint/js@9 @eslint/json@0.14
 
       - name: Install older transitive dependencies for ESLint 8
         if: ${{ matrix.eslint == 8 }}
-        run: |
-          jq '.pnpm.overrides["webcrypto-core"] = "~1.8.1"' package.json > package.json.tmp && mv package.json.tmp package.json
-          pnpm upgrade @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
+        run: yarn up @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
-        run: pnpm mocha
+        run: yarn mocha
 
       - name: Perf
         # Skip syntax errors or unavailable features on older Node.js versions
         if: ${{ matrix.node >= 20 }}
-        run: TIMING=1 pnpm lint
+        run: TIMING=1 yarn lint

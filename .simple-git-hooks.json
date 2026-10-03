@@ -1,4 +1,4 @@
 {
-  "pre-commit": "npx lint-staged",
-  "commit-msg": "npx commitlint -e"
+  "pre-commit": "yarn nano-staged",
+  "commit-msg": "yarn commitlint -e"
 }
