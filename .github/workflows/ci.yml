@@ -75,9 +75,13 @@ jobs:
       - name: Install ESLint ${{ matrix.eslint }}
         run: yarn up eslint@${{ matrix.eslint }}
 
+      # Keep `@eslint/json` on 0.13: it depends on `@eslint/plugin-kit` 0.3,
+      # whose `TextSourceCodeBase` has no `getLocFromIndex`, so this exercises the
+      # eslint-plugin-prettier ponyfill instead of ESLint's native implementation.
+      # Bumping this to 0.14 or later silently hides that test path.
       - name: Install older transitive dependencies for ESLint 8/9
         if: ${{ matrix.eslint < 10 }}
-        run: yarn up @eslint/js@9 @eslint/json@0.14
+        run: yarn up @eslint/js@9 @eslint/json@0.13
 
       - name: Install older transitive dependencies for ESLint 8
         if: ${{ matrix.eslint == 8 }}
