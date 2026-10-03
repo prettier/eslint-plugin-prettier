@@ -63,17 +63,15 @@ const { INSERT, DELETE, REPLACE } = generateDifferences;
 /** @type {PrettierFormat} */
 let prettierFormat;
 
-// ------------------------------------------------------------------------------
-//  Rule Definition
-// ------------------------------------------------------------------------------
-
 /** @type {WeakMap<SourceCode, { lineIndexes: number[], lineStart: number, columnStart: number, columnBase: number }>} */
 const locationCache = new WeakMap();
 
 /**
  * Ponyfill `sourceCode.getLocFromIndex` when it's unavailable.
  *
- * See also `getLocFromIndex` in `@eslint/js`.
+ * See also `SourceCode#getLocFromIndex` in `eslint`, and the equivalent
+ * `TextSourceCodeBase#getLocFromIndex` in `@eslint/plugin-kit` that non-JS
+ * languages such as `@eslint/json` inherit.
  *
  * @param {SourceCode} sourceCode
  * @param {number} index
@@ -188,6 +186,9 @@ const eslintPluginPrettier = {
     },
   },
   rules: {
+    // ------------------------------------------------------------------------------
+    //  Rule Definition
+    // ------------------------------------------------------------------------------
     prettier: {
       meta: {
         docs: {
