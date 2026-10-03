@@ -56,7 +56,7 @@ jobs:
       - name: Adapt for Yarn 3 on older Node.js
         if: ${{ matrix.node < 18 }}
         run: |
-          jq '.packageManager = "yarn@3.8.7" | .resolutions["webcrypto-core"] = "~1.8.1"' package.json > package.json.tmp && mv package.json.tmp package.json
+          jq '.packageManager = "yarn@3.8.7" | .resolutions["webcrypto-core"] = "~1.8.1" | del(.devDependencies.typescript)' package.json > package.json.tmp && mv package.json.tmp package.json
           rm -f yarn.lock
 
       - name: Install
