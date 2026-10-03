@@ -83,9 +83,7 @@ jobs:
 
       - name: Install older transitive dependencies for ESLint 8
         if: ${{ matrix.eslint == 8 }}
-        run: |
-          yarn add -D @types/eslint@9
-          yarn up @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
+        run: yarn up @eslint/js@9 @eslint/json@0.14 @graphql-eslint/eslint-plugin@3 eslint-plugin-svelte@2 svelte@3 vue-eslint-parser@9
 
       - name: Test
         run: yarn mocha
@@ -93,4 +91,9 @@ jobs:
       - name: Perf
         # Skip syntax errors or unavailable features on older Node.js versions
         if: ${{ matrix.node >= 20 }}
-        run: TIMING=1 yarn lint
+        run: TIMING=1 yarn lint:es
+
+      - name: Type Check
+        # ESLint 8 ships no types, and @types/eslint (8/9) don't match the code
+        if: ${{ matrix.node >= 20 && matrix.eslint >= 9 }}
+        run: yarn lint:tsc
