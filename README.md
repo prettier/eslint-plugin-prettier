@@ -15,6 +15,7 @@ Please read [Integrating with linters](https://prettier.io/docs/en/integrating-w
 - [`Svelte` support](#svelte-support)
 - [`arrow-body-style` and `prefer-arrow-callback` issue](#arrow-body-style-and-prefer-arrow-callback-issue)
 - [Options](#options)
+- [Line endings](#line-endings)
 - [Sponsors](#sponsors)
 - [Backers](#backers)
 - [Contributing](#contributing)
@@ -172,7 +173,17 @@ If you’re fixing large of amounts of previously unformatted code, consider tem
 
 - The rule is auto fixable -- if you run `eslint` with the `--fix` flag, your code will be formatted according to `prettier` style.
 
----
+## Line endings
+
+Prettier's default `endOfLine` is `lf`. On Windows, files are often checked out or saved with `crlf`, so `eslint` reports `Delete ␍` (or `Insert ␍`) for every line even when the file is otherwise formatted. This plugin reports exactly what Prettier would change, so `eslint --fix` and `prettier --write` keep producing the same output — it is not specific to this plugin.
+
+Configure line endings where Prettier can see them so the plugin and your editor agree:
+
+- `.prettierrc`: `"endOfLine": "auto"` keeps each file's existing line endings (use `"crlf"`/`"lf"` to enforce one explicitly).
+- [`.editorconfig`](https://editorconfig.org/): `end_of_line = lf` (or `crlf`).
+- `.gitattributes`: for example `* text=auto eol=lf`, so checkouts are consistent across platforms.
+
+Note that `endOfLine: "auto"` keeps each file's existing endings but still normalises a file that **mixes** them, using the first `cr`/`crlf` it finds. The plugin then reports the lines that differ, because that is what `prettier --write` would rewrite. To avoid those diagnostics, make each file's endings consistent with the selected `endOfLine` value. See [#641](https://github.com/prettier/eslint-plugin-prettier/issues/641).
 
 ## Sponsors
 
