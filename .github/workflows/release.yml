@@ -41,8 +41,6 @@ jobs:
         id: changesets
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: pnpm release
-          commit: 'chore: release eslint-plugin-prettier'
-          title: 'chore: release eslint-plugin-prettier'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish-script: pnpm release
+          commit-message: 'chore: release eslint-plugin-prettier'
+          pr-title: 'chore: release eslint-plugin-prettier'
