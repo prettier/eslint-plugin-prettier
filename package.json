@@ -47,7 +47,7 @@
     "lint:es": "eslint . --cache --max-warnings 10",
     "lint:tsc": "tsc",
     "prepare": "patch-package && simple-git-hooks && yarn-berry-deduplicate -s fewer",
-    "release": "yarn check && mocha && clean-pkg-json && changeset publish",
+    "release": "yarn check && mocha && clean-pkg-json --keep packageManager && changeset publish",
     "test": "yarn lint && mocha"
   },
   "peerDependencies": {
