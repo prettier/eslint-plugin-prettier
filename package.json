@@ -108,5 +108,8 @@
   },
   "resolutions": {
     "@yarnpkg/core": "4.9.1"
+  },
+  "publishConfig": {
+    "provenance": true
   }
 }
