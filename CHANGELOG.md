@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.5.7
+
+### Patch Changes
+
+- [#796](https://github.com/prettier/eslint-plugin-prettier/pull/796) [`7e53ecd`](https://github.com/prettier/eslint-plugin-prettier/commit/7e53ecd882fe6f0f74150cb0a539776b64182b3e) Thanks [@OskarEichler](https://github.com/OskarEichler)! - Fix fallback diagnostic locations for all supported line endings.
+
+- [#805](https://github.com/prettier/eslint-plugin-prettier/pull/805) [`1b7c433`](https://github.com/prettier/eslint-plugin-prettier/commit/1b7c43322ce0eb3ee7495d91481613d39d97af52) Thanks [@JounQin](https://github.com/JounQin)! - Report a clear error when the sync worker fails to load, so a missing `prettier` dependency now fails fast with `Cannot find package 'prettier'` instead of hanging ESLint indefinitely.
+
 ## 5.5.6
 
 ### Patch Changes
