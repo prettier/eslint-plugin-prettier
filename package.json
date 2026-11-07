@@ -69,8 +69,8 @@
     "synckit": "^0.12.3"
   },
   "devDependencies": {
-    "@1stg/remark-preset": "^3.2.0",
-    "@1stg/tsconfig": "^4.0.0",
+    "@1stg/remark-preset": "^4.0.0",
+    "@1stg/tsconfig": "^5.0.0",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
     "@commitlint/cli": "^21.2.3",
@@ -79,7 +79,7 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.1.0",
     "@graphql-eslint/eslint-plugin": "^4.4.1",
-    "@html-eslint/parser": "^0.66.1",
+    "@html-eslint/parser": "^0.68.0",
     "@prettier/plugin-pug": "^3.5.0",
     "@types/node": "^26.6.4",
     "@unts/patch-package": "^8.1.2",
@@ -104,7 +104,7 @@
     "svelte": "^5.57.1",
     "typescript": "^7.0.2",
     "vue-eslint-parser": "^10.4.1",
-    "yarn-berry-deduplicate": "^6.1.3"
+    "yarn-berry-deduplicate": "^8.0.0"
   },
   "resolutions": {
     "@yarnpkg/core": "4.9.1"
